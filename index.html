@@ -9,9 +9,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-body{font-family:Tahoma,Arial,sans-serif}
-.modal{display:none}
-.modal.active{display:flex}
+body{
+    font-family:Arial,Tahoma,sans-serif;
+}
+.modal{
+    display:none;
+}
+.modal.active{
+    display:flex;
+}
 </style>
 </head>
 
@@ -19,60 +25,129 @@ body{font-family:Tahoma,Arial,sans-serif}
 
 <header class="bg-white shadow-sm sticky top-0 z-40">
 <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-<div class="font-black text-xl">🕌 أزهري وأفتخر</div>
-<button onclick="openLogin()" class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
-تسجيل الدخول
-</button>
+
+    <div class="font-black text-xl">
+        🕌 أزهري وأفتخر
+    </div>
+
+    <div id="authArea">
+        <button
+            onclick="openLogin()"
+            class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+            تسجيل الدخول
+        </button>
+    </div>
+
 </div>
 </header>
 
+<main>
+
 <section class="bg-gradient-to-br from-emerald-700 to-emerald-900 text-white">
 <div class="max-w-7xl mx-auto px-4 py-20 text-center">
-<div class="text-5xl mb-6">🕌</div>
-<h1 class="text-4xl md:text-6xl font-black mb-6">منصة تعليمية متكاملة</h1>
-<p class="text-2xl font-bold mb-4">تعلّم، تقدّم،<br>وافتخر بأزهريتك</p>
-<p class="max-w-2xl mx-auto text-emerald-100 leading-8 mb-8">
-منصة أزهري وأفتخر تجمع القرآن الكريم والعلوم الشرعية والمواد الدراسية في مكان واحد، مع الدروس والفيديوهات والاختبارات ومتابعة تقدم الطالب.
-</p>
-<button onclick="document.getElementById('subjects').scrollIntoView()" class="bg-white text-emerald-800 px-7 py-3 rounded-xl font-black">
-استكشف المواد
-</button>
+
+    <div class="text-5xl mb-6">🕌</div>
+
+    <h1 class="text-4xl md:text-6xl font-black mb-6">
+        منصة تعليمية متكاملة
+    </h1>
+
+    <p class="text-2xl font-bold mb-4">
+        تعلّم، تقدّم،<br>
+        وافتخر بأزهريتك
+    </p>
+
+    <p class="max-w-2xl mx-auto text-emerald-100 leading-8 mb-8">
+        منصة أزهري وأفتخر تجمع القرآن الكريم والعلوم الشرعية
+        والمواد الدراسية في مكان واحد، مع الدروس والفيديوهات
+        والاختبارات ومتابعة تقدم الطالب.
+    </p>
+
+    <button
+        onclick="document.getElementById('subjects').scrollIntoView({behavior:'smooth'})"
+        class="bg-white text-emerald-800 px-7 py-3 rounded-xl font-black">
+        استكشف المواد
+    </button>
+
 </div>
 </section>
 
 <section id="subjects" class="max-w-7xl mx-auto px-4 py-16">
+
 <div class="text-center mb-12">
-<span class="text-emerald-600 font-bold">المواد الدراسية</span>
-<h2 class="text-4xl font-black mt-3">اختر المادة وابدأ رحلتك التعليمية</h2>
+
+    <span class="text-emerald-600 font-bold">
+        المواد الدراسية
+    </span>
+
+    <h2 class="text-4xl font-black mt-3">
+        اختر المادة وابدأ رحلتك التعليمية
+    </h2>
+
 </div>
 
-<div id="subjectsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="text-center col-span-full py-10">جاري تحميل المواد...</div>
+<div
+id="subjectsContainer"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+<div class="text-center col-span-full py-10">
+    جاري تحميل المواد...
+</div>
+
 </div>
 </section>
 
-<section id="subjectSection" class="hidden bg-white border-t">
+<section
+id="subjectSection"
+class="hidden bg-white border-t">
+
 <div class="max-w-7xl mx-auto px-4 py-12">
 
-<button onclick="closeSubject()" class="mb-6 bg-slate-100 px-5 py-2 rounded-xl font-bold">
+<button
+onclick="closeSubject()"
+class="mb-6 bg-slate-100 px-5 py-2 rounded-xl font-bold">
 ← العودة للمواد
 </button>
 
-<h2 id="currentSubjectTitle" class="text-4xl font-black mb-8"></h2>
+<h2
+id="currentSubjectTitle"
+class="text-4xl font-black mb-8">
+</h2>
 
 <div class="flex gap-3 flex-wrap mb-8">
-<button onclick="showTab('lessons')" class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">📚 الدروس</button>
-<button onclick="showTab('videos')" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">🎥 الفيديوهات</button>
-<button onclick="showTab('quizzes')" class="bg-purple-600 text-white px-5 py-2 rounded-xl font-bold">📝 الاختبارات</button>
+
+<button
+onclick="showTab('lessons')"
+class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+📚 الدروس
+</button>
+
+<button
+onclick="showTab('videos')"
+class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">
+🎥 الفيديوهات
+</button>
+
+<button
+onclick="showTab('quizzes')"
+class="bg-purple-600 text-white px-5 py-2 rounded-xl font-bold">
+📝 الاختبارات
+</button>
+
 </div>
 
 <div id="contentArea"></div>
+
 </div>
 </section>
 
 <section class="bg-slate-100 py-16">
+
 <div class="max-w-7xl mx-auto px-4">
-<h2 class="text-4xl font-black text-center mb-12">نظام المنصة</h2>
+
+<h2 class="text-4xl font-black text-center mb-12">
+نظام المنصة
+</h2>
 
 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
@@ -105,581 +180,1134 @@ body{font-family:Tahoma,Arial,sans-serif}
 </section>
 
 <section class="max-w-4xl mx-auto px-4 py-16 text-center">
-<h2 class="text-4xl font-black mb-5">عن أزهري وأفتخر</h2>
+
+<h2 class="text-4xl font-black mb-5">
+عن أزهري وأفتخر
+</h2>
+
 <p class="text-slate-600 leading-8">
 منصة تجمع بين العلم الشرعي والتميز الدراسي.
-هدف المنصة هو توفير بيئة تعليمية منظمة تساعد الطالب على التعلم والمتابعة والوصول إلى المحتوى الدراسي بسهولة.
+هدف المنصة هو توفير بيئة تعليمية منظمة تساعد الطالب
+على التعلم والمتابعة والوصول إلى المحتوى الدراسي بسهولة.
 </p>
-<div class="mt-8 text-2xl font-black text-emerald-700">ابدأ رحلتك التعليمية 🕌</div>
+
+<div class="mt-8 text-2xl font-black text-emerald-700">
+ابدأ رحلتك التعليمية 🕌
+</div>
+
 </section>
 
+</main>
+
 <footer class="bg-slate-900 text-white text-center py-8">
-<div class="font-black text-xl mb-2">🕌 أزهري وأفتخر</div>
-<div>© 2026 جميع الحقوق محفوظة</div>
+
+<div class="font-black text-xl mb-2">
+🕌 أزهري وأفتخر
+</div>
+
+<div>
+© 2026 جميع الحقوق محفوظة
+</div>
+
 </footer>
 
-<div id="loginModal" class="modal fixed inset-0 bg-black/60 items-center justify-center z-50 px-4">
+
+<!-- LOGIN MODAL -->
+
+<div
+id="loginModal"
+class="modal fixed inset-0 bg-black/60 items-center justify-center z-50 px-4">
+
 <div class="bg-white rounded-3xl p-7 w-full max-w-md">
 
 <div class="flex justify-between items-center mb-6">
-<h2 class="text-2xl font-black">تسجيل الدخول</h2>
-<button onclick="closeLogin()" class="text-2xl">×</button>
+
+<h2 class="text-2xl font-black">
+تسجيل الدخول
+</h2>
+
+<button
+onclick="closeLogin()"
+class="text-2xl">
+×
+</button>
+
 </div>
 
-<label class="block font-bold mb-2">البريد الإلكتروني</label>
-<input id="email" type="email" placeholder="البريد الإلكتروني"
+<label class="block font-bold mb-2">
+البريد الإلكتروني
+</label>
+
+<input
+id="email"
+type="email"
+placeholder="البريد الإلكتروني"
 class="w-full border rounded-xl px-4 py-3 mb-5">
 
-<label class="block font-bold mb-2">كلمة المرور</label>
-<input id="password" type="password" placeholder="كلمة المرور"
+<label class="block font-bold mb-2">
+كلمة المرور
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="كلمة المرور"
 class="w-full border rounded-xl px-4 py-3 mb-5">
 
-<button onclick="login()" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black">
+<button
+onclick="login()"
+class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black">
 دخول
 </button>
 
-<p id="loginMessage" class="text-center mt-4 font-bold"></p>
+<p
+id="loginMessage"
+class="text-center mt-4 font-bold">
+</p>
 
 </div>
 </div>
+
 
 <script>
 
-const SUPABASE_URL="https://fxezbarpvidzskcaaxnt.supabase.co";
+const SUPABASE_URL =
+"https://fxezbarpvidzskcaaxnt.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
 
-const supabaseClient=supabase.createClient(
-SUPABASE_URL,
-SUPABASE_PUBLISHABLE_KEY
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
 );
 
-let currentUser=null;
-let currentSubject=null;
-let currentQuiz=null;
-let currentQuestions=[];
-let selectedAnswers={};
+let currentUser = null;
+let currentSubject = null;
+let currentQuiz = null;
+let currentQuestions = [];
+let selectedAnswers = {};
+
+
+// =========================
+// AUTH UI
+// =========================
+
+async function updateAuthUI(){
+
+    const authArea =
+        document.getElementById("authArea");
+
+    if(!currentUser){
+
+        authArea.innerHTML = `
+            <button
+            onclick="openLogin()"
+            class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+                تسجيل الدخول
+            </button>
+        `;
+
+        return;
+    }
+
+    let studentName =
+        currentUser.email || "الطالب";
+
+    const {
+        data:profile
+    } = await supabaseClient
+        .from("profiles")
+        .select("name")
+        .eq("id",currentUser.id)
+        .maybeSingle();
+
+    if(profile && profile.name){
+        studentName = profile.name;
+    }
+
+    authArea.innerHTML = `
+
+        <div class="flex items-center gap-2">
+
+            <div class="hidden sm:block text-right">
+                <div class="text-xs text-slate-500">
+                    مرحبًا بك
+                </div>
+
+                <div class="font-black text-emerald-700">
+                    👤 ${studentName}
+                </div>
+            </div>
+
+            <button
+            onclick="logout()"
+            class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
+                🚪 خروج
+            </button>
+
+        </div>
+    `;
+}
+
+
+// =========================
+// LOGIN
+// =========================
 
 function openLogin(){
-document.getElementById("loginModal").classList.add("active");
+
+    document
+        .getElementById("loginModal")
+        .classList.add("active");
 }
 
 function closeLogin(){
-document.getElementById("loginModal").classList.remove("active");
+
+    document
+        .getElementById("loginModal")
+        .classList.remove("active");
 }
 
 async function login(){
 
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-const message=document.getElementById("loginMessage");
+    const email =
+        document.getElementById("email").value.trim();
 
-if(!email||!password){
-message.textContent="⚠️ اكتب البريد الإلكتروني وكلمة المرور";
-message.className="text-center mt-4 font-bold text-red-600";
-return;
+    const password =
+        document.getElementById("password").value;
+
+    const message =
+        document.getElementById("loginMessage");
+
+    if(!email || !password){
+
+        message.textContent =
+            "⚠️ اكتب البريد الإلكتروني وكلمة المرور";
+
+        message.className =
+            "text-center mt-4 font-bold text-red-600";
+
+        return;
+    }
+
+    message.textContent =
+        "جاري تسجيل الدخول...";
+
+    message.className =
+        "text-center mt-4 font-bold text-blue-600";
+
+    const {
+        data,
+        error
+    } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if(error){
+
+        message.textContent =
+            "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
+
+        message.className =
+            "text-center mt-4 font-bold text-red-600";
+
+        return;
+    }
+
+    currentUser = data.user;
+
+    await updateAuthUI();
+
+    message.textContent =
+        "✅ تم تسجيل الدخول بنجاح";
+
+    message.className =
+        "text-center mt-4 font-bold text-green-600";
+
+    setTimeout(() => {
+
+        closeLogin();
+
+        alert(
+            "مرحبًا بك 👋\nتم تسجيل الدخول بنجاح."
+        );
+
+    },700);
 }
 
-message.textContent="جاري تسجيل الدخول...";
-message.className="text-center mt-4 font-bold text-blue-600";
 
-const {data,error}=await supabaseClient.auth.signInWithPassword({
-email,
-password
-});
+// =========================
+// LOGOUT
+// =========================
 
-if(error){
-message.textContent="❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
-message.className="text-center mt-4 font-bold text-red-600";
-return;
+async function logout(){
+
+    const {
+        error
+    } = await supabaseClient.auth.signOut();
+
+    if(error){
+
+        alert("حدث خطأ أثناء تسجيل الخروج");
+        return;
+    }
+
+    currentUser = null;
+
+    await updateAuthUI();
+
+    alert("تم تسجيل الخروج بنجاح 👋");
 }
 
-currentUser=data.user;
 
-message.textContent="✅ تم تسجيل الدخول بنجاح";
-message.className="text-center mt-4 font-bold text-green-600";
-
-setTimeout(()=>{
-closeLogin();
-alert("مرحبًا بك 👋\nتم تسجيل الدخول بنجاح.");
-},700);
-
-}
+// =========================
+// CHECK USER
+// =========================
 
 async function checkUser(){
 
-const {data}=await supabaseClient.auth.getUser();
+    const {
+        data
+    } = await supabaseClient.auth.getUser();
 
-currentUser=data?.user||null;
+    if(data && data.user){
 
+        currentUser = data.user;
+
+    }else{
+
+        currentUser = null;
+
+    }
+
+    await updateAuthUI();
 }
+
+
+// =========================
+// AUTH STATE LISTENER
+// =========================
+
+supabaseClient.auth.onAuthStateChange(
+    async (event, session) => {
+
+        currentUser =
+            session?.user || null;
+
+        setTimeout(
+            () => updateAuthUI(),
+            0
+        );
+    }
+);
+
+
+// =========================
+// SUBJECTS
+// =========================
 
 async function loadSubjects(){
 
-const container=document.getElementById("subjectsContainer");
+    const container =
+        document.getElementById("subjectsContainer");
 
-const {data,error}=await supabaseClient
-.from("subjects")
-.select("*")
-.order("id");
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("subjects")
+        .select("*")
+        .order("id");
 
-if(error){
-container.innerHTML=`<div class="text-red-600 col-span-full text-center">حدث خطأ أثناء تحميل المواد</div>`;
-return;
+    if(error){
+
+        container.innerHTML =
+        `<div class="text-red-600 col-span-full text-center">
+        حدث خطأ أثناء تحميل المواد
+        </div>`;
+
+        return;
+    }
+
+    if(!data || data.length === 0){
+
+        container.innerHTML =
+        `<div class="text-center col-span-full">
+        لا توجد مواد حاليًا
+        </div>`;
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(subject => {
+
+        let icon = "📚";
+
+        if(subject.name.includes("القرآن"))
+            icon = "📖";
+
+        else if(subject.name.includes("شرعية"))
+            icon = "🕌";
+
+        else if(subject.name.includes("العربية"))
+            icon = "📚";
+
+        else if(subject.name.includes("الفيزياء"))
+            icon = "⚡";
+
+        else if(subject.name.includes("الكيمياء"))
+            icon = "🧪";
+
+        else if(subject.name.includes("الأحياء"))
+            icon = "🧬";
+
+        else if(subject.name.includes("English"))
+            icon = "🇬🇧";
+
+        else if(subject.name.includes("الرياضيات"))
+            icon = "📐";
+
+        container.innerHTML += `
+
+        <div class="bg-white rounded-3xl p-7 shadow-sm border
+        hover:shadow-lg transition">
+
+            <div class="text-5xl mb-5">
+                ${icon}
+            </div>
+
+            <h3 class="text-2xl font-black mb-3">
+                ${subject.name}
+            </h3>
+
+            <p class="text-slate-500 mb-6">
+                ${subject.description || ""}
+            </p>
+
+            <button
+            onclick="openSubject(${subject.id})"
+            class="w-full bg-emerald-600 text-white py-3
+            rounded-xl font-black">
+
+                دخول المادة
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
 }
 
-if(!data||data.length===0){
-container.innerHTML=`<div class="text-center col-span-full">لا توجد مواد حاليًا</div>`;
-return;
-}
 
-container.innerHTML="";
-
-data.forEach(subject=>{
-
-let icon="📚";
-
-if(subject.name.includes("القرآن"))icon="📖";
-else if(subject.name.includes("شرعية"))icon="🕌";
-else if(subject.name.includes("العربية"))icon="📚";
-else if(subject.name.includes("الفيزياء"))icon="⚡";
-else if(subject.name.includes("الكيمياء"))icon="🧪";
-else if(subject.name.includes("الأحياء"))icon="🧬";
-else if(subject.name.includes("English"))icon="🇬🇧";
-else if(subject.name.includes("الرياضيات"))icon="📐";
-
-container.innerHTML+=`
-
-<div class="bg-white rounded-3xl p-7 shadow-sm border hover:shadow-lg transition">
-
-<div class="text-5xl mb-5">${icon}</div>
-
-<h3 class="text-2xl font-black mb-3">${subject.name}</h3>
-
-<p class="text-slate-500 mb-6">${subject.description||""}</p>
-
-<button onclick="openSubject(${subject.id})"
-class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black">
-دخول المادة
-</button>
-
-</div>`;
-
-});
-
-}
+// =========================
+// OPEN SUBJECT
+// =========================
 
 async function openSubject(subjectId){
 
-const {data,error}=await supabaseClient
-.from("subjects")
-.select("*")
-.eq("id",subjectId)
-.single();
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("subjects")
+        .select("*")
+        .eq("id",subjectId)
+        .single();
 
-if(error){
-alert("حدث خطأ أثناء فتح المادة");
-return;
+    if(error){
+
+        alert("حدث خطأ أثناء فتح المادة");
+        return;
+    }
+
+    currentSubject = data;
+
+    document.getElementById(
+        "currentSubjectTitle"
+    ).textContent =
+        currentSubject.name;
+
+    document.getElementById(
+        "subjectSection"
+    ).classList.remove("hidden");
+
+    document.getElementById(
+        "subjectSection"
+    ).scrollIntoView({
+        behavior:"smooth"
+    });
+
+    showTab("lessons");
 }
 
-currentSubject=data;
 
-document.getElementById("currentSubjectTitle").textContent=currentSubject.name;
-
-document.getElementById("subjectSection").classList.remove("hidden");
-
-document.getElementById("subjectSection").scrollIntoView({behavior:"smooth"});
-
-showTab("lessons");
-
-}
+// =========================
+// CLOSE SUBJECT
+// =========================
 
 function closeSubject(){
 
-document.getElementById("subjectSection").classList.add("hidden");
+    document.getElementById(
+        "subjectSection"
+    ).classList.add("hidden");
 
-window.scrollTo({top:0,behavior:"smooth"});
-
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 }
+
+
+// =========================
+// TABS
+// =========================
 
 function showTab(tab){
 
-if(!currentSubject)return;
+    if(!currentSubject) return;
 
-if(tab==="lessons")loadLessons();
-if(tab==="videos")loadVideos();
-if(tab==="quizzes")loadQuizzes();
+    if(tab === "lessons")
+        loadLessons();
 
+    if(tab === "videos")
+        loadVideos();
+
+    if(tab === "quizzes")
+        loadQuizzes();
 }
+
+
+// =========================
+// LESSONS
+// =========================
 
 async function loadLessons(){
 
-const area=document.getElementById("contentArea");
+    const area =
+        document.getElementById("contentArea");
 
-area.innerHTML=`<div class="text-center py-8">جاري تحميل الدروس...</div>`;
+    area.innerHTML =
+    `<div class="text-center py-8">
+    جاري تحميل الدروس...
+    </div>`;
 
-const {data,error}=await supabaseClient
-.from("lessons")
-.select("*")
-.eq("subject_id",currentSubject.id)
-.order("id");
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("lessons")
+        .select("*")
+        .eq("subject_id",currentSubject.id)
+        .order("id");
 
-if(error){
-area.innerHTML=`<p class="text-red-600">حدث خطأ أثناء تحميل الدروس</p>`;
-return;
+    if(error){
+
+        area.innerHTML =
+        `<p class="text-red-600">
+        حدث خطأ أثناء تحميل الدروس
+        </p>`;
+
+        return;
+    }
+
+    if(!data || data.length === 0){
+
+        area.innerHTML =
+        `<div class="bg-slate-50 rounded-2xl p-8 text-center">
+        لا توجد دروس لهذه المادة حتى الآن.
+        </div>`;
+
+        return;
+    }
+
+    area.innerHTML =
+    `<div class="grid md:grid-cols-2 gap-5"></div>`;
+
+    const grid =
+        area.firstElementChild;
+
+    data.forEach(lesson => {
+
+        grid.innerHTML += `
+
+        <div class="border rounded-2xl p-6">
+
+            <h3 class="text-xl font-black mb-2">
+                ${lesson.title}
+            </h3>
+
+            <p class="text-slate-500 mb-5">
+                ${lesson.description || ""}
+            </p>
+
+            ${
+                lesson.video_url
+                ?
+                `<a href="${lesson.video_url}"
+                target="_blank"
+                class="inline-block bg-red-600 text-white
+                px-5 py-2 rounded-xl font-bold">
+                ▶️ مشاهدة الدرس
+                </a>`
+                :
+                ""
+            }
+
+        </div>
+
+        `;
+    });
 }
 
-if(!data||data.length===0){
-area.innerHTML=`<div class="bg-slate-50 rounded-2xl p-8 text-center">لا توجد دروس لهذه المادة حتى الآن.</div>`;
-return;
-}
 
-area.innerHTML=`<div class="grid md:grid-cols-2 gap-5"></div>`;
-
-const grid=area.firstElementChild;
-
-data.forEach(lesson=>{
-
-grid.innerHTML+=`
-
-<div class="border rounded-2xl p-6">
-
-<h3 class="text-xl font-black mb-2">${lesson.title}</h3>
-
-<p class="text-slate-500 mb-5">${lesson.description||""}</p>
-
-${lesson.video_url?`
-<a href="${lesson.video_url}" target="_blank"
-class="inline-block bg-red-600 text-white px-5 py-2 rounded-xl font-bold">
-▶️ مشاهدة الدرس
-</a>`:""}
-
-</div>`;
-
-});
-
-}
+// =========================
+// VIDEOS
+// =========================
 
 async function loadVideos(){
 
-const area=document.getElementById("contentArea");
+    const area =
+        document.getElementById("contentArea");
 
-area.innerHTML=`<div class="text-center py-8">جاري تحميل الفيديوهات...</div>`;
+    area.innerHTML =
+    `<div class="text-center py-8">
+    جاري تحميل الفيديوهات...
+    </div>`;
 
-const {data:lessons,error:lessonError}=await supabaseClient
-.from("lessons")
-.select("id")
-.eq("subject_id",currentSubject.id);
+    const {
+        data:lessons,
+        error:lessonError
+    } = await supabaseClient
+        .from("lessons")
+        .select("id")
+        .eq("subject_id",currentSubject.id);
 
-if(lessonError){
-area.innerHTML=`<p class="text-red-600">حدث خطأ أثناء تحميل الفيديوهات</p>`;
-return;
+    if(lessonError){
+
+        area.innerHTML =
+        `<p class="text-red-600">
+        حدث خطأ أثناء تحميل الفيديوهات
+        </p>`;
+
+        return;
+    }
+
+    if(!lessons || lessons.length === 0){
+
+        area.innerHTML =
+        `<div class="text-center py-8">
+        لا توجد فيديوهات حاليًا.
+        </div>`;
+
+        return;
+    }
+
+    const lessonIds =
+        lessons.map(item => item.id);
+
+    const {
+        data:videos,
+        error
+    } = await supabaseClient
+        .from("videos")
+        .select("*")
+        .in("lesson_id",lessonIds)
+        .order("id");
+
+    if(error){
+
+        area.innerHTML =
+        `<p class="text-red-600">
+        حدث خطأ أثناء تحميل الفيديوهات
+        </p>`;
+
+        return;
+    }
+
+    if(!videos || videos.length === 0){
+
+        area.innerHTML =
+        `<div class="text-center py-8">
+        لا توجد فيديوهات حاليًا.
+        </div>`;
+
+        return;
+    }
+
+    area.innerHTML =
+    `<div class="grid md:grid-cols-2 gap-5"></div>`;
+
+    const grid =
+        area.firstElementChild;
+
+    videos.forEach(video => {
+
+        grid.innerHTML += `
+
+        <div class="border rounded-2xl p-6">
+
+            <div class="text-4xl mb-4">
+                🎥
+            </div>
+
+            <h3 class="text-xl font-black mb-5">
+                ${video.title}
+            </h3>
+
+            <a href="${video.video_url}"
+            target="_blank"
+            class="inline-block bg-blue-600 text-white
+            px-5 py-2 rounded-xl font-bold">
+            ▶️ مشاهدة الفيديو
+            </a>
+
+        </div>
+
+        `;
+    });
 }
 
-if(!lessons||lessons.length===0){
-area.innerHTML=`<div class="text-center py-8">لا توجد فيديوهات حاليًا.</div>`;
-return;
-}
 
-const lessonIds=lessons.map(item=>item.id);
-
-const {data:videos,error}=await supabaseClient
-.from("videos")
-.select("*")
-.in("lesson_id",lessonIds)
-.order("id");
-
-if(error){
-area.innerHTML=`<p class="text-red-600">حدث خطأ أثناء تحميل الفيديوهات</p>`;
-return;
-}
-
-if(!videos||videos.length===0){
-area.innerHTML=`<div class="text-center py-8">لا توجد فيديوهات حاليًا.</div>`;
-return;
-}
-
-area.innerHTML=`<div class="grid md:grid-cols-2 gap-5"></div>`;
-
-const grid=area.firstElementChild;
-
-videos.forEach(video=>{
-
-grid.innerHTML+=`
-
-<div class="border rounded-2xl p-6">
-
-<div class="text-4xl mb-4">🎥</div>
-
-<h3 class="text-xl font-black mb-5">${video.title}</h3>
-
-<a href="${video.video_url}" target="_blank"
-class="inline-block bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">
-▶️ مشاهدة الفيديو
-</a>
-
-</div>`;
-
-});
-
-}
+// =========================
+// QUIZZES
+// =========================
 
 async function loadQuizzes(){
 
-const area=document.getElementById("contentArea");
+    const area =
+        document.getElementById("contentArea");
 
-area.innerHTML=`<div class="text-center py-8">جاري تحميل الاختبارات...</div>`;
+    area.innerHTML =
+    `<div class="text-center py-8">
+    جاري تحميل الاختبارات...
+    </div>`;
 
-const {data,error}=await supabaseClient
-.from("quizzes")
-.select("*")
-.eq("subject_id",currentSubject.id)
-.order("id");
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("quizzes")
+        .select("*")
+        .eq("subject_id",currentSubject.id)
+        .order("id");
 
-if(error){
-area.innerHTML=`<p class="text-red-600">حدث خطأ أثناء تحميل الاختبارات</p>`;
-return;
+    if(error){
+
+        area.innerHTML =
+        `<p class="text-red-600">
+        حدث خطأ أثناء تحميل الاختبارات
+        </p>`;
+
+        return;
+    }
+
+    if(!data || data.length === 0){
+
+        area.innerHTML =
+        `<div class="text-center py-8">
+        لا توجد اختبارات حاليًا.
+        </div>`;
+
+        return;
+    }
+
+    area.innerHTML =
+    `<div class="grid md:grid-cols-2 gap-5"></div>`;
+
+    const grid =
+        area.firstElementChild;
+
+    data.forEach(quiz => {
+
+        grid.innerHTML += `
+
+        <div class="border rounded-2xl p-6">
+
+            <div class="text-4xl mb-4">
+                📝
+            </div>
+
+            <h3 class="text-xl font-black mb-2">
+                ${quiz.title}
+            </h3>
+
+            <p class="text-slate-500 mb-5">
+                ${quiz.description || ""}
+            </p>
+
+            <button
+            onclick="startQuiz(${quiz.id})"
+            class="bg-purple-600 text-white
+            px-5 py-2 rounded-xl font-bold">
+
+            بدء الاختبار
+
+            </button>
+
+        </div>
+
+        `;
+    });
 }
 
-if(!data||data.length===0){
-area.innerHTML=`<div class="text-center py-8">لا توجد اختبارات حاليًا.</div>`;
-return;
-}
 
-area.innerHTML=`<div class="grid md:grid-cols-2 gap-5"></div>`;
-
-const grid=area.firstElementChild;
-
-data.forEach(quiz=>{
-
-grid.innerHTML+=`
-
-<div class="border rounded-2xl p-6">
-
-<div class="text-4xl mb-4">📝</div>
-
-<h3 class="text-xl font-black mb-2">${quiz.title}</h3>
-
-<p class="text-slate-500 mb-5">${quiz.description||""}</p>
-
-<button onclick="startQuiz(${quiz.id})"
-class="bg-purple-600 text-white px-5 py-2 rounded-xl font-bold">
-بدء الاختبار
-</button>
-
-</div>`;
-
-});
-
-}
+// =========================
+// START QUIZ
+// =========================
 
 async function startQuiz(quizId){
 
-await checkUser();
+    await checkUser();
 
-if(!currentUser){
-openLogin();
-document.getElementById("loginMessage").textContent="🔐 يجب تسجيل الدخول أولًا لبدء الاختبار.";
-return;
+    if(!currentUser){
+
+        openLogin();
+
+        document.getElementById(
+            "loginMessage"
+        ).textContent =
+        "🔐 يجب تسجيل الدخول أولًا لبدء الاختبار.";
+
+        return;
+    }
+
+    const {
+        data:quiz,
+        error:quizError
+    } = await supabaseClient
+        .from("quizzes")
+        .select("*")
+        .eq("id",quizId)
+        .single();
+
+    if(quizError){
+
+        alert("حدث خطأ أثناء تحميل الاختبار");
+        return;
+    }
+
+    const {
+        data:questions,
+        error:questionError
+    } = await supabaseClient
+        .from("questions")
+        .select("*")
+        .eq("quiz_id",quizId)
+        .order("id");
+
+    if(questionError){
+
+        alert("حدث خطأ أثناء تحميل الأسئلة");
+        return;
+    }
+
+    currentQuiz = quiz;
+    currentQuestions = questions || [];
+    selectedAnswers = {};
+
+    renderQuiz();
 }
 
-const {data:quiz,error:quizError}=await supabaseClient
-.from("quizzes")
-.select("*")
-.eq("id",quizId)
-.single();
 
-if(quizError){
-alert("حدث خطأ أثناء تحميل الاختبار");
-return;
-}
-
-const {data:questions,error:questionError}=await supabaseClient
-.from("questions")
-.select("*")
-.eq("quiz_id",quizId)
-.order("id");
-
-if(questionError){
-alert("حدث خطأ أثناء تحميل الأسئلة");
-return;
-}
-
-currentQuiz=quiz;
-currentQuestions=questions||[];
-selectedAnswers={};
-
-renderQuiz();
-
-}
+// =========================
+// RENDER QUIZ
+// =========================
 
 function renderQuiz(){
 
-const area=document.getElementById("contentArea");
+    const area =
+        document.getElementById("contentArea");
 
-if(currentQuestions.length===0){
-area.innerHTML=`<div class="text-center py-8">لا توجد أسئلة في هذا الاختبار.</div>`;
-return;
+    if(currentQuestions.length === 0){
+
+        area.innerHTML =
+        `<div class="text-center py-8">
+        لا توجد أسئلة في هذا الاختبار.
+        </div>`;
+
+        return;
+    }
+
+    area.innerHTML = `
+
+    <div class="max-w-3xl mx-auto">
+
+        <div class="mb-8">
+
+            <h2 class="text-3xl font-black mb-2">
+                ${currentQuiz.title}
+            </h2>
+
+            <p class="text-slate-500">
+                أجب عن جميع الأسئلة ثم اضغط إنهاء الاختبار.
+            </p>
+
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <button
+        onclick="submitQuiz()"
+        class="w-full bg-emerald-600 text-white
+        py-4 rounded-xl font-black mt-8">
+
+        إنهاء الاختبار
+
+        </button>
+
+        <div id="quizResult" class="mt-6"></div>
+
+    </div>
+
+    `;
+
+    const container =
+        document.getElementById(
+            "questionsContainer"
+        );
+
+    currentQuestions.forEach(
+        (question,index) => {
+
+        container.innerHTML += `
+
+        <div class="border rounded-2xl p-6 mb-5">
+
+            <h3 class="font-black text-lg mb-5">
+                ${index+1}. ${question.question_text}
+            </h3>
+
+            <div class="space-y-3">
+
+                ${createOption(
+                    question.id,
+                    "A",
+                    question.option_a
+                )}
+
+                ${createOption(
+                    question.id,
+                    "B",
+                    question.option_b
+                )}
+
+                ${createOption(
+                    question.id,
+                    "C",
+                    question.option_c
+                )}
+
+                ${createOption(
+                    question.id,
+                    "D",
+                    question.option_d
+                )}
+
+            </div>
+
+        </div>
+
+        `;
+    });
 }
 
-area.innerHTML=`
 
-<div class="max-w-3xl mx-auto">
+// =========================
+// OPTION
+// =========================
 
-<h2 class="text-3xl font-black mb-2">${currentQuiz.title}</h2>
+function createOption(
+    questionId,
+    letter,
+    text
+){
 
-<p class="text-slate-500 mb-8">أجب عن جميع الأسئلة ثم اضغط إنهاء الاختبار.</p>
+    return `
 
-<div id="questionsContainer"></div>
+    <button
+    id="option-${questionId}-${letter}"
+    onclick="selectAnswer(${questionId},'${letter}')"
+    class="w-full text-right border rounded-xl
+    px-4 py-3 hover:bg-slate-50">
 
-<button onclick="submitQuiz()"
-class="w-full bg-emerald-600 text-white py-4 rounded-xl font-black mt-8">
-إنهاء الاختبار
-</button>
+        <span class="font-black">
+        ${letter})
+        </span>
 
-<div id="quizResult" class="mt-6"></div>
+        ${text}
 
-</div>`;
+    </button>
 
-const container=document.getElementById("questionsContainer");
-
-currentQuestions.forEach((question,index)=>{
-
-container.innerHTML+=`
-
-<div class="border rounded-2xl p-6 mb-5">
-
-<h3 class="font-black text-lg mb-5">
-${index+1}. ${question.question_text}
-</h3>
-
-<div class="space-y-3">
-
-${createOption(question.id,"A",question.option_a)}
-${createOption(question.id,"B",question.option_b)}
-${createOption(question.id,"C",question.option_c)}
-${createOption(question.id,"D",question.option_d)}
-
-</div>
-
-</div>`;
-
-});
-
+    `;
 }
 
-function createOption(questionId,letter,text){
 
-return`
+// =========================
+// SELECT ANSWER
+// =========================
 
-<button id="option-${questionId}-${letter}"
-onclick="selectAnswer(${questionId},'${letter}')"
-class="w-full text-right border rounded-xl px-4 py-3 hover:bg-slate-50">
+function selectAnswer(
+    questionId,
+    answer
+){
 
-<span class="font-black">${letter})</span> ${text}
+    selectedAnswers[questionId] =
+        answer;
 
-</button>`;
+    ["A","B","C","D"].forEach(letter => {
 
+        const button =
+            document.getElementById(
+                `option-${questionId}-${letter}`
+            );
+
+        if(button){
+
+            button.classList.remove(
+                "bg-emerald-100",
+                "border-emerald-500"
+            );
+        }
+    });
+
+    const selected =
+        document.getElementById(
+            `option-${questionId}-${answer}`
+        );
+
+    if(selected){
+
+        selected.classList.add(
+            "bg-emerald-100",
+            "border-emerald-500"
+        );
+    }
 }
 
-function selectAnswer(questionId,answer){
 
-selectedAnswers[questionId]=answer;
-
-["A","B","C","D"].forEach(letter=>{
-
-const button=document.getElementById(`option-${questionId}-${letter}`);
-
-if(button){
-button.classList.remove("bg-emerald-100","border-emerald-500");
-}
-
-});
-
-const selected=document.getElementById(`option-${questionId}-${answer}`);
-
-if(selected){
-selected.classList.add("bg-emerald-100","border-emerald-500");
-}
-
-}
+// =========================
+// SUBMIT QUIZ
+// =========================
 
 async function submitQuiz(){
 
-await checkUser();
+    await checkUser();
 
-if(!currentUser){
-openLogin();
-return;
+    if(!currentUser){
+
+        openLogin();
+        return;
+    }
+
+    let score = 0;
+
+    currentQuestions.forEach(question => {
+
+        if(
+            selectedAnswers[question.id]
+            === question.correct_answer
+        ){
+
+            score++;
+        }
+    });
+
+    const total =
+        currentQuestions.length;
+
+    const percentage =
+        total > 0
+        ? Math.round((score / total) * 100)
+        : 0;
+
+    const {
+        error
+    } = await supabaseClient
+        .from("quiz_results")
+        .insert({
+
+            quiz_id: currentQuiz.id,
+
+            user_id: currentUser.id,
+
+            score: score,
+
+            total: total,
+
+            percentage: percentage
+
+        });
+
+    const result =
+        document.getElementById("quizResult");
+
+    if(error){
+
+        result.innerHTML = `
+
+        <div class="bg-red-50 text-red-700
+        rounded-2xl p-6 font-bold">
+
+        ❌ حدث خطأ أثناء حفظ النتيجة.
+
+        </div>
+
+        `;
+
+        return;
+    }
+
+    result.innerHTML = `
+
+    <div class="bg-emerald-50 text-emerald-700
+    rounded-2xl p-6 text-center">
+
+        <div class="text-4xl mb-3">
+        🎉
+        </div>
+
+        <div class="text-2xl font-black">
+        نتيجتك: ${score} / ${total}
+        </div>
+
+        <div class="text-xl font-bold mt-2">
+        النسبة: ${percentage}%
+        </div>
+
+        <div class="mt-3 font-bold">
+        ✅ تم حفظ نتيجتك في حسابك
+        </div>
+
+    </div>
+
+    `;
 }
 
-let score=0;
 
-currentQuestions.forEach(question=>{
+// =========================
+// START
+// =========================
 
-if(selectedAnswers[question.id]===question.correct_answer){
-score++;
-}
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-});
+        await checkUser();
 
-const total=currentQuestions.length;
+        await loadSubjects();
 
-const percentage=total>0?Math.round((score/total)*100):0;
-
-const {error}=await supabaseClient
-.from("quiz_results")
-.insert({
-quiz_id:currentQuiz.id,
-user_id:currentUser.id,
-score:score,
-total:total,
-percentage:percentage
-});
-
-const result=document.getElementById("quizResult");
-
-if(error){
-
-result.innerHTML=`
-
-<div class="bg-red-50 text-red-700 rounded-2xl p-6 font-bold">
-❌ حدث خطأ أثناء حفظ النتيجة.
-</div>`;
-
-return;
-}
-
-result.innerHTML=`
-
-<div class="bg-emerald-50 text-emerald-700 rounded-2xl p-6 text-center">
-
-<div class="text-4xl mb-3">🎉</div>
-
-<div class="text-2xl font-black">
-نتيجتك: ${score} / ${total}
-</div>
-
-<div class="text-xl font-bold mt-2">
-النسبة: ${percentage}%
-</div>
-
-<div class="mt-3 font-bold">
-✅ تم حفظ نتيجتك في حسابك
-</div>
-
-</div>`;
-
-}
-
-document.addEventListener("DOMContentLoaded",async()=>{
-
-await checkUser();
-await loadSubjects();
-
-});
+    }
+);
 
 </script>
 
 </body>
-</html>
+  </html>
