@@ -1,275 +1,428 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أزهري وأفتخر</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>أزهري وأفتخر | منصة التعليم</title>
 
-<style>
-body{
-    font-family:Arial,Tahoma,sans-serif;
-}
-.modal{
-    display:none;
-}
-.modal.active{
-    display:flex;
-}
-</style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        body {
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        .subject-card {
+            transition: .2s;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+        }
+    </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-800">
 
-<header class="bg-white shadow-sm sticky top-0 z-40">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+<!-- ================= HEADER ================= -->
 
-    <div class="font-black text-xl">
-        🕌 أزهري وأفتخر
+<header class="bg-white border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+
+        <div>
+            <h1 class="text-xl md:text-2xl font-black text-emerald-700">
+                أزهري وأفتخر
+            </h1>
+            <p class="text-xs text-slate-500">
+                منصة التعليم والتطوير
+            </p>
+        </div>
+
+        <div id="authArea"></div>
+
     </div>
-
-    <div id="authArea">
-        <button
-            onclick="openLogin()"
-            class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
-            تسجيل الدخول
-        </button>
-    </div>
-
-</div>
 </header>
 
-<main>
 
-<section class="bg-gradient-to-br from-emerald-700 to-emerald-900 text-white">
-<div class="max-w-7xl mx-auto px-4 py-20 text-center">
+<!-- ================= HOME ================= -->
 
-    <div class="text-5xl mb-6">🕌</div>
+<main id="homePage">
 
-    <h1 class="text-4xl md:text-6xl font-black mb-6">
-        منصة تعليمية متكاملة
-    </h1>
+    <section class="max-w-7xl mx-auto px-4 py-12">
 
-    <p class="text-2xl font-bold mb-4">
-        تعلّم، تقدّم،<br>
-        وافتخر بأزهريتك
-    </p>
+        <div class="bg-gradient-to-l from-emerald-700 to-emerald-500 text-white rounded-3xl p-7 md:p-12">
 
-    <p class="max-w-2xl mx-auto text-emerald-100 leading-8 mb-8">
-        منصة أزهري وأفتخر تجمع القرآن الكريم والعلوم الشرعية
-        والمواد الدراسية في مكان واحد، مع الدروس والفيديوهات
-        والاختبارات ومتابعة تقدم الطالب.
-    </p>
+            <span class="text-emerald-100 font-bold">
+                مرحبًا بك في
+            </span>
 
-    <button
-        onclick="document.getElementById('subjects').scrollIntoView({behavior:'smooth'})"
-        class="bg-white text-emerald-800 px-7 py-3 rounded-xl font-black">
-        استكشف المواد
-    </button>
+            <h2 class="text-3xl md:text-5xl font-black mt-3">
+                أزهري وأفتخر
+            </h2>
 
-</div>
-</section>
+            <p class="mt-5 text-emerald-50 max-w-2xl leading-8">
+                منصة تعليمية تجمع بين الدراسة المنظمة،
+                الاختبارات، الفيديوهات، ومتابعة تقدم الطالب
+                في مكان واحد.
+            </p>
 
-<section id="subjects" class="max-w-7xl mx-auto px-4 py-16">
+            <div class="mt-7 flex flex-wrap gap-3">
 
-<div class="text-center mb-12">
+                <button
+                    onclick="showSubjects()"
+                    class="bg-white text-emerald-700 px-6 py-3 rounded-2xl font-black">
+                    ابدأ التعلم
+                </button>
 
-    <span class="text-emerald-600 font-bold">
-        المواد الدراسية
-    </span>
+                <button
+                    onclick="openStudentPage()"
+                    class="bg-emerald-800 text-white px-6 py-3 rounded-2xl font-black">
+                    👨‍🎓 صفحة الطالب
+                </button>
 
-    <h2 class="text-4xl font-black mt-3">
-        اختر المادة وابدأ رحلتك التعليمية
-    </h2>
+            </div>
 
-</div>
+        </div>
 
-<div
-id="subjectsContainer"
-class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    </section>
 
-<div class="text-center col-span-full py-10">
-    جاري تحميل المواد...
-</div>
 
-</div>
-</section>
+    <!-- SUBJECTS -->
 
-<section
-id="subjectSection"
-class="hidden bg-white border-t">
+    <section id="subjectsSection" class="max-w-7xl mx-auto px-4 pb-16">
 
-<div class="max-w-7xl mx-auto px-4 py-12">
+        <div class="text-center mb-10">
 
-<button
-onclick="closeSubject()"
-class="mb-6 bg-slate-100 px-5 py-2 rounded-xl font-bold">
-← العودة للمواد
-</button>
+            <span class="text-emerald-600 font-bold">
+                المواد الدراسية
+            </span>
 
-<h2
-id="currentSubjectTitle"
-class="text-4xl font-black mb-8">
-</h2>
+            <h2 class="text-3xl md:text-4xl font-black mt-2">
+                اختر المادة
+            </h2>
 
-<div class="flex gap-3 flex-wrap mb-8">
+        </div>
 
-<button
-onclick="showTab('lessons')"
-class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
-📚 الدروس
-</button>
+        <div
+            id="subjectsContainer"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        </div>
 
-<button
-onclick="showTab('videos')"
-class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold">
-🎥 الفيديوهات
-</button>
-
-<button
-onclick="showTab('quizzes')"
-class="bg-purple-600 text-white px-5 py-2 rounded-xl font-bold">
-📝 الاختبارات
-</button>
-
-</div>
-
-<div id="contentArea"></div>
-
-</div>
-</section>
-
-<section class="bg-slate-100 py-16">
-
-<div class="max-w-7xl mx-auto px-4">
-
-<h2 class="text-4xl font-black text-center mb-12">
-نظام المنصة
-</h2>
-
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-<div class="bg-white rounded-2xl p-6 text-center shadow">
-<div class="text-4xl mb-4">👨‍🎓</div>
-<h3 class="font-black text-xl mb-2">صفحة الطالب</h3>
-<p>ملف شخصي ولوحة متابعة.</p>
-</div>
-
-<div class="bg-white rounded-2xl p-6 text-center shadow">
-<div class="text-4xl mb-4">🎥</div>
-<h3 class="font-black text-xl mb-2">الدروس والفيديوهات</h3>
-<p>محتوى تعليمي منظم.</p>
-</div>
-
-<div class="bg-white rounded-2xl p-6 text-center shadow">
-<div class="text-4xl mb-4">📝</div>
-<h3 class="font-black text-xl mb-2">الاختبارات</h3>
-<p>اختبارات ودرجات وتقييم.</p>
-</div>
-
-<div class="bg-white rounded-2xl p-6 text-center shadow">
-<div class="text-4xl mb-4">📊</div>
-<h3 class="font-black text-xl mb-2">متابعة التقدم</h3>
-<p>متابعة إنجاز الطالب.</p>
-</div>
-
-</div>
-</div>
-</section>
-
-<section class="max-w-4xl mx-auto px-4 py-16 text-center">
-
-<h2 class="text-4xl font-black mb-5">
-عن أزهري وأفتخر
-</h2>
-
-<p class="text-slate-600 leading-8">
-منصة تجمع بين العلم الشرعي والتميز الدراسي.
-هدف المنصة هو توفير بيئة تعليمية منظمة تساعد الطالب
-على التعلم والمتابعة والوصول إلى المحتوى الدراسي بسهولة.
-</p>
-
-<div class="mt-8 text-2xl font-black text-emerald-700">
-ابدأ رحلتك التعليمية 🕌
-</div>
-
-</section>
+    </section>
 
 </main>
 
-<footer class="bg-slate-900 text-white text-center py-8">
 
-<div class="font-black text-xl mb-2">
-🕌 أزهري وأفتخر
-</div>
+<!-- ================= SUBJECT PAGE ================= -->
 
-<div>
-© 2026 جميع الحقوق محفوظة
-</div>
+<section id="subjectPage" class="hidden-section">
 
-</footer>
+    <div class="max-w-7xl mx-auto px-4 py-10">
+
+        <button
+            onclick="backHome()"
+            class="mb-6 bg-slate-200 px-5 py-2 rounded-xl font-bold">
+            ← العودة
+        </button>
+
+        <div class="bg-white rounded-3xl p-6 border">
+
+            <h2 id="subjectTitle"
+                class="text-3xl font-black text-emerald-700">
+            </h2>
+
+            <p id="subjectDescription"
+               class="text-slate-500 mt-2">
+            </p>
+
+        </div>
 
 
-<!-- LOGIN MODAL -->
+        <!-- LESSONS -->
+
+        <div class="mt-10">
+
+            <h3 class="text-2xl font-black mb-5">
+                📚 الدروس
+            </h3>
+
+            <div
+                id="lessonsContainer"
+                class="grid md:grid-cols-2 gap-5">
+            </div>
+
+        </div>
+
+
+        <!-- QUIZZES -->
+
+        <div class="mt-12">
+
+            <h3 class="text-2xl font-black mb-5">
+                📝 الاختبارات
+            </h3>
+
+            <div
+                id="quizzesContainer"
+                class="grid md:grid-cols-2 gap-5">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STUDENT PAGE ================= -->
+
+<section id="studentPage" class="hidden-section">
+
+    <div class="max-w-7xl mx-auto px-4 py-10">
+
+        <button
+            onclick="backHome()"
+            class="mb-6 bg-slate-200 px-5 py-2 rounded-xl font-bold">
+            ← الرئيسية
+        </button>
+
+
+        <!-- PROFILE -->
+
+        <div class="bg-white border rounded-3xl p-7">
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-5">
+
+                <div>
+
+                    <p class="text-sm text-slate-500">
+                        لوحة الطالب
+                    </p>
+
+                    <h2
+                        id="studentName"
+                        class="text-3xl font-black text-emerald-700 mt-2">
+                        الطالب
+                    </h2>
+
+                    <p
+                        id="studentEmail"
+                        class="text-slate-500 mt-2">
+                    </p>
+
+                </div>
+
+                <div class="text-6xl">
+                    👨‍🎓
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+
+            <div class="bg-white border rounded-2xl p-5">
+                <p class="text-sm text-slate-500">
+                    الاختبارات
+                </p>
+
+                <p
+                    id="quizCount"
+                    class="text-3xl font-black text-emerald-700 mt-2">
+                    0
+                </p>
+            </div>
+
+
+            <div class="bg-white border rounded-2xl p-5">
+
+                <p class="text-sm text-slate-500">
+                    متوسط الدرجات
+                </p>
+
+                <p
+                    id="averageScore"
+                    class="text-3xl font-black text-emerald-700 mt-2">
+                    0%
+                </p>
+
+            </div>
+
+
+            <div class="bg-white border rounded-2xl p-5">
+
+                <p class="text-sm text-slate-500">
+                    أعلى درجة
+                </p>
+
+                <p
+                    id="bestScore"
+                    class="text-3xl font-black text-emerald-700 mt-2">
+                    0%
+                </p>
+
+            </div>
+
+
+            <div class="bg-white border rounded-2xl p-5">
+
+                <p class="text-sm text-slate-500">
+                    المواد
+                </p>
+
+                <p
+                    id="subjectCount"
+                    class="text-3xl font-black text-emerald-700 mt-2">
+                    0
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="bg-white border rounded-3xl p-6 mt-8">
+
+            <h3 class="text-2xl font-black mb-6">
+                📊 تقدمي الدراسي
+            </h3>
+
+            <div id="progressContainer">
+            </div>
+
+        </div>
+
+
+        <!-- RESULTS -->
+
+        <div class="bg-white border rounded-3xl p-6 mt-8">
+
+            <h3 class="text-2xl font-black mb-6">
+                📝 نتائج الاختبارات
+            </h3>
+
+            <div id="resultsContainer">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LOGIN MODAL ================= -->
 
 <div
-id="loginModal"
-class="modal fixed inset-0 bg-black/60 items-center justify-center z-50 px-4">
+    id="loginModal"
+    class="hidden fixed inset-0 bg-black/60 z-[100] items-center justify-center px-4">
 
-<div class="bg-white rounded-3xl p-7 w-full max-w-md">
+    <div class="bg-white rounded-3xl p-7 w-full max-w-md">
 
-<div class="flex justify-between items-center mb-6">
+        <div class="flex items-center justify-between">
 
-<h2 class="text-2xl font-black">
-تسجيل الدخول
-</h2>
+            <h2 class="text-2xl font-black">
+                تسجيل الدخول
+            </h2>
 
-<button
-onclick="closeLogin()"
-class="text-2xl">
-×
-</button>
+            <button
+                onclick="closeLogin()"
+                class="text-2xl">
+                ×
+            </button>
 
-</div>
+        </div>
 
-<label class="block font-bold mb-2">
-البريد الإلكتروني
-</label>
 
-<input
-id="email"
-type="email"
-placeholder="البريد الإلكتروني"
-class="w-full border rounded-xl px-4 py-3 mb-5">
+        <input
+            id="emailInput"
+            type="email"
+            placeholder="البريد الإلكتروني"
+            class="w-full mt-7 border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500">
 
-<label class="block font-bold mb-2">
-كلمة المرور
-</label>
 
-<input
-id="password"
-type="password"
-placeholder="كلمة المرور"
-class="w-full border rounded-xl px-4 py-3 mb-5">
+        <input
+            id="passwordInput"
+            type="password"
+            placeholder="كلمة المرور"
+            class="w-full mt-4 border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500">
 
-<button
-onclick="login()"
-class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black">
-دخول
-</button>
 
-<p
-id="loginMessage"
-class="text-center mt-4 font-bold">
-</p>
+        <button
+            onclick="login()"
+            class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black mt-5">
+            دخول
+        </button>
+
+
+        <p
+            id="loginMessage"
+            class="text-center text-sm mt-4">
+        </p>
+
+    </div>
 
 </div>
+
+
+<!-- ================= QUIZ MODAL ================= -->
+
+<div
+    id="quizModal"
+    class="hidden fixed inset-0 bg-black/60 z-[100] overflow-y-auto px-4 py-8">
+
+    <div class="bg-white rounded-3xl p-7 w-full max-w-2xl mx-auto">
+
+        <div class="flex items-center justify-between">
+
+            <h2
+                id="quizTitle"
+                class="text-2xl font-black">
+            </h2>
+
+            <button
+                onclick="closeQuiz()"
+                class="text-2xl">
+                ×
+            </button>
+
+        </div>
+
+        <div id="quizQuestions" class="mt-7"></div>
+
+        <button
+            onclick="submitQuiz()"
+            class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black mt-7">
+            إنهاء الاختبار
+        </button>
+
+        <div
+            id="quizResult"
+            class="text-center font-black text-xl mt-5">
+        </div>
+
+    </div>
+
 </div>
 
 
 <script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://fxezbarpvidzskcaaxnt.supabase.co";
@@ -283,16 +436,61 @@ supabase.createClient(
     SUPABASE_PUBLISHABLE_KEY
 );
 
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
 let currentUser = null;
+
 let currentSubject = null;
+
 let currentQuiz = null;
+
 let currentQuestions = [];
-let selectedAnswers = {};
 
 
-// =========================
-// AUTH UI
-// =========================
+/* =====================================================
+   SUBJECT ICONS
+===================================================== */
+
+function getSubjectIcon(name){
+
+    if(name.includes("قرآن")) return "📖";
+
+    if(name.includes("شرعية")) return "🕌";
+
+    if(name.includes("عربي")) return "📚";
+
+    if(name.includes("فيزياء")) return "⚡";
+
+    if(name.includes("كيمياء")) return "🧪";
+
+    if(name.includes("أحياء")) return "🧬";
+
+    if(name.includes("English")) return "🇬🇧";
+
+    if(name.includes("رياضيات")) return "📐";
+
+    return "📘";
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
+
+async function checkUser(){
+
+    const { data } =
+        await supabaseClient.auth.getSession();
+
+    currentUser =
+        data.session?.user || null;
+
+    await updateAuthUI();
+}
+
 
 async function updateAuthUI(){
 
@@ -303,8 +501,8 @@ async function updateAuthUI(){
 
         authArea.innerHTML = `
             <button
-            onclick="openLogin()"
-            class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+                onclick="openLogin()"
+                class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
                 تسجيل الدخول
             </button>
         `;
@@ -312,26 +510,33 @@ async function updateAuthUI(){
         return;
     }
 
+
     let studentName =
         currentUser.email || "الطالب";
 
-    const {
-        data:profile
-    } = await supabaseClient
+
+    const { data: profile } =
+        await supabaseClient
         .from("profiles")
         .select("name")
-        .eq("id",currentUser.id)
+        .eq("id", currentUser.id)
         .maybeSingle();
 
+
     if(profile && profile.name){
-        studentName = profile.name;
+
+        studentName =
+            profile.name;
+
     }
+
 
     authArea.innerHTML = `
 
         <div class="flex items-center gap-2">
 
             <div class="hidden sm:block text-right">
+
                 <div class="text-xs text-slate-500">
                     مرحبًا بك
                 </div>
@@ -339,157 +544,151 @@ async function updateAuthUI(){
                 <div class="font-black text-emerald-700">
                     👤 ${studentName}
                 </div>
+
             </div>
 
             <button
-            onclick="logout()"
-            class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
+                onclick="openStudentPage()"
+                class="bg-slate-100 px-4 py-2 rounded-xl font-bold">
+                👨‍🎓 حسابي
+            </button>
+
+            <button
+                onclick="logout()"
+                class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
                 🚪 خروج
             </button>
 
         </div>
+
     `;
 }
 
 
-// =========================
-// LOGIN
-// =========================
+/* =====================================================
+   LOGIN
+===================================================== */
 
 function openLogin(){
 
-    document
-        .getElementById("loginModal")
-        .classList.add("active");
+    const modal =
+        document.getElementById("loginModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
 }
+
 
 function closeLogin(){
 
-    document
-        .getElementById("loginModal")
-        .classList.remove("active");
+    const modal =
+        document.getElementById("loginModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
 }
+
 
 async function login(){
 
     const email =
-        document.getElementById("email").value.trim();
+        document.getElementById("emailInput").value.trim();
 
     const password =
-        document.getElementById("password").value;
+        document.getElementById("passwordInput").value;
 
     const message =
         document.getElementById("loginMessage");
 
+
     if(!email || !password){
 
         message.textContent =
-            "⚠️ اكتب البريد الإلكتروني وكلمة المرور";
+            "من فضلك أدخل البريد وكلمة المرور.";
 
         message.className =
-            "text-center mt-4 font-bold text-red-600";
+            "text-center text-sm mt-4 text-red-600";
 
         return;
     }
+
 
     message.textContent =
         "جاري تسجيل الدخول...";
 
     message.className =
-        "text-center mt-4 font-bold text-blue-600";
+        "text-center text-sm mt-4 text-slate-500";
 
-    const {
-        data,
-        error
-    } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-    });
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+
+            password: password
+
+        });
+
 
     if(error){
 
         message.textContent =
-            "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
+            "البريد أو كلمة المرور غير صحيحة.";
 
         message.className =
-            "text-center mt-4 font-bold text-red-600";
+            "text-center text-sm mt-4 text-red-600";
 
         return;
     }
 
-    currentUser = data.user;
+
+    currentUser =
+        data.user;
+
 
     await updateAuthUI();
 
-    message.textContent =
-        "✅ تم تسجيل الدخول بنجاح";
+    closeLogin();
 
-    message.className =
-        "text-center mt-4 font-bold text-green-600";
+    openStudentPage();
 
-    setTimeout(() => {
-
-        closeLogin();
-
-        alert(
-            "مرحبًا بك 👋\nتم تسجيل الدخول بنجاح."
-        );
-
-    },700);
 }
 
 
-// =========================
-// LOGOUT
-// =========================
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 async function logout(){
 
-    const {
-        error
-    } = await supabaseClient.auth.signOut();
+    const { error } =
+        await supabaseClient.auth.signOut();
+
 
     if(error){
 
-        alert("حدث خطأ أثناء تسجيل الخروج");
+        alert("حدث خطأ أثناء تسجيل الخروج.");
+
         return;
     }
+
 
     currentUser = null;
 
     await updateAuthUI();
 
+    backHome();
+
     alert("تم تسجيل الخروج بنجاح 👋");
+
 }
 
 
-// =========================
-// CHECK USER
-// =========================
-
-async function checkUser(){
-
-    const {
-        data
-    } = await supabaseClient.auth.getUser();
-
-    if(data && data.user){
-
-        currentUser = data.user;
-
-    }else{
-
-        currentUser = null;
-
-    }
-
-    await updateAuthUI();
-}
-
-
-// =========================
-// AUTH STATE LISTENER
-// =========================
+/* =====================================================
+   AUTH STATE
+===================================================== */
 
 supabaseClient.auth.onAuthStateChange(
     async (event, session) => {
@@ -501,736 +700,518 @@ supabaseClient.auth.onAuthStateChange(
             () => updateAuthUI(),
             0
         );
+
     }
 );
 
 
-// =========================
-// SUBJECTS
-// =========================
+/* =====================================================
+   LOAD SUBJECTS
+===================================================== */
 
 async function loadSubjects(){
 
     const container =
         document.getElementById("subjectsContainer");
 
-    const {
-        data,
-        error
-    } = await supabaseClient
+
+    container.innerHTML = `
+        <div class="col-span-full text-center text-slate-500">
+            جاري تحميل المواد...
+        </div>
+    `;
+
+
+    const { data, error } =
+        await supabaseClient
         .from("subjects")
         .select("*")
         .order("id");
 
+
     if(error){
 
-        container.innerHTML =
-        `<div class="text-red-600 col-span-full text-center">
-        حدث خطأ أثناء تحميل المواد
-        </div>`;
+        container.innerHTML = `
+            <div class="col-span-full text-center text-red-600">
+                حدث خطأ أثناء تحميل المواد.
+            </div>
+        `;
 
         return;
     }
 
-    if(!data || data.length === 0){
 
-        container.innerHTML =
-        `<div class="text-center col-span-full">
-        لا توجد مواد حاليًا
-        </div>`;
+    document.getElementById("subjectCount").textContent =
+        data.length;
 
-        return;
-    }
 
     container.innerHTML = "";
 
+
     data.forEach(subject => {
 
-        let icon = "📚";
+        const card =
+            document.createElement("div");
 
-        if(subject.name.includes("القرآن"))
-            icon = "📖";
 
-        else if(subject.name.includes("شرعية"))
-            icon = "🕌";
+        card.className =
+            "subject-card bg-white border rounded-3xl p-6 shadow-sm cursor-pointer";
 
-        else if(subject.name.includes("العربية"))
-            icon = "📚";
 
-        else if(subject.name.includes("الفيزياء"))
-            icon = "⚡";
+        card.onclick =
+            () => openSubject(subject);
 
-        else if(subject.name.includes("الكيمياء"))
-            icon = "🧪";
 
-        else if(subject.name.includes("الأحياء"))
-            icon = "🧬";
+        card.innerHTML = `
 
-        else if(subject.name.includes("English"))
-            icon = "🇬🇧";
-
-        else if(subject.name.includes("الرياضيات"))
-            icon = "📐";
-
-        container.innerHTML += `
-
-        <div class="bg-white rounded-3xl p-7 shadow-sm border
-        hover:shadow-lg transition">
-
-            <div class="text-5xl mb-5">
-                ${icon}
+            <div class="text-5xl">
+                ${getSubjectIcon(subject.name)}
             </div>
 
-            <h3 class="text-2xl font-black mb-3">
+            <h3 class="text-xl font-black mt-5">
                 ${subject.name}
             </h3>
 
-            <p class="text-slate-500 mb-6">
-                ${subject.description || ""}
+            <p class="text-sm text-slate-500 mt-2 leading-6">
+                ${subject.description || "محتوى تعليمي متكامل"}
             </p>
 
-            <button
-            onclick="openSubject(${subject.id})"
-            class="w-full bg-emerald-600 text-white py-3
-            rounded-xl font-black">
-
-                دخول المادة
-
-            </button>
-
-        </div>
+            <div class="mt-5 text-emerald-600 font-bold">
+                دخول المادة ←
+            </div>
 
         `;
 
+
+        container.appendChild(card);
+
     });
 
 }
 
 
-// =========================
-// OPEN SUBJECT
-// =========================
+/* =====================================================
+   OPEN SUBJECT
+===================================================== */
 
-async function openSubject(subjectId){
+async function openSubject(subject){
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("subjects")
-        .select("*")
-        .eq("id",subjectId)
-        .single();
+    currentSubject =
+        subject;
 
-    if(error){
 
-        alert("حدث خطأ أثناء فتح المادة");
-        return;
-    }
+    document.getElementById("homePage")
+        .classList.add("hidden-section");
 
-    currentSubject = data;
 
-    document.getElementById(
-        "currentSubjectTitle"
-    ).textContent =
-        currentSubject.name;
+    document.getElementById("studentPage")
+        .classList.add("hidden-section");
 
-    document.getElementById(
-        "subjectSection"
-    ).classList.remove("hidden");
 
-    document.getElementById(
-        "subjectSection"
-    ).scrollIntoView({
-        behavior:"smooth"
-    });
+    document.getElementById("subjectPage")
+        .classList.remove("hidden-section");
 
-    showTab("lessons");
+
+    document.getElementById("subjectTitle")
+        .textContent =
+        subject.name;
+
+
+    document.getElementById("subjectDescription")
+        .textContent =
+        subject.description || "";
+
+
+    await loadLessons(subject.id);
+
+    await loadQuizzes(subject.id);
+
 }
 
 
-// =========================
-// CLOSE SUBJECT
-// =========================
+/* =====================================================
+   LOAD LESSONS
+===================================================== */
 
-function closeSubject(){
+async function loadLessons(subjectId){
 
-    document.getElementById(
-        "subjectSection"
-    ).classList.add("hidden");
-
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
-}
+    const container =
+        document.getElementById("lessonsContainer");
 
 
-// =========================
-// TABS
-// =========================
-
-function showTab(tab){
-
-    if(!currentSubject) return;
-
-    if(tab === "lessons")
-        loadLessons();
-
-    if(tab === "videos")
-        loadVideos();
-
-    if(tab === "quizzes")
-        loadQuizzes();
-}
+    container.innerHTML = `
+        <div class="text-slate-500">
+            جاري تحميل الدروس...
+        </div>
+    `;
 
 
-// =========================
-// LESSONS
-// =========================
-
-async function loadLessons(){
-
-    const area =
-        document.getElementById("contentArea");
-
-    area.innerHTML =
-    `<div class="text-center py-8">
-    جاري تحميل الدروس...
-    </div>`;
-
-    const {
-        data,
-        error
-    } = await supabaseClient
+    const { data, error } =
+        await supabaseClient
         .from("lessons")
         .select("*")
-        .eq("subject_id",currentSubject.id)
+        .eq("subject_id", subjectId)
         .order("id");
+
 
     if(error){
 
-        area.innerHTML =
-        `<p class="text-red-600">
-        حدث خطأ أثناء تحميل الدروس
-        </p>`;
+        container.innerHTML =
+            `<p class="text-red-600">حدث خطأ.</p>`;
 
         return;
     }
 
-    if(!data || data.length === 0){
 
-        area.innerHTML =
-        `<div class="bg-slate-50 rounded-2xl p-8 text-center">
-        لا توجد دروس لهذه المادة حتى الآن.
-        </div>`;
+    if(!data.length){
+
+        container.innerHTML =
+            `<p class="text-slate-500">لا توجد دروس حاليًا.</p>`;
 
         return;
     }
 
-    area.innerHTML =
-    `<div class="grid md:grid-cols-2 gap-5"></div>`;
 
-    const grid =
-        area.firstElementChild;
+    container.innerHTML = "";
+
 
     data.forEach(lesson => {
 
-        grid.innerHTML += `
+        const card =
+            document.createElement("div");
 
-        <div class="border rounded-2xl p-6">
 
-            <h3 class="text-xl font-black mb-2">
+        card.className =
+            "bg-white border rounded-2xl p-5";
+
+
+        card.innerHTML = `
+
+            <div class="text-3xl">
+                🎥
+            </div>
+
+            <h4 class="font-black text-lg mt-3">
                 ${lesson.title}
-            </h3>
+            </h4>
 
-            <p class="text-slate-500 mb-5">
+            <p class="text-sm text-slate-500 mt-2">
                 ${lesson.description || ""}
             </p>
 
             ${
                 lesson.video_url
                 ?
-                `<a href="${lesson.video_url}"
-                target="_blank"
-                class="inline-block bg-red-600 text-white
-                px-5 py-2 rounded-xl font-bold">
-                ▶️ مشاهدة الدرس
-                </a>`
+                `
+                <a
+                    href="${lesson.video_url}"
+                    target="_blank"
+                    class="inline-block mt-4 bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+                    ▶ مشاهدة الفيديو
+                </a>
+                `
                 :
                 ""
             }
 
-        </div>
-
         `;
+
+
+        container.appendChild(card);
+
     });
+
 }
 
 
-// =========================
-// VIDEOS
-// =========================
+/* =====================================================
+   LOAD QUIZZES
+===================================================== */
 
-async function loadVideos(){
+async function loadQuizzes(subjectId){
 
-    const area =
-        document.getElementById("contentArea");
+    const container =
+        document.getElementById("quizzesContainer");
 
-    area.innerHTML =
-    `<div class="text-center py-8">
-    جاري تحميل الفيديوهات...
-    </div>`;
 
-    const {
-        data:lessons,
-        error:lessonError
-    } = await supabaseClient
-        .from("lessons")
-        .select("id")
-        .eq("subject_id",currentSubject.id);
-
-    if(lessonError){
-
-        area.innerHTML =
-        `<p class="text-red-600">
-        حدث خطأ أثناء تحميل الفيديوهات
-        </p>`;
-
-        return;
-    }
-
-    if(!lessons || lessons.length === 0){
-
-        area.innerHTML =
-        `<div class="text-center py-8">
-        لا توجد فيديوهات حاليًا.
-        </div>`;
-
-        return;
-    }
-
-    const lessonIds =
-        lessons.map(item => item.id);
-
-    const {
-        data:videos,
-        error
-    } = await supabaseClient
-        .from("videos")
-        .select("*")
-        .in("lesson_id",lessonIds)
-        .order("id");
-
-    if(error){
-
-        area.innerHTML =
-        `<p class="text-red-600">
-        حدث خطأ أثناء تحميل الفيديوهات
-        </p>`;
-
-        return;
-    }
-
-    if(!videos || videos.length === 0){
-
-        area.innerHTML =
-        `<div class="text-center py-8">
-        لا توجد فيديوهات حاليًا.
-        </div>`;
-
-        return;
-    }
-
-    area.innerHTML =
-    `<div class="grid md:grid-cols-2 gap-5"></div>`;
-
-    const grid =
-        area.firstElementChild;
-
-    videos.forEach(video => {
-
-        grid.innerHTML += `
-
-        <div class="border rounded-2xl p-6">
-
-            <div class="text-4xl mb-4">
-                🎥
-            </div>
-
-            <h3 class="text-xl font-black mb-5">
-                ${video.title}
-            </h3>
-
-            <a href="${video.video_url}"
-            target="_blank"
-            class="inline-block bg-blue-600 text-white
-            px-5 py-2 rounded-xl font-bold">
-            ▶️ مشاهدة الفيديو
-            </a>
-
+    container.innerHTML = `
+        <div class="text-slate-500">
+            جاري تحميل الاختبارات...
         </div>
-
-        `;
-    });
-}
+    `;
 
 
-// =========================
-// QUIZZES
-// =========================
-
-async function loadQuizzes(){
-
-    const area =
-        document.getElementById("contentArea");
-
-    area.innerHTML =
-    `<div class="text-center py-8">
-    جاري تحميل الاختبارات...
-    </div>`;
-
-    const {
-        data,
-        error
-    } = await supabaseClient
+    const { data, error } =
+        await supabaseClient
         .from("quizzes")
         .select("*")
-        .eq("subject_id",currentSubject.id)
+        .eq("subject_id", subjectId)
         .order("id");
+
 
     if(error){
 
-        area.innerHTML =
-        `<p class="text-red-600">
-        حدث خطأ أثناء تحميل الاختبارات
-        </p>`;
+        container.innerHTML =
+            `<p class="text-red-600">حدث خطأ.</p>`;
 
         return;
     }
 
-    if(!data || data.length === 0){
 
-        area.innerHTML =
-        `<div class="text-center py-8">
-        لا توجد اختبارات حاليًا.
-        </div>`;
+    if(!data.length){
+
+        container.innerHTML =
+            `<p class="text-slate-500">لا توجد اختبارات حاليًا.</p>`;
 
         return;
     }
 
-    area.innerHTML =
-    `<div class="grid md:grid-cols-2 gap-5"></div>`;
 
-    const grid =
-        area.firstElementChild;
+    container.innerHTML = "";
+
 
     data.forEach(quiz => {
 
-        grid.innerHTML += `
+        const card =
+            document.createElement("div");
 
-        <div class="border rounded-2xl p-6">
 
-            <div class="text-4xl mb-4">
+        card.className =
+            "bg-white border rounded-2xl p-5";
+
+
+        card.innerHTML = `
+
+            <div class="text-3xl">
                 📝
             </div>
 
-            <h3 class="text-xl font-black mb-2">
+            <h4 class="font-black text-lg mt-3">
                 ${quiz.title}
-            </h3>
+            </h4>
 
-            <p class="text-slate-500 mb-5">
+            <p class="text-sm text-slate-500 mt-2">
                 ${quiz.description || ""}
             </p>
 
             <button
-            onclick="startQuiz(${quiz.id})"
-            class="bg-purple-600 text-white
-            px-5 py-2 rounded-xl font-bold">
-
-            بدء الاختبار
-
+                onclick="startQuiz(${quiz.id})"
+                class="mt-4 bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
+                بدء الاختبار
             </button>
 
-        </div>
-
         `;
+
+
+        container.appendChild(card);
+
     });
+
 }
 
 
-// =========================
-// START QUIZ
-// =========================
+/* =====================================================
+   START QUIZ
+===================================================== */
 
 async function startQuiz(quizId){
 
-    await checkUser();
-
     if(!currentUser){
 
         openLogin();
 
-        document.getElementById(
-            "loginMessage"
-        ).textContent =
-        "🔐 يجب تسجيل الدخول أولًا لبدء الاختبار.";
-
         return;
     }
 
-    const {
-        data:quiz,
-        error:quizError
-    } = await supabaseClient
+
+    const { data: quiz } =
+        await supabaseClient
         .from("quizzes")
         .select("*")
-        .eq("id",quizId)
+        .eq("id", quizId)
         .single();
 
-    if(quizError){
 
-        alert("حدث خطأ أثناء تحميل الاختبار");
+    if(!quiz){
+
+        alert("تعذر تحميل الاختبار.");
+
         return;
     }
 
-    const {
-        data:questions,
-        error:questionError
-    } = await supabaseClient
+
+    const { data: questions, error } =
+        await supabaseClient
         .from("questions")
         .select("*")
-        .eq("quiz_id",quizId)
+        .eq("quiz_id", quizId)
         .order("id");
 
-    if(questionError){
 
-        alert("حدث خطأ أثناء تحميل الأسئلة");
-        return;
-    }
+    if(error || !questions.length){
 
-    currentQuiz = quiz;
-    currentQuestions = questions || [];
-    selectedAnswers = {};
-
-    renderQuiz();
-}
-
-
-// =========================
-// RENDER QUIZ
-// =========================
-
-function renderQuiz(){
-
-    const area =
-        document.getElementById("contentArea");
-
-    if(currentQuestions.length === 0){
-
-        area.innerHTML =
-        `<div class="text-center py-8">
-        لا توجد أسئلة في هذا الاختبار.
-        </div>`;
+        alert("لا توجد أسئلة في هذا الاختبار.");
 
         return;
     }
 
-    area.innerHTML = `
 
-    <div class="max-w-3xl mx-auto">
+    currentQuiz =
+        quiz;
 
-        <div class="mb-8">
+    currentQuestions =
+        questions;
 
-            <h2 class="text-3xl font-black mb-2">
-                ${currentQuiz.title}
-            </h2>
 
-            <p class="text-slate-500">
-                أجب عن جميع الأسئلة ثم اضغط إنهاء الاختبار.
-            </p>
+    document.getElementById("quizTitle")
+        .textContent =
+        quiz.title;
 
-        </div>
-
-        <div id="questionsContainer"></div>
-
-        <button
-        onclick="submitQuiz()"
-        class="w-full bg-emerald-600 text-white
-        py-4 rounded-xl font-black mt-8">
-
-        إنهاء الاختبار
-
-        </button>
-
-        <div id="quizResult" class="mt-6"></div>
-
-    </div>
-
-    `;
 
     const container =
-        document.getElementById(
-            "questionsContainer"
-        );
+        document.getElementById("quizQuestions");
 
-    currentQuestions.forEach(
-        (question,index) => {
 
-        container.innerHTML += `
+    container.innerHTML = "";
 
-        <div class="border rounded-2xl p-6 mb-5">
 
-            <h3 class="font-black text-lg mb-5">
-                ${index+1}. ${question.question_text}
+    questions.forEach((question, index) => {
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "border rounded-2xl p-5 mb-5";
+
+
+        div.innerHTML = `
+
+            <h3 class="font-black leading-7">
+                ${index + 1}. ${question.question_text}
             </h3>
 
-            <div class="space-y-3">
+            <div class="mt-4 space-y-2">
 
-                ${createOption(
-                    question.id,
-                    "A",
-                    question.option_a
-                )}
+                ${makeOption(question.id, "A", question.option_a)}
 
-                ${createOption(
-                    question.id,
-                    "B",
-                    question.option_b
-                )}
+                ${makeOption(question.id, "B", question.option_b)}
 
-                ${createOption(
-                    question.id,
-                    "C",
-                    question.option_c
-                )}
+                ${makeOption(question.id, "C", question.option_c)}
 
-                ${createOption(
-                    question.id,
-                    "D",
-                    question.option_d
-                )}
+                ${makeOption(question.id, "D", question.option_d)}
 
             </div>
 
-        </div>
-
         `;
+
+
+        container.appendChild(div);
+
     });
+
+
+    document.getElementById("quizResult")
+        .textContent = "";
+
+
+    const modal =
+        document.getElementById("quizModal");
+
+
+    modal.classList.remove("hidden");
+
 }
 
 
-// =========================
-// OPTION
-// =========================
-
-function createOption(
-    questionId,
-    letter,
-    text
-){
+function makeOption(questionId, value, text){
 
     return `
 
-    <button
-    id="option-${questionId}-${letter}"
-    onclick="selectAnswer(${questionId},'${letter}')"
-    class="w-full text-right border rounded-xl
-    px-4 py-3 hover:bg-slate-50">
+        <label
+            class="flex items-center gap-3 border rounded-xl p-3 cursor-pointer hover:bg-slate-50">
 
-        <span class="font-black">
-        ${letter})
-        </span>
+            <input
+                type="radio"
+                name="question_${questionId}"
+                value="${value}">
 
-        ${text}
+            <span>
+                ${value}) ${text}
+            </span>
 
-    </button>
+        </label>
 
     `;
+
 }
 
 
-// =========================
-// SELECT ANSWER
-// =========================
-
-function selectAnswer(
-    questionId,
-    answer
-){
-
-    selectedAnswers[questionId] =
-        answer;
-
-    ["A","B","C","D"].forEach(letter => {
-
-        const button =
-            document.getElementById(
-                `option-${questionId}-${letter}`
-            );
-
-        if(button){
-
-            button.classList.remove(
-                "bg-emerald-100",
-                "border-emerald-500"
-            );
-        }
-    });
-
-    const selected =
-        document.getElementById(
-            `option-${questionId}-${answer}`
-        );
-
-    if(selected){
-
-        selected.classList.add(
-            "bg-emerald-100",
-            "border-emerald-500"
-        );
-    }
-}
-
-
-// =========================
-// SUBMIT QUIZ
-// =========================
+/* =====================================================
+   SUBMIT QUIZ
+===================================================== */
 
 async function submitQuiz(){
 
-    await checkUser();
-
     if(!currentUser){
 
-        openLogin();
+        alert("يجب تسجيل الدخول أولًا.");
+
         return;
     }
 
+
     let score = 0;
+
+    let answered = 0;
+
 
     currentQuestions.forEach(question => {
 
-        if(
-            selectedAnswers[question.id]
-            === question.correct_answer
-        ){
+        const selected =
+            document.querySelector(
+                `input[name="question_${question.id}"]:checked`
+            );
 
-            score++;
+
+        if(selected){
+
+            answered++;
+
+            if(
+                selected.value ===
+                question.correct_answer
+            ){
+
+                score++;
+
+            }
+
         }
+
     });
+
+
+    if(answered < currentQuestions.length){
+
+        alert("من فضلك أجب عن جميع الأسئلة.");
+
+        return;
+    }
+
 
     const total =
         currentQuestions.length;
 
-    const percentage =
-        total > 0
-        ? Math.round((score / total) * 100)
-        : 0;
 
-    const {
-        error
-    } = await supabaseClient
+    const percentage =
+        Math.round(
+            (score / total) * 100
+        );
+
+
+    const { error } =
+        await supabaseClient
         .from("quiz_results")
         .insert({
 
@@ -1246,55 +1227,454 @@ async function submitQuiz(){
 
         });
 
-    const result =
-        document.getElementById("quizResult");
 
     if(error){
 
-        result.innerHTML = `
+        document.getElementById("quizResult")
+            .textContent =
+            "تم التصحيح لكن لم يتم حفظ النتيجة.";
 
-        <div class="bg-red-50 text-red-700
-        rounded-2xl p-6 font-bold">
+        return;
+    }
 
-        ❌ حدث خطأ أثناء حفظ النتيجة.
 
-        </div>
+    document.getElementById("quizResult")
+        .innerHTML = `
+
+            <div class="bg-emerald-50 text-emerald-700 rounded-2xl p-5">
+
+                🎉 تم إنهاء الاختبار
+
+                <div class="text-4xl font-black mt-3">
+                    ${percentage}%
+                </div>
+
+                <div class="text-base mt-2">
+                    ${score} من ${total}
+                </div>
+
+            </div>
+
+        `;
+
+}
+
+
+/* =====================================================
+   CLOSE QUIZ
+===================================================== */
+
+function closeQuiz(){
+
+    document.getElementById("quizModal")
+        .classList.add("hidden");
+
+}
+
+
+/* =====================================================
+   STUDENT PAGE
+===================================================== */
+
+async function openStudentPage(){
+
+    if(!currentUser){
+
+        openLogin();
+
+        return;
+    }
+
+
+    document.getElementById("homePage")
+        .classList.add("hidden-section");
+
+
+    document.getElementById("subjectPage")
+        .classList.add("hidden-section");
+
+
+    document.getElementById("studentPage")
+        .classList.remove("hidden-section");
+
+
+    await loadStudentDashboard();
+
+}
+
+
+/* =====================================================
+   STUDENT DASHBOARD
+===================================================== */
+
+async function loadStudentDashboard(){
+
+    document.getElementById("studentEmail")
+        .textContent =
+        currentUser.email;
+
+
+    let studentName =
+        "الطالب";
+
+
+    const { data: profile } =
+        await supabaseClient
+        .from("profiles")
+        .select("name")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+
+    if(profile?.name){
+
+        studentName =
+            profile.name;
+
+    }
+
+
+    document.getElementById("studentName")
+        .textContent =
+        studentName;
+
+
+    await loadStudentResults();
+
+    await loadStudentProgress();
+
+}
+
+
+/* =====================================================
+   STUDENT RESULTS
+===================================================== */
+
+async function loadStudentResults(){
+
+    const container =
+        document.getElementById("resultsContainer");
+
+
+    const { data, error } =
+        await supabaseClient
+        .from("quiz_results")
+        .select(`
+            id,
+            score,
+            total,
+            percentage,
+            created_at,
+            quizzes (
+                title
+            )
+        `)
+        .eq("user_id", currentUser.id)
+        .order("created_at", {
+            ascending: false
+        });
+
+
+    if(error){
+
+        container.innerHTML =
+            `<p class="text-red-600">تعذر تحميل النتائج.</p>`;
+
+        return;
+    }
+
+
+    const results =
+        data || [];
+
+
+    document.getElementById("quizCount")
+        .textContent =
+        results.length;
+
+
+    if(!results.length){
+
+        document.getElementById("averageScore")
+            .textContent =
+            "0%";
+
+
+        document.getElementById("bestScore")
+            .textContent =
+            "0%";
+
+
+        container.innerHTML = `
+
+            <div class="text-center py-8 text-slate-500">
+
+                لم تؤد أي اختبار حتى الآن.
+
+            </div>
 
         `;
 
         return;
     }
 
-    result.innerHTML = `
 
-    <div class="bg-emerald-50 text-emerald-700
-    rounded-2xl p-6 text-center">
+    const totalPercentage =
+        results.reduce(
+            (sum, item) =>
+                sum + Number(item.percentage || 0),
+            0
+        );
 
-        <div class="text-4xl mb-3">
-        🎉
-        </div>
 
-        <div class="text-2xl font-black">
-        نتيجتك: ${score} / ${total}
-        </div>
+    const average =
+        Math.round(
+            totalPercentage / results.length
+        );
 
-        <div class="text-xl font-bold mt-2">
-        النسبة: ${percentage}%
-        </div>
 
-        <div class="mt-3 font-bold">
-        ✅ تم حفظ نتيجتك في حسابك
-        </div>
+    const best =
+        Math.max(
+            ...results.map(
+                item =>
+                    Number(item.percentage || 0)
+            )
+        );
 
-    </div>
 
-    `;
+    document.getElementById("averageScore")
+        .textContent =
+        `${average}%`;
+
+
+    document.getElementById("bestScore")
+        .textContent =
+        `${best}%`;
+
+
+    container.innerHTML = "";
+
+
+    results.forEach(result => {
+
+        const date =
+            new Date(result.created_at)
+            .toLocaleDateString("ar-EG");
+
+
+        const title =
+            result.quizzes?.title ||
+            "اختبار";
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "border rounded-2xl p-5 mb-3";
+
+
+        div.innerHTML = `
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+
+                <div>
+
+                    <h4 class="font-black">
+                        ${title}
+                    </h4>
+
+                    <p class="text-sm text-slate-500 mt-1">
+                        ${date}
+                    </p>
+
+                </div>
+
+                <div class="text-left">
+
+                    <div class="text-2xl font-black text-emerald-700">
+                        ${result.percentage}%
+                    </div>
+
+                    <div class="text-sm text-slate-500">
+                        ${result.score} / ${result.total}
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
 }
 
 
-// =========================
-// START
-// =========================
+/* =====================================================
+   STUDENT PROGRESS
+===================================================== */
+
+async function loadStudentProgress(){
+
+    const container =
+        document.getElementById("progressContainer");
+
+
+    const { data, error } =
+        await supabaseClient
+        .from("student_progress")
+        .select(`
+            id,
+            completed_lessons,
+            completed_quizzes,
+            progress_percentage,
+            subjects (
+                name
+            )
+        `)
+        .eq("user_id", currentUser.id)
+        .order("id");
+
+
+    if(error){
+
+        container.innerHTML = `
+            <p class="text-slate-500">
+                لا توجد بيانات تقدم مسجلة حتى الآن.
+            </p>
+        `;
+
+        return;
+    }
+
+
+    if(!data || !data.length){
+
+        container.innerHTML = `
+
+            <div class="text-center py-8 text-slate-500">
+
+                لم يبدأ تسجيل تقدمك الدراسي بعد.
+
+                <p class="text-sm mt-2">
+                    سيظهر تقدمك هنا مع تطوير المنصة.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    data.forEach(item => {
+
+        const progress =
+            Number(
+                item.progress_percentage || 0
+            );
+
+
+        const subjectName =
+            item.subjects?.name ||
+            "مادة";
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "mb-6";
+
+
+        div.innerHTML = `
+
+            <div class="flex justify-between mb-2">
+
+                <span class="font-bold">
+                    ${subjectName}
+                </span>
+
+                <span class="font-black text-emerald-700">
+                    ${progress}%
+                </span>
+
+            </div>
+
+            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+
+                <div
+                    class="h-full bg-emerald-600 rounded-full"
+                    style="width:${Math.min(progress,100)}%">
+                </div>
+
+            </div>
+
+            <div class="text-xs text-slate-500 mt-2">
+
+                دروس مكتملة:
+                ${item.completed_lessons || 0}
+
+                |
+
+                اختبارات مكتملة:
+                ${item.completed_quizzes || 0}
+
+            </div>
+
+        `;
+
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSubjects(){
+
+    document.getElementById("subjectsSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+function backHome(){
+
+    document.getElementById("subjectPage")
+        .classList.add("hidden-section");
+
+
+    document.getElementById("studentPage")
+        .classList.add("hidden-section");
+
+
+    document.getElementById("homePage")
+        .classList.remove("hidden-section");
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -1310,4 +1690,4 @@ document.addEventListener(
 </script>
 
 </body>
-  </html>
+    </html>
