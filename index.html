@@ -43,7 +43,6 @@
 
       <span id="userName" class="hidden text-sm font-bold text-slate-600"></span>
 
-      <!-- زر لوحة الدكتور -->
       <button
         id="doctorDashboardBtn"
         onclick="showDoctorDashboard()"
@@ -208,7 +207,8 @@
   </div>
 
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+  <!-- الإحصائيات -->
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">
 
     <div class="bg-white border rounded-2xl p-5">
       <div class="text-slate-500 text-sm">إجمالي المواد</div>
@@ -226,6 +226,11 @@
     </div>
 
     <div class="bg-white border rounded-2xl p-5">
+      <div class="text-slate-500 text-sm">الصور</div>
+      <div id="statImages" class="text-3xl font-black mt-2">0</div>
+    </div>
+
+    <div class="bg-white border rounded-2xl p-5">
       <div class="text-slate-500 text-sm">المواد الدراسية</div>
       <div id="statSubjects" class="text-3xl font-black mt-2">0</div>
     </div>
@@ -233,6 +238,7 @@
   </div>
 
 
+  <!-- رفع محتوى -->
   <div class="bg-white border rounded-3xl p-6 md:p-8 mb-10">
 
     <h3 class="text-2xl font-black mb-6">
@@ -281,6 +287,7 @@
       </div>
 
 
+      <!-- صورة الغلاف -->
       <div>
 
         <label class="block font-bold mb-2">
@@ -293,20 +300,29 @@
           accept="image/*"
           class="w-full border rounded-xl p-3 bg-white">
 
+        <p class="text-xs text-slate-500 mt-2">
+          اختيارية — تظهر كغلاف للمادة.
+        </p>
+
       </div>
 
 
+      <!-- المحتوى الأساسي -->
       <div>
 
         <label class="block font-bold mb-2">
-          الفيديو أو PDF
+          الفيديو أو PDF أو صورة
         </label>
 
         <input
           id="contentFile"
           type="file"
-          accept=".mp4,.webm,.mov,.pdf"
+          accept=".mp4,.webm,.mov,.pdf,image/*"
           class="w-full border rounded-xl p-3 bg-white">
+
+        <p class="text-xs text-slate-500 mt-2">
+          يمكنك رفع فيديو أو PDF أو صورة كمحتوى مستقل.
+        </p>
 
       </div>
 
@@ -325,6 +341,7 @@
   </div>
 
 
+  <!-- إدارة المحتوى -->
   <div class="bg-white border rounded-3xl p-6 md:p-8">
 
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
@@ -354,6 +371,7 @@
 </section>
 
 
+<!-- تسجيل الدخول -->
 <div
   id="loginModal"
   class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
@@ -403,6 +421,7 @@
 </div>
 
 
+<!-- تعديل -->
 <div
   id="editModal"
   class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
@@ -470,10 +489,13 @@ import {
 const SUPABASE_URL =
   "https://fxezbarpvidzskcaaxnt.supabase.co";
 
+
 const SUPABASE_KEY =
   "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
 
-const STORAGE_BUCKET = "Content";
+
+const STORAGE_BUCKET =
+  "Content";
 
 
 const supabase =
@@ -483,7 +505,8 @@ const supabase =
   );
 
 
-window.supabaseClient = supabase;
+window.supabaseClient =
+  supabase;
 
 
 let currentUser = null;
@@ -500,7 +523,10 @@ const diniSubjects = [
 
 function escapeHTML(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
     return "";
   }
 
@@ -514,10 +540,12 @@ function escapeHTML(value) {
 }
 
 
-/* إصلاح روابط Content القديمة */
+/* إصلاح روابط Content القديمة والجديدة */
 function normalizeStorageUrl(url) {
 
-  if (!url) return "";
+  if (!url) {
+    return "";
+  }
 
   return String(url)
     .replace(
@@ -534,22 +562,28 @@ function getStoragePathFromUrl(url) {
   const normalized =
     normalizeStorageUrl(url);
 
+
   const marker =
     `/storage/v1/object/public/${STORAGE_BUCKET}/`;
 
+
   const index =
     normalized.indexOf(marker);
+
 
   if (index === -1) {
     return null;
   }
 
-  return normalized
-    .slice(index + marker.length);
+
+  return normalized.slice(
+    index + marker.length
+  );
 
 }
 
 
+/* تحميل المواد */
 async function loadSubjects() {
 
   const {
@@ -577,6 +611,7 @@ async function loadSubjects() {
 }
 
 
+/* تحديث تسجيل الدخول */
 async function refreshAuth() {
 
   const {
@@ -617,16 +652,20 @@ async function refreshAuth() {
 }
 
 
+/* تحديث الهيدر */
 function updateHeader() {
 
   const loginBtn =
     document.getElementById("loginBtn");
 
+
   const logoutBtn =
     document.getElementById("logoutBtn");
 
+
   const userName =
     document.getElementById("userName");
+
 
   const doctorBtn =
     document.getElementById("doctorDashboardBtn");
@@ -635,27 +674,39 @@ function updateHeader() {
   if (currentUser) {
 
     loginBtn.classList.add("hidden");
+
     logoutBtn.classList.remove("hidden");
+
 
     userName.textContent =
       currentProfile?.name ||
       currentUser.email ||
       "";
 
+
     userName.classList.remove("hidden");
 
 
-    if (currentProfile?.role === "doctor") {
+    if (
+      currentProfile?.role === "doctor"
+    ) {
+
       doctorBtn.classList.remove("hidden");
+
     } else {
+
       doctorBtn.classList.add("hidden");
+
     }
 
   } else {
 
     loginBtn.classList.remove("hidden");
+
     logoutBtn.classList.add("hidden");
+
     userName.classList.add("hidden");
+
     doctorBtn.classList.add("hidden");
 
   }
@@ -663,6 +714,7 @@ function updateHeader() {
 }
 
 
+/* تسجيل الدخول */
 window.openLogin = function() {
 
   document
@@ -689,6 +741,7 @@ window.login = async function() {
       .value
       .trim();
 
+
   const password =
     document
       .getElementById("loginPassword")
@@ -702,16 +755,18 @@ window.login = async function() {
   status.textContent =
     "جاري تسجيل الدخول...";
 
+
   status.className =
     "text-sm font-bold mb-4 text-slate-500";
 
 
   const {
     error
-  } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+  } =
+    await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
 
   if (error) {
@@ -719,8 +774,10 @@ window.login = async function() {
     status.textContent =
       "بيانات الدخول غير صحيحة.";
 
+
     status.className =
       "text-sm font-bold mb-4 text-red-600";
+
 
     return;
 
@@ -729,6 +786,7 @@ window.login = async function() {
 
   status.textContent =
     "تم تسجيل الدخول.";
+
 
   status.className =
     "text-sm font-bold mb-4 text-green-600";
@@ -741,8 +799,13 @@ window.login = async function() {
 
     closeLogin();
 
-    if (currentProfile?.role === "doctor") {
+
+    if (
+      currentProfile?.role === "doctor"
+    ) {
+
       showDoctorDashboard();
+
     }
 
   }, 400);
@@ -750,12 +813,16 @@ window.login = async function() {
 };
 
 
+/* تسجيل الخروج */
 window.logout = async function() {
 
   await supabase.auth.signOut();
 
+
   currentUser = null;
+
   currentProfile = null;
+
 
   updateHeader();
 
@@ -764,19 +831,23 @@ window.logout = async function() {
 };
 
 
+/* الصفحة الرئيسية */
 window.goHome = function() {
 
   document
     .getElementById("homePage")
     .classList.remove("hidden");
 
+
   document
     .getElementById("subjectsSection")
     .classList.add("hidden");
 
+
   document
     .getElementById("materialsSection")
     .classList.add("hidden");
+
 
   document
     .getElementById("doctorDashboard")
@@ -791,21 +862,28 @@ window.goHome = function() {
 };
 
 
-window.openCategory = async function(category) {
+/* فتح القسم */
+window.openCategory =
+async function(category) {
 
-  currentCategory = category;
+  currentCategory =
+    category;
+
 
   document
     .getElementById("homePage")
     .classList.remove("hidden");
 
+
   document
     .getElementById("subjectsSection")
     .classList.remove("hidden");
 
+
   document
     .getElementById("materialsSection")
     .classList.add("hidden");
+
 
   document
     .getElementById("doctorDashboard")
@@ -829,13 +907,16 @@ window.openCategory = async function(category) {
   const filtered =
     subjects.filter(subject => {
 
-      if (category === "dini") {
+      if (
+        category === "dini"
+      ) {
 
         return diniSubjects.includes(
           subject.name
         );
 
       }
+
 
       return !diniSubjects.includes(
         subject.name
@@ -874,7 +955,10 @@ window.openCategory = async function(category) {
           </h3>
 
           <p class="text-slate-500 mt-2 text-sm">
-            ${escapeHTML(subject.description || "استعرض الدروس والمحتوى")}
+            ${escapeHTML(
+              subject.description ||
+              "استعرض الدروس والمحتوى"
+            )}
           </p>
 
         </button>
@@ -893,7 +977,9 @@ window.openCategory = async function(category) {
 };
 
 
-window.openSubject = async function(subjectId) {
+/* فتح المادة */
+window.openSubject =
+async function(subjectId) {
 
   const subjects =
     await loadSubjects();
@@ -901,11 +987,15 @@ window.openSubject = async function(subjectId) {
 
   const subject =
     subjects.find(
-      s => Number(s.id) === Number(subjectId)
+      s =>
+        Number(s.id) ===
+        Number(subjectId)
     );
 
 
-  if (!subject) return;
+  if (!subject) {
+    return;
+  }
 
 
   currentSubject =
@@ -915,6 +1005,7 @@ window.openSubject = async function(subjectId) {
   document
     .getElementById("subjectsSection")
     .classList.add("hidden");
+
 
   document
     .getElementById("materialsSection")
@@ -933,7 +1024,9 @@ window.openSubject = async function(subjectId) {
     subject.description || "";
 
 
-  await loadMaterials(subject.id);
+  await loadMaterials(
+    subject.id
+  );
 
 
   document
@@ -945,36 +1038,42 @@ window.openSubject = async function(subjectId) {
 };
 
 
+/* تحميل محتوى الطلاب */
 async function loadMaterials(subjectId) {
 
   const {
     data,
     error
-  } = await supabase
-    .from("materials")
-    .select("*")
-    .eq("subject_id", subjectId)
-    .order("sort_order", {
-      ascending: true
-    })
-    .order("created_at", {
-      ascending: true
-    });
+  } =
+    await supabase
+      .from("materials")
+      .select("*")
+      .eq("subject_id", subjectId)
+      .order("sort_order", {
+        ascending: true
+      })
+      .order("created_at", {
+        ascending: true
+      });
 
 
   const grid =
-    document.getElementById("materialsGrid");
+    document.getElementById(
+      "materialsGrid"
+    );
 
 
   if (error) {
 
     console.error(error);
 
+
     grid.innerHTML = `
       <div class="col-span-full bg-red-50 text-red-700 rounded-2xl p-6">
         حدث خطأ أثناء تحميل المحتوى.
       </div>
     `;
+
 
     return;
 
@@ -986,14 +1085,17 @@ async function loadMaterials(subjectId) {
     grid.innerHTML = `
       <div class="col-span-full bg-white border rounded-2xl p-10 text-center">
         <div class="text-5xl mb-4">📚</div>
+
         <h3 class="text-xl font-black mb-2">
           لا يوجد محتوى حتى الآن
         </h3>
+
         <p class="text-slate-500">
           سيتم إضافة الدروس قريبًا.
         </p>
       </div>
     `;
+
 
     return;
 
@@ -1007,6 +1109,14 @@ async function loadMaterials(subjectId) {
         material.file_type === "video";
 
 
+      const isPDF =
+        material.file_type === "pdf";
+
+
+      const isImage =
+        material.file_type === "image";
+
+
       const fileUrl =
         normalizeStorageUrl(
           material.file_url
@@ -1015,8 +1125,38 @@ async function loadMaterials(subjectId) {
 
       const cover =
         material.cover_url
-          ? normalizeStorageUrl(material.cover_url)
+          ? normalizeStorageUrl(
+              material.cover_url
+            )
           : "";
+
+
+      let typeLabel =
+        "📄 PDF";
+
+
+      if (isVideo) {
+        typeLabel = "🎥 فيديو";
+      }
+
+
+      if (isImage) {
+        typeLabel = "🖼️ صورة";
+      }
+
+
+      let fallbackIcon =
+        "📄";
+
+
+      if (isVideo) {
+        fallbackIcon = "🎥";
+      }
+
+
+      if (isImage) {
+        fallbackIcon = "🖼️";
+      }
 
 
       return `
@@ -1030,12 +1170,12 @@ async function loadMaterials(subjectId) {
               <img
                 src="${escapeHTML(cover)}"
                 class="w-full h-48 object-cover"
-                alt="">
+                alt="غلاف ${escapeHTML(material.title)}">
             `
             :
             `
               <div class="w-full h-48 bg-gradient-to-br from-brand-800 to-slate-900 flex items-center justify-center text-6xl">
-                ${isVideo ? "🎥" : "📄"}
+                ${fallbackIcon}
               </div>
             `
           }
@@ -1044,19 +1184,23 @@ async function loadMaterials(subjectId) {
           <div class="p-6">
 
             <div class="text-xs font-bold text-brand-600 mb-2">
-              ${isVideo ? "🎥 فيديو" : "📄 PDF"}
+              ${typeLabel}
             </div>
+
 
             <h3 class="text-xl font-black">
               ${escapeHTML(material.title)}
             </h3>
+
 
             ${
               material.description
               ?
               `
                 <p class="text-slate-500 mt-3 leading-7">
-                  ${escapeHTML(material.description)}
+                  ${escapeHTML(
+                    material.description
+                  )}
                 </p>
               `
               :
@@ -1076,12 +1220,35 @@ async function loadMaterials(subjectId) {
                   src="${escapeHTML(fileUrl)}">
                 </video>
 
+
                 <a
                   href="${escapeHTML(fileUrl)}"
                   target="_blank"
                   rel="noopener noreferrer"
                   class="block text-center mt-3 border border-brand-600 text-brand-700 py-2 rounded-xl font-bold">
                   فتح الفيديو في صفحة جديدة
+                </a>
+              `
+              :
+              isImage
+              ?
+              `
+                <div class="mt-5 bg-slate-100 rounded-2xl overflow-hidden">
+
+                  <img
+                    src="${escapeHTML(fileUrl)}"
+                    alt="${escapeHTML(material.title)}"
+                    class="w-full max-h-[600px] object-contain">
+
+                </div>
+
+
+                <a
+                  href="${escapeHTML(fileUrl)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="block text-center mt-3 bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-xl font-black">
+                  فتح الصورة بحجم كامل
                 </a>
               `
               :
@@ -1107,13 +1274,17 @@ async function loadMaterials(subjectId) {
 }
 
 
-window.backToSections = function() {
+/* رجوع للأقسام */
+window.backToSections =
+function() {
 
   document
     .getElementById("subjectsSection")
     .classList.add("hidden");
 
+
   goHome();
+
 
   document
     .getElementById("sections")
@@ -1124,15 +1295,19 @@ window.backToSections = function() {
 };
 
 
-window.backToSubjects = function() {
+/* رجوع للمواد */
+window.backToSubjects =
+function() {
 
   document
     .getElementById("materialsSection")
     .classList.add("hidden");
 
+
   document
     .getElementById("subjectsSection")
     .classList.remove("hidden");
+
 
   document
     .getElementById("subjectsSection")
@@ -1143,6 +1318,7 @@ window.backToSubjects = function() {
 };
 
 
+/* تجهيز مواد لوحة الدكتور */
 async function prepareDoctorSubjects() {
 
   const subjects =
@@ -1159,17 +1335,21 @@ async function prepareDoctorSubjects() {
 
   document
     .getElementById("doctorSubject")
-    .innerHTML = options;
+    .innerHTML =
+    options;
 
 
   document
     .getElementById("manageSubject")
-    .innerHTML = options;
+    .innerHTML =
+    options;
 
 }
 
 
-window.showDoctorDashboard = async function() {
+/* لوحة الدكتور */
+window.showDoctorDashboard =
+async function() {
 
   if (
     !currentUser ||
@@ -1187,13 +1367,16 @@ window.showDoctorDashboard = async function() {
     .getElementById("homePage")
     .classList.add("hidden");
 
+
   document
     .getElementById("subjectsSection")
     .classList.add("hidden");
 
+
   document
     .getElementById("materialsSection")
     .classList.add("hidden");
+
 
   document
     .getElementById("doctorDashboard")
@@ -1202,7 +1385,9 @@ window.showDoctorDashboard = async function() {
 
   await prepareDoctorSubjects();
 
+
   await loadDoctorStats();
+
 
   await loadDoctorMaterials();
 
@@ -1216,12 +1401,22 @@ window.showDoctorDashboard = async function() {
 };
 
 
-async function uploadFileToStorage(file, folder) {
+/* رفع الملفات إلى Storage */
+async function uploadFileToStorage(
+  file,
+  folder
+) {
 
   const safeName =
     file.name
-      .replace(/[^\w.\-\u0600-\u06FF ]+/g, "")
-      .replace(/\s+/g, "-");
+      .replace(
+        /[^\w.\-\u0600-\u06FF ]+/g,
+        ""
+      )
+      .replace(
+        /\s+/g,
+        "-"
+      );
 
 
   const path =
@@ -1230,17 +1425,18 @@ async function uploadFileToStorage(file, folder) {
 
   const {
     error
-  } = await supabase
-    .storage
-    .from(STORAGE_BUCKET)
-    .upload(
-      path,
-      file,
-      {
-        upsert: false,
-        contentType: file.type
-      }
-    );
+  } =
+    await supabase
+      .storage
+      .from(STORAGE_BUCKET)
+      .upload(
+        path,
+        file,
+        {
+          upsert: false,
+          contentType: file.type
+        }
+      );
 
 
   if (error) {
@@ -1266,7 +1462,9 @@ async function uploadFileToStorage(file, folder) {
 }
 
 
-window.uploadMaterial = async function() {
+/* رفع مادة جديدة */
+window.uploadMaterial =
+async function() {
 
   if (
     !currentUser ||
@@ -1280,38 +1478,50 @@ window.uploadMaterial = async function() {
 
   const subjectId =
     document
-      .getElementById("doctorSubject")
+      .getElementById(
+        "doctorSubject"
+      )
       .value;
 
 
   const title =
     document
-      .getElementById("materialTitle")
+      .getElementById(
+        "materialTitle"
+      )
       .value
       .trim();
 
 
   const description =
     document
-      .getElementById("materialDescription")
+      .getElementById(
+        "materialDescription"
+      )
       .value
       .trim();
 
 
   const coverFile =
     document
-      .getElementById("coverFile")
+      .getElementById(
+        "coverFile"
+      )
       .files[0];
 
 
   const contentFile =
     document
-      .getElementById("contentFile")
+      .getElementById(
+        "contentFile"
+      )
       .files[0];
 
 
   const status =
-    document.getElementById("uploadStatus");
+    document.getElementById(
+      "uploadStatus"
+    );
 
 
   if (!title) {
@@ -1319,8 +1529,10 @@ window.uploadMaterial = async function() {
     status.textContent =
       "اكتب عنوان الدرس أولًا.";
 
+
     status.className =
       "mt-5 text-sm font-bold text-red-600";
+
 
     return;
 
@@ -1330,10 +1542,58 @@ window.uploadMaterial = async function() {
   if (!contentFile) {
 
     status.textContent =
-      "اختر الفيديو أو ملف PDF.";
+      "اختر فيديو أو PDF أو صورة.";
+
 
     status.className =
       "mt-5 text-sm font-bold text-red-600";
+
+
+    return;
+
+  }
+
+
+  /* تحديد نوع المحتوى */
+  let fileType =
+    "video";
+
+
+  if (
+    contentFile.type ===
+    "application/pdf"
+  ) {
+
+    fileType =
+      "pdf";
+
+  } else if (
+    contentFile.type.startsWith(
+      "image/"
+    )
+  ) {
+
+    fileType =
+      "image";
+
+  } else if (
+    contentFile.type.startsWith(
+      "video/"
+    )
+  ) {
+
+    fileType =
+      "video";
+
+  } else {
+
+    status.textContent =
+      "❌ نوع الملف غير مدعوم. ارفع فيديو أو PDF أو صورة.";
+
+
+    status.className =
+      "mt-5 text-sm font-bold text-red-600";
+
 
     return;
 
@@ -1343,15 +1603,18 @@ window.uploadMaterial = async function() {
   status.textContent =
     "جاري رفع الملفات...";
 
+
   status.className =
     "mt-5 text-sm font-bold text-slate-500";
 
 
   try {
 
-    let coverUrl = null;
+    let coverUrl =
+      null;
 
 
+    /* رفع الغلاف إذا اختاره الدكتور */
     if (coverFile) {
 
       coverUrl =
@@ -1363,6 +1626,7 @@ window.uploadMaterial = async function() {
     }
 
 
+    /* رفع المحتوى الأساسي */
     const contentUrl =
       await uploadFileToStorage(
         contentFile,
@@ -1370,57 +1634,63 @@ window.uploadMaterial = async function() {
       );
 
 
-    const fileType =
-      contentFile.type === "application/pdf"
-        ? "pdf"
-        : "video";
-
-
+    /* الحصول على آخر ترتيب */
     const {
       data: lastMaterial
-    } = await supabase
-      .from("materials")
-      .select("sort_order")
-      .eq("subject_id", subjectId)
-      .order("sort_order", {
-        ascending: false
-      })
-      .limit(1)
-      .maybeSingle();
+    } =
+      await supabase
+        .from("materials")
+        .select("sort_order")
+        .eq(
+          "subject_id",
+          subjectId
+        )
+        .order(
+          "sort_order",
+          {
+            ascending: false
+          }
+        )
+        .limit(1)
+        .maybeSingle();
 
 
     const nextOrder =
       lastMaterial
-        ? Number(lastMaterial.sort_order || 0) + 1
+        ? Number(
+            lastMaterial.sort_order || 0
+          ) + 1
         : 0;
 
 
+    /* حفظ المادة في قاعدة البيانات */
     const {
       error
-    } = await supabase
-      .from("materials")
-      .insert({
+    } =
+      await supabase
+        .from("materials")
+        .insert({
 
-        subject_id:
-          Number(subjectId),
+          subject_id:
+            Number(subjectId),
 
-        title,
+          title,
 
-        description,
+          description,
 
-        file_url:
-          contentUrl,
+          file_url:
+            contentUrl,
 
-        file_type:
-          fileType,
+          file_type:
+            fileType,
 
-        cover_url:
-          coverUrl,
+          cover_url:
+            coverUrl,
 
-        sort_order:
-          nextOrder
+          sort_order:
+            nextOrder
 
-      });
+        });
 
 
     if (error) {
@@ -1433,41 +1703,55 @@ window.uploadMaterial = async function() {
     status.textContent =
       "✅ تم رفع المحتوى بنجاح.";
 
+
     status.className =
       "mt-5 text-sm font-bold text-green-600";
 
 
+    /* تنظيف الحقول */
     document
-      .getElementById("materialTitle")
+      .getElementById(
+        "materialTitle"
+      )
       .value = "";
 
 
     document
-      .getElementById("materialDescription")
+      .getElementById(
+        "materialDescription"
+      )
       .value = "";
 
 
     document
-      .getElementById("coverFile")
+      .getElementById(
+        "coverFile"
+      )
       .value = "";
 
 
     document
-      .getElementById("contentFile")
+      .getElementById(
+        "contentFile"
+      )
       .value = "";
 
 
     await loadDoctorStats();
 
+
     await loadDoctorMaterials();
+
 
   } catch (error) {
 
     console.error(error);
 
+
     status.textContent =
       "❌ حدث خطأ أثناء الرفع: " +
       error.message;
+
 
     status.className =
       "mt-5 text-sm font-bold text-red-600";
@@ -1477,23 +1761,31 @@ window.uploadMaterial = async function() {
 };
 
 
+/* إحصائيات الدكتور */
 async function loadDoctorStats() {
 
   const {
     data: materials
-  } = await supabase
-    .from("materials")
-    .select("id,file_type");
+  } =
+    await supabase
+      .from("materials")
+      .select(
+        "id,file_type"
+      );
 
 
   const {
     count: subjectsCount
-  } = await supabase
-    .from("subjects")
-    .select("*", {
-      count: "exact",
-      head: true
-    });
+  } =
+    await supabase
+      .from("subjects")
+      .select(
+        "*",
+        {
+          count: "exact",
+          head: true
+        }
+      );
 
 
   const total =
@@ -1502,67 +1794,116 @@ async function loadDoctorStats() {
 
   const videos =
     materials?.filter(
-      m => m.file_type === "video"
+      m =>
+        m.file_type ===
+        "video"
     ).length || 0;
 
 
   const pdfs =
     materials?.filter(
-      m => m.file_type === "pdf"
+      m =>
+        m.file_type ===
+        "pdf"
+    ).length || 0;
+
+
+  const images =
+    materials?.filter(
+      m =>
+        m.file_type ===
+        "image"
     ).length || 0;
 
 
   document
-    .getElementById("statMaterials")
-    .textContent = total;
-
-
-  document
-    .getElementById("statVideos")
-    .textContent = videos;
-
-
-  document
-    .getElementById("statPDFs")
-    .textContent = pdfs;
-
-
-  document
-    .getElementById("statSubjects")
+    .getElementById(
+      "statMaterials"
+    )
     .textContent =
-      subjectsCount || 0;
+    total;
+
+
+  document
+    .getElementById(
+      "statVideos"
+    )
+    .textContent =
+    videos;
+
+
+  document
+    .getElementById(
+      "statPDFs"
+    )
+    .textContent =
+    pdfs;
+
+
+  document
+    .getElementById(
+      "statImages"
+    )
+    .textContent =
+    images;
+
+
+  document
+    .getElementById(
+      "statSubjects"
+    )
+    .textContent =
+    subjectsCount || 0;
 
 }
 
 
-window.loadDoctorMaterials = async function() {
+/* إدارة محتوى الدكتور */
+window.loadDoctorMaterials =
+async function() {
 
   const subjectId =
     document
-      .getElementById("manageSubject")
+      .getElementById(
+        "manageSubject"
+      )
       .value;
 
 
-  if (!subjectId) return;
+  if (!subjectId) {
+    return;
+  }
 
 
   const {
     data,
     error
-  } = await supabase
-    .from("materials")
-    .select("*")
-    .eq("subject_id", Number(subjectId))
-    .order("sort_order", {
-      ascending: true
-    })
-    .order("created_at", {
-      ascending: true
-    });
+  } =
+    await supabase
+      .from("materials")
+      .select("*")
+      .eq(
+        "subject_id",
+        Number(subjectId)
+      )
+      .order(
+        "sort_order",
+        {
+          ascending: true
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: true
+        }
+      );
 
 
   const list =
-    document.getElementById("doctorMaterialsList");
+    document.getElementById(
+      "doctorMaterialsList"
+    );
 
 
   if (error) {
@@ -1572,6 +1913,7 @@ window.loadDoctorMaterials = async function() {
         حدث خطأ في تحميل المحتوى.
       </div>
     `;
+
 
     return;
 
@@ -1586,13 +1928,57 @@ window.loadDoctorMaterials = async function() {
       </div>
     `;
 
+
     return;
 
   }
 
 
   list.innerHTML =
-    data.map((material, index) => `
+    data.map(
+      (material, index) => {
+
+        const isVideo =
+          material.file_type ===
+          "video";
+
+
+        const isImage =
+          material.file_type ===
+          "image";
+
+
+        let typeLabel =
+          "PDF";
+
+
+        let icon =
+          "📄";
+
+
+        if (isVideo) {
+
+          typeLabel =
+            "فيديو";
+
+          icon =
+            "🎥";
+
+        }
+
+
+        if (isImage) {
+
+          typeLabel =
+            "صورة";
+
+          icon =
+            "🖼️";
+
+        }
+
+
+        return `
 
       <div class="border rounded-2xl p-4 flex flex-col md:flex-row gap-4 md:items-center">
 
@@ -1603,13 +1989,18 @@ window.loadDoctorMaterials = async function() {
             ?
             `
               <img
-                src="${escapeHTML(normalizeStorageUrl(material.cover_url))}"
-                class="w-full h-full object-cover">
+                src="${escapeHTML(
+                  normalizeStorageUrl(
+                    material.cover_url
+                  )
+                )}"
+                class="w-full h-full object-cover"
+                alt="">
             `
             :
             `
               <div class="w-full h-full flex items-center justify-center text-3xl">
-                ${material.file_type === "video" ? "🎥" : "📄"}
+                ${icon}
               </div>
             `
           }
@@ -1620,15 +2011,20 @@ window.loadDoctorMaterials = async function() {
         <div class="flex-1">
 
           <div class="text-xs text-brand-600 font-bold mb-1">
-            ${material.file_type === "video" ? "فيديو" : "PDF"}
+            ${typeLabel}
           </div>
 
           <h4 class="font-black text-lg">
-            ${escapeHTML(material.title)}
+            ${escapeHTML(
+              material.title
+            )}
           </h4>
 
           <p class="text-slate-500 text-sm mt-1">
-            ${escapeHTML(material.description || "بدون وصف")}
+            ${escapeHTML(
+              material.description ||
+              "بدون وصف"
+            )}
           </p>
 
         </div>
@@ -1669,12 +2065,17 @@ window.loadDoctorMaterials = async function() {
 
       </div>
 
-    `).join("");
+    `;
+
+      }
+    ).join("");
 
 };
 
 
-window.deleteMaterial = async function(id) {
+/* حذف مادة */
+window.deleteMaterial =
+async function(id) {
 
   const confirmed =
     confirm(
@@ -1682,24 +2083,34 @@ window.deleteMaterial = async function(id) {
     );
 
 
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
 
   const {
     data: material,
     error: readError
-  } = await supabase
-    .from("materials")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
+  } =
+    await supabase
+      .from("materials")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .maybeSingle();
 
 
-  if (readError || !material) {
+  if (
+    readError ||
+    !material
+  ) {
 
     alert(
       "تعذر العثور على الدرس."
     );
+
 
     return;
 
@@ -1708,6 +2119,7 @@ window.deleteMaterial = async function(id) {
 
   try {
 
+    /* حذف المحتوى الأساسي */
     const contentPath =
       getStoragePathFromUrl(
         material.file_url
@@ -1718,12 +2130,15 @@ window.deleteMaterial = async function(id) {
 
       const {
         error: storageError
-      } = await supabase
-        .storage
-        .from(STORAGE_BUCKET)
-        .remove([
-          contentPath
-        ]);
+      } =
+        await supabase
+          .storage
+          .from(
+            STORAGE_BUCKET
+          )
+          .remove([
+            contentPath
+          ]);
 
 
       if (storageError) {
@@ -1738,7 +2153,10 @@ window.deleteMaterial = async function(id) {
     }
 
 
-    if (material.cover_url) {
+    /* حذف الغلاف */
+    if (
+      material.cover_url
+    ) {
 
       const coverPath =
         getStoragePathFromUrl(
@@ -1750,7 +2168,9 @@ window.deleteMaterial = async function(id) {
 
         await supabase
           .storage
-          .from(STORAGE_BUCKET)
+          .from(
+            STORAGE_BUCKET
+          )
           .remove([
             coverPath
           ]);
@@ -1760,12 +2180,17 @@ window.deleteMaterial = async function(id) {
     }
 
 
+    /* حذف السجل */
     const {
       error: deleteError
-    } = await supabase
-      .from("materials")
-      .delete()
-      .eq("id", id);
+    } =
+      await supabase
+        .from("materials")
+        .delete()
+        .eq(
+          "id",
+          id
+        );
 
 
     if (deleteError) {
@@ -1775,6 +2200,7 @@ window.deleteMaterial = async function(id) {
         deleteError.message
       );
 
+
       return;
 
     }
@@ -1782,14 +2208,19 @@ window.deleteMaterial = async function(id) {
 
     await loadDoctorStats();
 
+
     await loadDoctorMaterials();
 
 
     if (
       currentSubject &&
       !document
-        .getElementById("materialsSection")
-        .classList.contains("hidden")
+        .getElementById(
+          "materialsSection"
+        )
+        .classList.contains(
+          "hidden"
+        )
     ) {
 
       await loadMaterials(
@@ -1803,6 +2234,7 @@ window.deleteMaterial = async function(id) {
 
     console.error(error);
 
+
     alert(
       "حدث خطأ أثناء الحذف: " +
       error.message
@@ -1813,23 +2245,33 @@ window.deleteMaterial = async function(id) {
 };
 
 
-window.openEditModal = async function(id) {
+/* فتح تعديل */
+window.openEditModal =
+async function(id) {
 
   const {
     data: material,
     error
-  } = await supabase
-    .from("materials")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
+  } =
+    await supabase
+      .from("materials")
+      .select("*")
+      .eq(
+        "id",
+        id
+      )
+      .maybeSingle();
 
 
-  if (error || !material) {
+  if (
+    error ||
+    !material
+  ) {
 
     alert(
       "تعذر تحميل بيانات الدرس."
     );
+
 
     return;
 
@@ -1837,67 +2279,99 @@ window.openEditModal = async function(id) {
 
 
   document
-    .getElementById("editId")
-    .value = id;
-
-
-  document
-    .getElementById("editTitle")
+    .getElementById(
+      "editId"
+    )
     .value =
-      material.title || "";
+    id;
 
 
   document
-    .getElementById("editDescription")
+    .getElementById(
+      "editTitle"
+    )
     .value =
-      material.description || "";
+    material.title || "";
 
 
   document
-    .getElementById("editStatus")
-    .textContent = "";
+    .getElementById(
+      "editDescription"
+    )
+    .value =
+    material.description || "";
 
 
   document
-    .getElementById("editModal")
-    .classList.remove("hidden");
+    .getElementById(
+      "editStatus"
+    )
+    .textContent =
+    "";
+
+
+  document
+    .getElementById(
+      "editModal"
+    )
+    .classList
+    .remove(
+      "hidden"
+    );
 
 };
 
 
-window.closeEditModal = function() {
+/* إغلاق التعديل */
+window.closeEditModal =
+function() {
 
   document
-    .getElementById("editModal")
-    .classList.add("hidden");
+    .getElementById(
+      "editModal"
+    )
+    .classList
+    .add(
+      "hidden"
+    );
 
 };
 
 
-window.saveEdit = async function() {
+/* حفظ التعديل */
+window.saveEdit =
+async function() {
 
   const id =
     document
-      .getElementById("editId")
+      .getElementById(
+        "editId"
+      )
       .value;
 
 
   const title =
     document
-      .getElementById("editTitle")
+      .getElementById(
+        "editTitle"
+      )
       .value
       .trim();
 
 
   const description =
     document
-      .getElementById("editDescription")
+      .getElementById(
+        "editDescription"
+      )
       .value
       .trim();
 
 
   const status =
-    document.getElementById("editStatus");
+    document.getElementById(
+      "editStatus"
+    );
 
 
   if (!title) {
@@ -1905,8 +2379,10 @@ window.saveEdit = async function() {
     status.textContent =
       "اكتب عنوان الدرس.";
 
+
     status.className =
       "text-sm font-bold mb-4 text-red-600";
+
 
     return;
 
@@ -1915,13 +2391,17 @@ window.saveEdit = async function() {
 
   const {
     error
-  } = await supabase
-    .from("materials")
-    .update({
-      title,
-      description
-    })
-    .eq("id", id);
+  } =
+    await supabase
+      .from("materials")
+      .update({
+        title,
+        description
+      })
+      .eq(
+        "id",
+        id
+      );
 
 
   if (error) {
@@ -1930,8 +2410,10 @@ window.saveEdit = async function() {
       "حدث خطأ: " +
       error.message;
 
+
     status.className =
       "text-sm font-bold mb-4 text-red-600";
+
 
     return;
 
@@ -1940,6 +2422,7 @@ window.saveEdit = async function() {
 
   status.textContent =
     "تم الحفظ.";
+
 
   status.className =
     "text-sm font-bold mb-4 text-green-600";
@@ -1965,33 +2448,52 @@ window.saveEdit = async function() {
 };
 
 
-window.moveMaterial = async function(
+/* تحريك المادة */
+window.moveMaterial =
+async function(
   id,
   direction
 ) {
 
   const subjectId =
     document
-      .getElementById("manageSubject")
+      .getElementById(
+        "manageSubject"
+      )
       .value;
 
 
   const {
     data: materials,
     error
-  } = await supabase
-    .from("materials")
-    .select("id,sort_order")
-    .eq("subject_id", Number(subjectId))
-    .order("sort_order", {
-      ascending: true
-    })
-    .order("created_at", {
-      ascending: true
-    });
+  } =
+    await supabase
+      .from("materials")
+      .select(
+        "id,sort_order,created_at"
+      )
+      .eq(
+        "subject_id",
+        Number(subjectId)
+      )
+      .order(
+        "sort_order",
+        {
+          ascending: true
+        }
+      )
+      .order(
+        "created_at",
+        {
+          ascending: true
+        }
+      );
 
 
-  if (error || !materials) {
+  if (
+    error ||
+    !materials
+  ) {
 
     return;
 
@@ -2000,11 +2502,15 @@ window.moveMaterial = async function(
 
   const index =
     materials.findIndex(
-      item => String(item.id) === String(id)
+      item =>
+        String(item.id) ===
+        String(id)
     );
 
 
-  if (index === -1) return;
+  if (index === -1) {
+    return;
+  }
 
 
   const targetIndex =
@@ -2015,7 +2521,8 @@ window.moveMaterial = async function(
 
   if (
     targetIndex < 0 ||
-    targetIndex >= materials.length
+    targetIndex >=
+    materials.length
   ) {
 
     return;
@@ -2026,31 +2533,45 @@ window.moveMaterial = async function(
   const current =
     materials[index];
 
+
   const target =
     materials[targetIndex];
 
 
   const currentOrder =
-    Number(current.sort_order || 0);
+    Number(
+      current.sort_order || 0
+    );
+
 
   const targetOrder =
-    Number(target.sort_order || 0);
+    Number(
+      target.sort_order || 0
+    );
 
 
   await supabase
     .from("materials")
     .update({
-      sort_order: targetOrder
+      sort_order:
+        targetOrder
     })
-    .eq("id", current.id);
+    .eq(
+      "id",
+      current.id
+    );
 
 
   await supabase
     .from("materials")
     .update({
-      sort_order: currentOrder
+      sort_order:
+        currentOrder
     })
-    .eq("id", target.id);
+    .eq(
+      "id",
+      target.id
+    );
 
 
   await loadDoctorMaterials();
@@ -2067,12 +2588,14 @@ window.moveMaterial = async function(
 };
 
 
+/* تشغيل الموقع */
 await refreshAuth();
 
 
 if (
   currentUser &&
-  currentProfile?.role === "doctor"
+  currentProfile?.role ===
+  "doctor"
 ) {
 
   showDoctorDashboard();
@@ -2082,4 +2605,4 @@ if (
 </script>
 
 </body>
-</html>
+  </html>
