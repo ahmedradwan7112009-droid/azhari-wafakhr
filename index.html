@@ -44,17 +44,21 @@ audio{width:100%}
 أزهري وأفتخر
 </button>
 
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 flex-wrap">
 
 <button onclick="showHome()" class="hidden md:block px-4 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">
 الرئيسية
 </button>
 
-<button id="doctorButton" onclick="openLoginModal()" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold">
+<button id="doctorButton"
+onclick="openLoginModal()"
+class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold">
 تسجيل الدخول
 </button>
 
-<button id="logoutButton" onclick="logout()" class="hidden px-4 py-2 rounded-xl bg-red-600 text-white font-bold">
+<button id="logoutButton"
+onclick="logout()"
+class="hidden px-4 py-2 rounded-xl bg-red-600 text-white font-bold">
 تسجيل الخروج
 </button>
 
@@ -100,19 +104,24 @@ audio{width:100%}
 
 </div>
 
-<div id="subjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+<div id="subjectsGrid"
+class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+</div>
 
 </section>
 
 </main>
 
-<section id="materialsSection" class="hidden-section max-w-7xl mx-auto px-4 py-12">
+<section id="materialsSection"
+class="hidden-section max-w-7xl mx-auto px-4 py-12">
 
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 
 <div>
 
-<p id="selectedSubjectLabel" class="text-brand-600 font-bold"></p>
+<p id="selectedSubjectLabel"
+class="text-brand-600 font-bold">
+</p>
 
 <h2 class="text-3xl font-black mt-2">
 المحتوى التعليمي
@@ -120,17 +129,21 @@ audio{width:100%}
 
 </div>
 
-<button onclick="showHome()" class="px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
+<button onclick="showHome()"
+class="px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
 ← العودة للمواد
 </button>
 
 </div>
 
-<div id="materialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+<div id="materialsGrid"
+class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+</div>
 
 </section>
 
-<section id="doctorDashboard" class="hidden-section max-w-7xl mx-auto px-4 py-10">
+<section id="doctorDashboard"
+class="hidden-section max-w-7xl mx-auto px-4 py-10">
 
 <div class="mb-10">
 
@@ -191,7 +204,9 @@ class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white 
 <div>
 <label class="block font-bold mb-2">عنوان المحتوى</label>
 
-<input id="materialTitle" type="text" required
+<input id="materialTitle"
+type="text"
+required
 placeholder="مثال: المحاضرة الأولى"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
 </div>
@@ -199,7 +214,8 @@ class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white 
 <div>
 <label class="block font-bold mb-2">الوصف</label>
 
-<textarea id="materialDescription" rows="3"
+<textarea id="materialDescription"
+rows="3"
 placeholder="وصف مختصر للمحتوى"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
 </div>
@@ -268,6 +284,9 @@ class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
 
 </section>
 
+
+<!-- ================= LOGIN MODAL ================= -->
+
 <div id="loginModal"
 class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
 
@@ -294,7 +313,11 @@ class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
 البريد الإلكتروني
 </label>
 
-<input id="loginEmail" type="email" required autocomplete="email"
+<input
+id="loginEmail"
+type="email"
+required
+autocomplete="email"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
 
 </div>
@@ -305,21 +328,166 @@ class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white 
 كلمة المرور
 </label>
 
-<input id="loginPassword" type="password" required autocomplete="current-password"
+<input
+id="loginPassword"
+type="password"
+required
+autocomplete="current-password"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
 
 </div>
 
-<p id="loginError" class="hidden text-red-600 font-bold"></p>
+<p id="loginError"
+class="hidden text-red-600 font-bold">
+</p>
 
-<button type="submit"
+<button
+type="submit"
 class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
 تسجيل الدخول
 </button>
 
 </form>
+
+<div class="border-t border-slate-200 dark:border-slate-700 mt-6 pt-6 text-center">
+
+<p class="text-slate-500 mb-3">
+ليس لديك حساب طالب؟
+</p>
+
+<button
+type="button"
+onclick="openSignupModal()"
+class="w-full py-3 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black">
+إنشاء حساب طالب
+</button>
+
+</div>
+
 </div>
 </div>
+
+
+<!-- ================= SIGNUP MODAL ================= -->
+
+<div id="signupModal"
+class="hidden fixed inset-0 z-[110] bg-black/60 flex items-center justify-center p-4">
+
+<div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl">
+
+<div class="flex items-center justify-between mb-6">
+
+<h2 class="text-2xl font-black">
+إنشاء حساب طالب
+</h2>
+
+<button onclick="closeSignupModal()"
+class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
+×
+</button>
+
+</div>
+
+<form id="signupForm" class="space-y-5">
+
+<div>
+
+<label class="block font-bold mb-2">
+الاسم
+</label>
+
+<input
+id="signupName"
+type="text"
+required
+autocomplete="name"
+placeholder="اكتب اسمك"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+البريد الإلكتروني
+</label>
+
+<input
+id="signupEmail"
+type="email"
+required
+autocomplete="email"
+placeholder="example@gmail.com"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+كلمة المرور
+</label>
+
+<input
+id="signupPassword"
+type="password"
+required
+minlength="6"
+autocomplete="new-password"
+placeholder="6 أحرف على الأقل"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+تأكيد كلمة المرور
+</label>
+
+<input
+id="signupPasswordConfirm"
+type="password"
+required
+minlength="6"
+autocomplete="new-password"
+placeholder="أعد كتابة كلمة المرور"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<p id="signupError"
+class="hidden text-red-600 font-bold leading-7">
+</p>
+
+<p id="signupSuccess"
+class="hidden text-green-600 font-bold leading-7">
+</p>
+
+<button
+id="signupButton"
+type="submit"
+class="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-black">
+إنشاء الحساب
+</button>
+
+</form>
+
+<div class="text-center mt-5">
+
+<button
+onclick="backToLoginFromSignup()"
+class="text-brand-600 font-bold">
+لديك حساب بالفعل؟ تسجيل الدخول
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= EDIT MODAL ================= -->
 
 <div id="editModal"
 class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
@@ -349,7 +517,10 @@ class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
 العنوان
 </label>
 
-<input id="editTitle" type="text" required
+<input
+id="editTitle"
+type="text"
+required
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
 
 </div>
@@ -360,7 +531,9 @@ class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white 
 الوصف
 </label>
 
-<textarea id="editDescription" rows="4"
+<textarea
+id="editDescription"
+rows="4"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
 
 </div>
@@ -371,12 +544,15 @@ class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white 
 الترتيب
 </label>
 
-<input id="editSortOrder" type="number"
+<input
+id="editSortOrder"
+type="number"
 class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
 
 </div>
 
-<button type="submit"
+<button
+type="submit"
 class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
 حفظ التعديل
 </button>
@@ -385,10 +561,12 @@ class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
 </div>
 </div>
 
+
 <script type="module">
 
 import { createClient }
 from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
 
 const SUPABASE_URL =
 "https://fxezbarpvidzskcaaxnt.supabase.co";
@@ -396,13 +574,16 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
 
-const STORAGE_BUCKET = "Content";
+const STORAGE_BUCKET =
+"Content";
+
 
 const supabase =
 createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+
 
 let subjects = [];
 let materials = [];
@@ -428,17 +609,21 @@ function getStoragePathFromUrl(url){
 
 if(!url)return null;
 
-url = normalizeStorageUrl(url);
+url =
+normalizeStorageUrl(url);
 
 const marker =
 `/storage/v1/object/public/${STORAGE_BUCKET}/`;
 
-const index = url.indexOf(marker);
+const index =
+url.indexOf(marker);
 
 if(index === -1)return null;
 
 return decodeURIComponent(
-url.substring(index + marker.length)
+url.substring(
+index + marker.length
+)
 );
 
 }
@@ -461,25 +646,33 @@ function getFileType(file){
 const type =
 String(file.type || "").toLowerCase();
 
-if(type === "application/pdf")return "pdf";
+if(type === "application/pdf")
+return "pdf";
 
-if(type.startsWith("image/"))return "image";
+if(type.startsWith("image/"))
+return "image";
 
-if(type.startsWith("video/"))return "video";
+if(type.startsWith("video/"))
+return "video";
 
-if(type.startsWith("audio/"))return "audio";
+if(type.startsWith("audio/"))
+return "audio";
 
 return "file";
 
 }
 
 
-/* ================= STORAGE UPLOAD ================= */
+/* ================= STORAGE ================= */
 
 async function uploadFileToStorage(file,folder){
 
 if(!file){
-throw new Error("لم يتم اختيار ملف.");
+
+throw new Error(
+"لم يتم اختيار ملف."
+);
+
 }
 
 const mimeType =
@@ -487,11 +680,13 @@ String(file.type || "").toLowerCase();
 
 let extension = "bin";
 
+
 if(mimeType === "application/pdf"){
 
 extension = "pdf";
 
 }
+
 
 else if(mimeType.startsWith("image/")){
 
@@ -512,6 +707,7 @@ imageExtensions[mimeType] || "jpg";
 
 }
 
+
 else if(mimeType.startsWith("video/")){
 
 const videoExtensions = {
@@ -527,6 +723,7 @@ extension =
 videoExtensions[mimeType] || "mp4";
 
 }
+
 
 else if(mimeType.startsWith("audio/")){
 
@@ -550,6 +747,7 @@ audioExtensions[mimeType] || "mp3";
 
 }
 
+
 let randomPart = "";
 
 if(
@@ -571,11 +769,13 @@ Math.random()
 
 }
 
+
 const safeName =
 `file-${Date.now()}-${randomPart}.${extension}`;
 
 const path =
 `${folder}/${safeName}`;
+
 
 const {
 error
@@ -594,6 +794,7 @@ file.type ||
 }
 );
 
+
 if(error){
 
 console.error(error);
@@ -601,6 +802,7 @@ console.error(error);
 throw error;
 
 }
+
 
 const {
 data
@@ -610,6 +812,7 @@ supabase
 .from(STORAGE_BUCKET)
 .getPublicUrl(path);
 
+
 if(!data || !data.publicUrl){
 
 throw new Error(
@@ -618,6 +821,7 @@ throw new Error(
 
 }
 
+
 return normalizeStorageUrl(
 data.publicUrl
 );
@@ -625,7 +829,7 @@ data.publicUrl
 }
 
 
-/* ================= AUTH ================= */
+/* ================= AUTH SESSION ================= */
 
 async function checkSession(){
 
@@ -644,6 +848,27 @@ await updateAuthUI();
 }
 
 
+async function getCurrentProfile(){
+
+if(!currentSession)
+return null;
+
+const {
+data
+} =
+await supabase
+.from("profiles")
+.select("role,name")
+.eq("id",currentSession.user.id)
+.maybeSingle();
+
+return data || null;
+
+}
+
+
+/* ================= AUTH UI ================= */
+
 async function updateAuthUI(){
 
 const doctorButton =
@@ -652,7 +877,9 @@ document.getElementById("doctorButton");
 const logoutButton =
 document.getElementById("logoutButton");
 
-if(!doctorButton || !logoutButton)return;
+
+if(!doctorButton || !logoutButton)
+return;
 
 
 if(!currentSession){
@@ -670,14 +897,8 @@ return;
 }
 
 
-const {
-data:profile
-} =
-await supabase
-.from("profiles")
-.select("role,name")
-.eq("id",currentSession.user.id)
-.maybeSingle();
+const profile =
+await getCurrentProfile();
 
 
 if(profile && profile.role === "doctor"){
@@ -705,76 +926,14 @@ logoutButton.classList.remove("hidden");
 }
 
 
-/* ================= LOGOUT ================= */
-
-async function logout(){
-
-try{
-
-const {
-error
-} =
-await supabase.auth.signOut();
-
-if(error){
-
-console.error(error);
-
-alert(
-"حدث خطأ أثناء تسجيل الخروج:\n" +
-error.message
-);
-
-return;
-
-}
-
-currentSession = null;
-
-document
-.getElementById("doctorDashboard")
-.classList.add("hidden-section");
-
-document
-.getElementById("materialsSection")
-.classList.add("hidden-section");
-
-document
-.getElementById("homeSection")
-.classList.remove("hidden-section");
-
-await updateAuthUI();
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"حدث خطأ أثناء تسجيل الخروج."
-);
-
-}
-
-}
-
-
-/*
-مهم جداً:
-لأن هذا script من نوع module،
-نجعل logout متاحة لزر HTML.
-*/
-window.logout = logout;
-
-
-/* ================= LOGIN ================= */
+/* ================= LOGIN MODAL ================= */
 
 window.openLoginModal =
 function(){
+
+document
+.getElementById("signupModal")
+.classList.add("hidden");
 
 document
 .getElementById("loginModal")
@@ -793,6 +952,54 @@ document
 };
 
 
+window.openSignupModal =
+function(){
+
+document
+.getElementById("loginModal")
+.classList.add("hidden");
+
+document
+.getElementById("signupModal")
+.classList.remove("hidden");
+
+document
+.getElementById("signupError")
+.classList.add("hidden");
+
+document
+.getElementById("signupSuccess")
+.classList.add("hidden");
+
+};
+
+
+window.closeSignupModal =
+function(){
+
+document
+.getElementById("signupModal")
+.classList.add("hidden");
+
+};
+
+
+window.backToLoginFromSignup =
+function(){
+
+document
+.getElementById("signupModal")
+.classList.add("hidden");
+
+document
+.getElementById("loginModal")
+.classList.remove("hidden");
+
+};
+
+
+/* ================= LOGIN ================= */
+
 document
 .getElementById("loginForm")
 .addEventListener(
@@ -800,6 +1007,7 @@ document
 async function(event){
 
 event.preventDefault();
+
 
 const email =
 document
@@ -812,11 +1020,13 @@ document
 .getElementById("loginPassword")
 .value;
 
+
 const errorElement =
 document
 .getElementById("loginError");
 
 errorElement.classList.add("hidden");
+
 
 const {
 data,
@@ -825,9 +1035,12 @@ error
 await supabase
 .auth
 .signInWithPassword({
+
 email,
 password
+
 });
+
 
 if(error){
 
@@ -840,21 +1053,18 @@ return;
 
 }
 
+
 currentSession =
 data.session;
+
 
 closeLoginModal();
 
 await updateAuthUI();
 
-const {
-data:profile
-} =
-await supabase
-.from("profiles")
-.select("role")
-.eq("id",currentSession.user.id)
-.maybeSingle();
+
+const profile =
+await getCurrentProfile();
 
 
 if(profile && profile.role === "doctor"){
@@ -871,6 +1081,347 @@ showHome();
 );
 
 
+/* ================= STUDENT SIGNUP ================= */
+
+document
+.getElementById("signupForm")
+.addEventListener(
+"submit",
+async function(event){
+
+event.preventDefault();
+
+
+const name =
+document
+.getElementById("signupName")
+.value
+.trim();
+
+const email =
+document
+.getElementById("signupEmail")
+.value
+.trim();
+
+const password =
+document
+.getElementById("signupPassword")
+.value;
+
+const confirmPassword =
+document
+.getElementById("signupPasswordConfirm")
+.value;
+
+
+const errorElement =
+document
+.getElementById("signupError");
+
+const successElement =
+document
+.getElementById("signupSuccess");
+
+const button =
+document
+.getElementById("signupButton");
+
+
+errorElement.classList.add("hidden");
+successElement.classList.add("hidden");
+
+
+if(name.length < 2){
+
+errorElement.textContent =
+"اكتب اسمك بشكل صحيح.";
+
+errorElement.classList.remove("hidden");
+
+return;
+
+}
+
+
+if(password.length < 6){
+
+errorElement.textContent =
+"كلمة المرور يجب أن تكون 6 أحرف على الأقل.";
+
+errorElement.classList.remove("hidden");
+
+return;
+
+}
+
+
+if(password !== confirmPassword){
+
+errorElement.textContent =
+"كلمتا المرور غير متطابقتين.";
+
+errorElement.classList.remove("hidden");
+
+return;
+
+}
+
+
+button.disabled = true;
+button.textContent =
+"جاري إنشاء الحساب...";
+
+
+try{
+
+
+/*
+ننشئ حساب Auth للطالب.
+نضع الاسم أيضاً في metadata.
+*/
+
+const {
+data,
+error
+} =
+await supabase
+.auth
+.signUp({
+
+email,
+password,
+
+options:{
+data:{
+name:name,
+role:"student"
+}
+}
+
+});
+
+
+if(error){
+
+throw error;
+
+}
+
+
+/*
+إذا كان Supabase يسمح بالجلسة مباشرة،
+ننشيء ملف الطالب.
+*/
+
+if(data.user){
+
+const {
+error:profileError
+} =
+await supabase
+.from("profiles")
+.upsert({
+
+id:data.user.id,
+name:name,
+role:"student"
+
+},{
+onConflict:"id"
+});
+
+
+if(profileError){
+
+console.error(
+"profile insert error:",
+profileError
+);
+
+}
+
+
+/*
+لو توجد جلسة مباشرة، ندخل الطالب.
+*/
+
+if(data.session){
+
+currentSession =
+data.session;
+
+await updateAuthUI();
+
+closeSignupModal();
+
+showHome();
+
+alert(
+"تم إنشاء حساب الطالب بنجاح."
+);
+
+return;
+
+}
+
+}
+
+
+/*
+في حالة تفعيل تأكيد البريد الإلكتروني.
+*/
+
+successElement.textContent =
+"تم إنشاء الحساب بنجاح. إذا طُلب منك تأكيد البريد الإلكتروني، أكّد بريدك ثم سجّل الدخول.";
+
+successElement.classList.remove("hidden");
+
+
+document
+.getElementById("signupForm")
+.reset();
+
+
+}catch(error){
+
+console.error(error);
+
+let message =
+"تعذر إنشاء الحساب.";
+
+if(error && error.message){
+
+message =
+error.message;
+
+}
+
+
+/*
+رسائل مفهومة للمستخدم.
+*/
+
+if(
+message.toLowerCase()
+.includes("already registered")
+){
+
+message =
+"هذا البريد الإلكتروني مسجل بالفعل.";
+
+}
+
+else if(
+message.toLowerCase()
+.includes("invalid email")
+){
+
+message =
+"البريد الإلكتروني غير صحيح.";
+
+}
+
+else if(
+message.toLowerCase()
+.includes("password")
+){
+
+message =
+"تأكد أن كلمة المرور 6 أحرف على الأقل.";
+
+}
+
+
+errorElement.textContent =
+message;
+
+errorElement.classList.remove("hidden");
+
+
+}finally{
+
+button.disabled = false;
+
+button.textContent =
+"إنشاء الحساب";
+
+}
+
+}
+);
+
+
+/* ================= LOGOUT ================= */
+
+async function logout(){
+
+try{
+
+const {
+error
+} =
+await supabase
+.auth
+.signOut();
+
+
+if(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تسجيل الخروج:\n" +
+error.message
+);
+
+return;
+
+}
+
+
+currentSession = null;
+
+
+document
+.getElementById("doctorDashboard")
+.classList.add("hidden-section");
+
+document
+.getElementById("materialsSection")
+.classList.add("hidden-section");
+
+document
+.getElementById("homeSection")
+.classList.remove("hidden-section");
+
+
+await updateAuthUI();
+
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تسجيل الخروج."
+);
+
+}
+
+}
+
+
+window.logout =
+logout;
+
+
 /* ================= SUBJECTS ================= */
 
 async function loadSubjects(){
@@ -884,6 +1435,7 @@ await supabase
 .select("*")
 .order("id",{ascending:true});
 
+
 if(error){
 
 console.error(error);
@@ -892,8 +1444,10 @@ return;
 
 }
 
+
 subjects =
 data || [];
+
 
 renderSubjects();
 
@@ -911,6 +1465,7 @@ document.getElementById("subjectsGrid");
 
 grid.innerHTML = "";
 
+
 if(!subjects.length){
 
 grid.innerHTML = `
@@ -923,10 +1478,12 @@ return;
 
 }
 
+
 subjects.forEach(subject=>{
 
 const card =
 document.createElement("button");
+
 
 card.className = `
 text-right
@@ -937,7 +1494,9 @@ transition border
 border-slate-100 dark:border-slate-800
 `;
 
+
 card.innerHTML = `
+
 <div class="w-14 h-14 rounded-2xl
 bg-brand-100 dark:bg-brand-900/40
 flex items-center justify-center
@@ -958,8 +1517,10 @@ ${escapeHtml(subject.description || "محتوى تعليمي")}
 </div>
 `;
 
+
 card.onclick =
 ()=>loadMaterials(subject.id);
+
 
 grid.appendChild(card);
 
@@ -975,20 +1536,25 @@ async function loadMaterials(subjectId){
 currentSubjectId =
 subjectId;
 
+
 const subject =
 subjects.find(
 item =>
-Number(item.id) === Number(subjectId)
+Number(item.id) ===
+Number(subjectId)
 );
+
 
 document
 .getElementById("selectedSubjectLabel")
 .textContent =
 subject ? subject.name : "";
 
+
 document
 .getElementById("homeSection")
 .classList.add("hidden-section");
+
 
 document
 .getElementById("materialsSection")
@@ -997,6 +1563,7 @@ document
 
 const grid =
 document.getElementById("materialsGrid");
+
 
 grid.innerHTML = `
 <div class="col-span-full text-center p-10">
@@ -1022,7 +1589,9 @@ if(error){
 
 console.error(error);
 
+
 grid.innerHTML = `
+
 <div class="col-span-full text-center
 bg-white dark:bg-slate-900
 rounded-3xl p-10">
@@ -1044,8 +1613,10 @@ return;
 
 }
 
+
 materials =
 data || [];
+
 
 renderMaterials();
 
@@ -1057,11 +1628,14 @@ function renderMaterials(){
 const grid =
 document.getElementById("materialsGrid");
 
+
 grid.innerHTML = "";
+
 
 if(!materials.length){
 
 grid.innerHTML = `
+
 <div class="col-span-full text-center
 bg-white dark:bg-slate-900
 rounded-3xl p-12">
@@ -1088,14 +1662,20 @@ return;
 
 materials.forEach(material=>{
 
+
 const url =
-normalizeStorageUrl(material.file_url);
+normalizeStorageUrl(
+material.file_url
+);
+
 
 const type =
 material.file_type;
 
+
 const card =
 document.createElement("article");
+
 
 card.className = `
 material-card
@@ -1104,11 +1684,14 @@ rounded-3xl overflow-hidden shadow
 border border-slate-100 dark:border-slate-800
 `;
 
+
 let content = "";
+
 
 if(type === "video"){
 
 content = `
+
 <video
 controls
 preload="metadata"
@@ -1123,9 +1706,11 @@ class="w-full aspect-video bg-black">
 
 }
 
+
 else if(type === "audio"){
 
 content = `
+
 <div class="p-6 bg-gradient-to-br
 from-brand-50 to-white
 dark:from-brand-950/30
@@ -1148,9 +1733,11 @@ dark:to-slate-900">
 
 }
 
+
 else if(type === "image"){
 
 content = `
+
 <div class="w-full aspect-video bg-slate-100
 dark:bg-slate-800 flex items-center justify-center">
 
@@ -1164,9 +1751,11 @@ class="w-full h-full object-contain">
 
 }
 
+
 else if(type === "pdf"){
 
 content = `
+
 <div class="aspect-video bg-red-50
 dark:bg-red-950/20
 flex flex-col items-center
@@ -1185,9 +1774,11 @@ PDF
 
 }
 
+
 else{
 
 content = `
+
 <div class="aspect-video bg-slate-100
 dark:bg-slate-800
 flex items-center justify-center
@@ -1201,9 +1792,11 @@ text-6xl">
 
 let action = "";
 
+
 if(type === "pdf"){
 
 action = `
+
 <a
 href="${escapeHtml(url)}"
 target="_blank"
@@ -1218,9 +1811,14 @@ rounded-xl bg-brand-600 text-white font-bold">
 
 }
 
-else if(type === "image" || type === "file"){
+
+else if(
+type === "image" ||
+type === "file"
+){
 
 action = `
+
 <a
 href="${escapeHtml(url)}"
 target="_blank"
@@ -1237,6 +1835,7 @@ rounded-xl bg-brand-600 text-white font-bold">
 
 
 card.innerHTML = `
+
 ${content}
 
 <div class="p-5">
@@ -1285,6 +1884,7 @@ action
 </div>
 `;
 
+
 grid.appendChild(card);
 
 });
@@ -1305,19 +1905,16 @@ return;
 }
 
 
-const {
-data:profile
-} =
-await supabase
-.from("profiles")
-.select("role")
-.eq("id",currentSession.user.id)
-.maybeSingle();
+const profile =
+await getCurrentProfile();
 
 
-if(!profile || profile.role !== "doctor"){
+if(!profile ||
+profile.role !== "doctor"){
 
-alert("هذا الحساب ليس حساب دكتور.");
+alert(
+"هذا الحساب ليس حساب دكتور."
+);
 
 return;
 
@@ -1328,13 +1925,16 @@ document
 .getElementById("homeSection")
 .classList.add("hidden-section");
 
+
 document
 .getElementById("materialsSection")
 .classList.add("hidden-section");
 
+
 document
 .getElementById("doctorDashboard")
 .classList.remove("hidden-section");
+
 
 await loadDoctorMaterials();
 
@@ -1368,8 +1968,10 @@ return;
 
 }
 
+
 materials =
 data || [];
+
 
 renderDoctorMaterials();
 
@@ -1387,11 +1989,14 @@ function renderDoctorMaterials(){
 const container =
 document.getElementById("doctorMaterials");
 
+
 container.innerHTML = "";
+
 
 if(!materials.length){
 
 container.innerHTML = `
+
 <div class="text-center p-10 text-slate-500">
 لا يوجد محتوى حتى الآن.
 </div>
@@ -1404,6 +2009,7 @@ return;
 
 materials.forEach(material=>{
 
+
 const subject =
 subjects.find(
 item =>
@@ -1411,8 +2017,10 @@ Number(item.id) ===
 Number(material.subject_id)
 );
 
+
 const row =
 document.createElement("div");
+
 
 row.className = `
 border border-slate-200
@@ -1422,7 +2030,9 @@ lg:flex-row lg:items-center
 justify-between gap-4
 `;
 
+
 row.innerHTML = `
+
 <div class="min-w-0">
 
 <div class="flex flex-wrap items-center gap-2">
@@ -1494,6 +2104,7 @@ bg-red-600 text-white font-bold">
 </div>
 `;
 
+
 container.appendChild(row);
 
 });
@@ -1511,10 +2122,12 @@ async function(event){
 
 event.preventDefault();
 
+
 const subjectId =
 document
 .getElementById("uploadSubject")
 .value;
+
 
 const title =
 document
@@ -1522,16 +2135,19 @@ document
 .value
 .trim();
 
+
 const description =
 document
 .getElementById("materialDescription")
 .value
 .trim();
 
+
 const file =
 document
 .getElementById("materialFile")
 .files[0];
+
 
 const sortOrder =
 Number(
@@ -1540,33 +2156,42 @@ document
 .value || 0
 );
 
+
 if(!file){
 
-alert("اختر ملفاً أولاً.");
+alert(
+"اختر ملفاً أولاً."
+);
 
 return;
 
 }
 
+
 const button =
 document
 .getElementById("uploadButton");
+
 
 button.disabled = true;
 
 button.textContent =
 "جاري الرفع...";
 
+
 try{
+
 
 const fileType =
 getFileType(file);
+
 
 const fileUrl =
 await uploadFileToStorage(
 file,
 "materials"
 );
+
 
 const {
 error
@@ -1593,31 +2218,37 @@ sortOrder
 
 });
 
+
 if(error){
 
 throw error;
 
 }
 
+
 alert(
 "تم رفع المحتوى بنجاح."
 );
+
 
 document
 .getElementById("uploadForm")
 .reset();
 
+
 document
 .getElementById("materialSortOrder")
 .value = 0;
 
+
 await loadDoctorMaterials();
 
-}
 
+}
 catch(error){
 
 console.error(error);
+
 
 alert(
 "حدث خطأ أثناء الرفع:\n" +
@@ -1625,7 +2256,6 @@ error.message
 );
 
 }
-
 finally{
 
 button.disabled = false;
@@ -1647,30 +2277,37 @@ async function(id){
 const material =
 materials.find(
 item =>
-Number(item.id) === Number(id)
+Number(item.id) ===
+Number(id)
 );
 
+
 if(!material)return;
+
 
 document
 .getElementById("editMaterialId")
 .value =
 material.id;
 
+
 document
 .getElementById("editTitle")
 .value =
 material.title || "";
+
 
 document
 .getElementById("editDescription")
 .value =
 material.description || "";
 
+
 document
 .getElementById("editSortOrder")
 .value =
 material.sort_order || 0;
+
 
 document
 .getElementById("editModal")
@@ -1697,10 +2334,12 @@ async function(event){
 
 event.preventDefault();
 
+
 const id =
 document
 .getElementById("editMaterialId")
 .value;
+
 
 const title =
 document
@@ -1708,11 +2347,13 @@ document
 .value
 .trim();
 
+
 const description =
 document
 .getElementById("editDescription")
 .value
 .trim();
+
 
 const sortOrder =
 Number(
@@ -1721,17 +2362,21 @@ document
 .value || 0
 );
 
+
 const {
 error
 } =
 await supabase
 .from("materials")
 .update({
+
 title,
 description,
 sort_order:sortOrder
+
 })
 .eq("id",id);
+
 
 if(error){
 
@@ -1743,6 +2388,7 @@ error.message
 return;
 
 }
+
 
 closeEditModal();
 
@@ -1760,24 +2406,31 @@ async function(id){
 const material =
 materials.find(
 item =>
-Number(item.id) === Number(id)
+Number(item.id) ===
+Number(id)
 );
 
+
 if(!material)return;
+
 
 const confirmed =
 confirm(
 `هل تريد حذف "${material.title}"؟`
 );
 
+
 if(!confirmed)return;
 
+
 try{
+
 
 const storagePath =
 getStoragePathFromUrl(
 material.file_url
 );
+
 
 const {
 error:deleteDbError
@@ -1787,11 +2440,13 @@ await supabase
 .delete()
 .eq("id",id);
 
+
 if(deleteDbError){
 
 throw deleteDbError;
 
 }
+
 
 if(storagePath){
 
@@ -1801,7 +2456,10 @@ error:storageError
 await supabase
 .storage
 .from(STORAGE_BUCKET)
-.remove([storagePath]);
+.remove([
+storagePath
+]);
+
 
 if(storageError){
 
@@ -1814,13 +2472,15 @@ storageError
 
 }
 
+
 await loadDoctorMaterials();
 
-}
 
+}
 catch(error){
 
 console.error(error);
+
 
 alert(
 "حدث خطأ أثناء الحذف:\n" +
@@ -1840,30 +2500,40 @@ async function(id,direction){
 const index =
 materials.findIndex(
 item =>
-Number(item.id) === Number(id)
+Number(item.id) ===
+Number(id)
 );
 
+
 if(index === -1)return;
+
 
 const newIndex =
 index + direction;
 
+
 if(
 newIndex < 0 ||
 newIndex >= materials.length
-)return;
+)
+return;
+
 
 const current =
 materials[index];
 
+
 const target =
 materials[newIndex];
+
 
 const currentOrder =
 Number(current.sort_order || 0);
 
+
 const targetOrder =
 Number(target.sort_order || 0);
+
 
 const {
 error:error1
@@ -1875,6 +2545,7 @@ sort_order:targetOrder
 })
 .eq("id",current.id);
 
+
 if(error1){
 
 alert(error1.message);
@@ -1882,6 +2553,7 @@ alert(error1.message);
 return;
 
 }
+
 
 const {
 error:error2
@@ -1893,6 +2565,7 @@ sort_order:currentOrder
 })
 .eq("id",target.id);
 
+
 if(error2){
 
 alert(error2.message);
@@ -1900,6 +2573,7 @@ alert(error2.message);
 return;
 
 }
+
 
 await loadDoctorMaterials();
 
@@ -1913,18 +2587,23 @@ function fillUploadSubjects(){
 const select =
 document.getElementById("uploadSubject");
 
+
 select.innerHTML = "";
+
 
 subjects.forEach(subject=>{
 
 const option =
 document.createElement("option");
 
+
 option.value =
 subject.id;
 
+
 option.textContent =
 subject.name;
+
 
 select.appendChild(option);
 
@@ -1940,11 +2619,14 @@ async function updateStats(){
 const statSubjects =
 document.getElementById("statSubjects");
 
+
 const statMaterials =
 document.getElementById("statMaterials");
 
+
 const statVideos =
 document.getElementById("statVideos");
+
 
 const statAudios =
 document.getElementById("statAudios");
@@ -1966,6 +2648,7 @@ await supabase
 .from("materials")
 .select("file_type");
 
+
 if(error){
 
 console.error(error);
@@ -1974,8 +2657,10 @@ return;
 
 }
 
+
 const list =
 data || [];
+
 
 if(statMaterials){
 
@@ -1983,6 +2668,7 @@ statMaterials.textContent =
 list.length;
 
 }
+
 
 if(statVideos){
 
@@ -1993,6 +2679,7 @@ item.file_type === "video"
 ).length;
 
 }
+
 
 if(statAudios){
 
@@ -2016,13 +2703,16 @@ document
 .getElementById("homeSection")
 .classList.remove("hidden-section");
 
+
 document
 .getElementById("materialsSection")
 .classList.add("hidden-section");
 
+
 document
 .getElementById("doctorDashboard")
 .classList.add("hidden-section");
+
 
 window.scrollTo({
 top:0,
@@ -2057,4 +2747,4 @@ await loadSubjects();
 </script>
 
 </body>
-</html>
+    </html>
