@@ -1,576 +1,408 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أزهري وأفتخر</title>
 
-    <title>أزهري وأفتخر</title>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: "#f0fdf4",
-                            100: "#dcfce7",
-                            200: "#bbf7d0",
-                            300: "#86efac",
-                            400: "#4ade80",
-                            500: "#22c55e",
-                            600: "#16a34a",
-                            700: "#15803d",
-                            800: "#166534",
-                            900: "#14532d"
-                        }
-                    }
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                brand: {
+                    50:"#f0fdf4",100:"#dcfce7",200:"#bbf7d0",
+                    300:"#86efac",400:"#4ade80",500:"#22c55e",
+                    600:"#16a34a",700:"#15803d",800:"#166534",900:"#14532d"
                 }
             }
-        };
-    </script>
-
-    <style>
-        body {
-            font-family: Arial, Tahoma, sans-serif;
         }
+    }
+};
+</script>
 
-        .glass {
-            background: rgba(255,255,255,.75);
-            backdrop-filter: blur(12px);
-        }
-
-        .dark .glass {
-            background: rgba(15,23,42,.75);
-        }
-
-        .material-card {
-            transition: .25s ease;
-        }
-
-        .material-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .hidden-section {
-            display: none !important;
-        }
-
-        audio {
-            width: 100%;
-        }
-    </style>
+<style>
+body{font-family:Arial,Tahoma,sans-serif}
+.glass{background:rgba(255,255,255,.75);backdrop-filter:blur(12px)}
+.dark .glass{background:rgba(15,23,42,.75)}
+.material-card{transition:.25s ease}
+.material-card:hover{transform:translateY(-4px)}
+.hidden-section{display:none!important}
+audio{width:100%}
+</style>
 </head>
 
 <body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-white">
 
-<!-- ================= HEADER ================= -->
-
 <header class="sticky top-0 z-50 border-b border-slate-200 dark:border-slate-800 glass">
+<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
 
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+<button onclick="showHome()" class="text-xl md:text-2xl font-black text-brand-600">
+أزهري وأفتخر
+</button>
 
-        <button
-            onclick="showHome()"
-            class="text-xl md:text-2xl font-black text-brand-600">
-            أزهري وأفتخر
-        </button>
+<div class="flex items-center gap-2">
 
-        <div class="flex items-center gap-2">
+<button onclick="showHome()" class="hidden md:block px-4 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">
+الرئيسية
+</button>
 
-            <button
-                onclick="showHome()"
-                class="hidden md:block px-4 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">
-                الرئيسية
-            </button>
+<button id="doctorButton" onclick="openLoginModal()" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold">
+دخول الدكتور
+</button>
 
-            <button
-                id="doctorButton"
-                onclick="openLoginModal()"
-                class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold">
-                دخول الدكتور
-            </button>
+<button id="logoutButton" onclick="logout()" class="hidden px-4 py-2 rounded-xl bg-red-600 text-white font-bold">
+تسجيل الخروج
+</button>
 
-            <button
-                id="logoutButton"
-                onclick="logout()"
-                class="hidden px-4 py-2 rounded-xl bg-red-600 text-white font-bold">
-                تسجيل الخروج
-            </button>
-
-        </div>
-
-    </div>
-
+</div>
+</div>
 </header>
-
-
-<!-- ================= HOME ================= -->
 
 <main id="homeSection">
 
-    <!-- HERO -->
+<section class="max-w-7xl mx-auto px-4 py-16">
+<div class="rounded-3xl bg-gradient-to-br from-brand-700 to-brand-500 text-white p-8 md:p-16 shadow-xl">
 
-    <section class="max-w-7xl mx-auto px-4 py-16">
+<div class="max-w-3xl">
 
-        <div class="rounded-3xl bg-gradient-to-br from-brand-700 to-brand-500 text-white p-8 md:p-16 shadow-xl">
+<span class="inline-block mb-4 px-4 py-2 rounded-full bg-white/20">
+منصة تعليمية
+</span>
 
-            <div class="max-w-3xl">
+<h1 class="text-4xl md:text-6xl font-black leading-tight">
+أزهري وأفتخر
+</h1>
 
-                <span class="inline-block mb-4 px-4 py-2 rounded-full bg-white/20">
-                    منصة تعليمية
-                </span>
+<p class="mt-6 text-lg md:text-xl text-white/90 leading-9">
+منصة تعليمية تجمع المواد الدراسية والمحتوى التعليمي
+في مكان واحد، بطريقة منظمة وسهلة للطلاب.
+</p>
 
-                <h1 class="text-4xl md:text-6xl font-black leading-tight">
-                    أزهري وأفتخر
-                </h1>
+</div>
+</div>
+</section>
 
-                <p class="mt-6 text-lg md:text-xl text-white/90 leading-9">
-                    منصة تعليمية تجمع المواد الدراسية والمحتوى التعليمي
-                    في مكان واحد، بطريقة منظمة وسهلة للطلاب.
-                </p>
+<section class="max-w-7xl mx-auto px-4 py-10">
 
-            </div>
+<div class="text-center mb-10">
 
-        </div>
+<span class="text-brand-600 font-bold">
+المواد الدراسية
+</span>
 
-    </section>
+<h2 class="text-3xl md:text-4xl font-black mt-3">
+اختر المادة
+</h2>
 
+</div>
 
-    <!-- SUBJECTS -->
-
-    <section class="max-w-7xl mx-auto px-4 py-10">
-
-        <div class="text-center mb-10">
-
-            <span class="text-brand-600 font-bold">
-                المواد الدراسية
-            </span>
-
-            <h2 class="text-3xl md:text-4xl font-black mt-3">
-                اختر المادة
-            </h2>
-
-        </div>
-
-        <div
-            id="subjectsGrid"
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        </div>
-
-    </section>
-
-
-    <!-- MATERIALS -->
-
-    <section
-        id="materialsSection"
-        class="hidden-section max-w-7xl mx-auto px-4 py-12">
-
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-
-            <div>
-
-                <p
-                    id="selectedSubjectLabel"
-                    class="text-brand-600 font-bold">
-                </p>
-
-                <h2 class="text-3xl font-black mt-2">
-                    المحتوى التعليمي
-                </h2>
-
-            </div>
-
-            <button
-                onclick="showHome()"
-                class="px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
-                ← العودة للمواد
-            </button>
-
-        </div>
-
-        <div
-            id="materialsGrid"
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- ================= DOCTOR DASHBOARD ================= -->
-
-<section
-    id="doctorDashboard"
-    class="hidden-section max-w-7xl mx-auto px-4 py-10">
-
-    <div class="mb-10">
-
-        <span class="text-brand-600 font-bold">
-            لوحة التحكم
-        </span>
-
-        <h1 class="text-4xl font-black mt-3">
-            لوحة تحكم الدكتور
-        </h1>
-
-        <p class="text-slate-500 dark:text-slate-400 mt-3">
-            إضافة وإدارة الفيديوهات والملفات والصور والصوت.
-        </p>
-
-    </div>
-
-
-    <!-- STATS -->
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-
-        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
-            <p class="text-slate-500">المواد</p>
-            <p id="statSubjects" class="text-3xl font-black mt-2">0</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
-            <p class="text-slate-500">المحتوى</p>
-            <p id="statMaterials" class="text-3xl font-black mt-2">0</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
-            <p class="text-slate-500">الفيديوهات</p>
-            <p id="statVideos" class="text-3xl font-black mt-2">0</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
-            <p class="text-slate-500">الصوتيات</p>
-            <p id="statAudios" class="text-3xl font-black mt-2">0</p>
-        </div>
-
-    </div>
-
-
-    <!-- ADD MATERIAL -->
-
-    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow mb-10">
-
-        <h2 class="text-2xl font-black mb-6">
-            إضافة محتوى جديد
-        </h2>
-
-        <form id="uploadForm" class="space-y-5">
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    المادة
-                </label>
-
-                <select
-                    id="uploadSubject"
-                    required
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-                </select>
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    عنوان المحتوى
-                </label>
-
-                <input
-                    id="materialTitle"
-                    type="text"
-                    required
-                    placeholder="مثال: المحاضرة الأولى"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    الوصف
-                </label>
-
-                <textarea
-                    id="materialDescription"
-                    rows="3"
-                    placeholder="وصف مختصر للمحتوى"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    الملف
-                </label>
-
-                <input
-                    id="materialFile"
-                    type="file"
-                    required
-                    accept=".mp4,.webm,.mov,.pdf,image/*,.mp3,.wav,.ogg,.m4a,.aac,.flac"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-                <p class="text-sm text-slate-500 mt-2">
-                    مسموح: فيديو، PDF، صور، MP3، WAV، OGG، M4A، AAC، FLAC
-                </p>
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    ترتيب المحتوى
-                </label>
-
-                <input
-                    id="materialSortOrder"
-                    type="number"
-                    value="0"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <button
-                id="uploadButton"
-                type="submit"
-                class="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-black">
-                رفع المحتوى
-            </button>
-
-        </form>
-
-    </div>
-
-
-    <!-- MANAGEMENT -->
-
-    <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow">
-
-        <div class="flex items-center justify-between gap-4 mb-6">
-
-            <h2 class="text-2xl font-black">
-                إدارة المحتوى
-            </h2>
-
-            <button
-                onclick="loadDoctorMaterials()"
-                class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
-                تحديث
-            </button>
-
-        </div>
-
-        <div
-            id="doctorMaterials"
-            class="space-y-4">
-        </div>
-
-    </div>
+<div id="subjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
 
 </section>
 
+<section id="materialsSection" class="hidden-section max-w-7xl mx-auto px-4 py-12">
 
-<!-- ================= LOGIN MODAL ================= -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 
-<div
-    id="loginModal"
-    class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
+<div>
 
-    <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl">
+<p id="selectedSubjectLabel" class="text-brand-600 font-bold"></p>
 
-        <div class="flex items-center justify-between mb-6">
-
-            <h2 class="text-2xl font-black">
-                دخول الدكتور
-            </h2>
-
-            <button
-                onclick="closeLoginModal()"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
-                ×
-            </button>
-
-        </div>
-
-
-        <form id="loginForm" class="space-y-5">
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    البريد الإلكتروني
-                </label>
-
-                <input
-                    id="loginEmail"
-                    type="email"
-                    required
-                    autocomplete="email"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    كلمة المرور
-                </label>
-
-                <input
-                    id="loginPassword"
-                    type="password"
-                    required
-                    autocomplete="current-password"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <p
-                id="loginError"
-                class="hidden text-red-600 font-bold">
-            </p>
-
-
-            <button
-                type="submit"
-                class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
-                تسجيل الدخول
-            </button>
-
-        </form>
-
-    </div>
+<h2 class="text-3xl font-black mt-2">
+المحتوى التعليمي
+</h2>
 
 </div>
 
-
-<!-- ================= EDIT MODAL ================= -->
-
-<div
-    id="editModal"
-    class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
-
-    <div class="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl">
-
-        <div class="flex items-center justify-between mb-6">
-
-            <h2 class="text-2xl font-black">
-                تعديل المحتوى
-            </h2>
-
-            <button
-                onclick="closeEditModal()"
-                class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
-                ×
-            </button>
-
-        </div>
-
-
-        <form id="editForm" class="space-y-5">
-
-            <input
-                id="editMaterialId"
-                type="hidden">
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    العنوان
-                </label>
-
-                <input
-                    id="editTitle"
-                    type="text"
-                    required
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    الوصف
-                </label>
-
-                <textarea
-                    id="editDescription"
-                    rows="4"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
-
-            </div>
-
-
-            <div>
-
-                <label class="block font-bold mb-2">
-                    الترتيب
-                </label>
-
-                <input
-                    id="editSortOrder"
-                    type="number"
-                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
-
-            </div>
-
-
-            <button
-                type="submit"
-                class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
-                حفظ التعديل
-            </button>
-
-        </form>
-
-    </div>
+<button onclick="showHome()" class="px-5 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
+← العودة للمواد
+</button>
 
 </div>
 
+<div id="materialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
-<!-- ================= SCRIPT ================= -->
+</section>
+
+</main>
+
+<section id="doctorDashboard" class="hidden-section max-w-7xl mx-auto px-4 py-10">
+
+<div class="mb-10">
+
+<span class="text-brand-600 font-bold">
+لوحة التحكم
+</span>
+
+<h1 class="text-4xl font-black mt-3">
+لوحة تحكم الدكتور
+</h1>
+
+<p class="text-slate-500 dark:text-slate-400 mt-3">
+إضافة وإدارة الفيديوهات والملفات والصور والصوت.
+</p>
+
+</div>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
+<p class="text-slate-500">المواد</p>
+<p id="statSubjects" class="text-3xl font-black mt-2">0</p>
+</div>
+
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
+<p class="text-slate-500">المحتوى</p>
+<p id="statMaterials" class="text-3xl font-black mt-2">0</p>
+</div>
+
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
+<p class="text-slate-500">الفيديوهات</p>
+<p id="statVideos" class="text-3xl font-black mt-2">0</p>
+</div>
+
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-5 shadow">
+<p class="text-slate-500">الصوتيات</p>
+<p id="statAudios" class="text-3xl font-black mt-2">0</p>
+</div>
+
+</div>
+
+<div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow mb-10">
+
+<h2 class="text-2xl font-black mb-6">
+إضافة محتوى جديد
+</h2>
+
+<form id="uploadForm" class="space-y-5">
+
+<div>
+<label class="block font-bold mb-2">المادة</label>
+
+<select id="uploadSubject" required
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+</select>
+</div>
+
+<div>
+<label class="block font-bold mb-2">عنوان المحتوى</label>
+
+<input id="materialTitle" type="text" required
+placeholder="مثال: المحاضرة الأولى"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+</div>
+
+<div>
+<label class="block font-bold mb-2">الوصف</label>
+
+<textarea id="materialDescription" rows="3"
+placeholder="وصف مختصر للمحتوى"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+الملف
+</label>
+
+<input
+id="materialFile"
+type="file"
+required
+accept=".mp4,.webm,.mov,.pdf,image/*,.mp3,.wav,.ogg,.m4a,.aac,.flac"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+<p class="text-sm text-slate-500 mt-2">
+مسموح: فيديو، PDF، صور، MP3، WAV، OGG، M4A، AAC، FLAC
+</p>
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+ترتيب المحتوى
+</label>
+
+<input
+id="materialSortOrder"
+type="number"
+value="0"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<button
+id="uploadButton"
+type="submit"
+class="w-full py-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-black">
+رفع المحتوى
+</button>
+
+</form>
+</div>
+
+<div class="bg-white dark:bg-slate-900 rounded-3xl p-6 md:p-8 shadow">
+
+<div class="flex items-center justify-between gap-4 mb-6">
+
+<h2 class="text-2xl font-black">
+إدارة المحتوى
+</h2>
+
+<button onclick="loadDoctorMaterials()"
+class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 font-bold">
+تحديث
+</button>
+
+</div>
+
+<div id="doctorMaterials" class="space-y-4"></div>
+
+</div>
+
+</section>
+
+<div id="loginModal"
+class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
+
+<div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl">
+
+<div class="flex items-center justify-between mb-6">
+
+<h2 class="text-2xl font-black">
+دخول الدكتور
+</h2>
+
+<button onclick="closeLoginModal()"
+class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
+×
+</button>
+
+</div>
+
+<form id="loginForm" class="space-y-5">
+
+<div>
+
+<label class="block font-bold mb-2">
+البريد الإلكتروني
+</label>
+
+<input id="loginEmail" type="email" required autocomplete="email"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+كلمة المرور
+</label>
+
+<input id="loginPassword" type="password" required autocomplete="current-password"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<p id="loginError" class="hidden text-red-600 font-bold"></p>
+
+<button type="submit"
+class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
+تسجيل الدخول
+</button>
+
+</form>
+</div>
+</div>
+
+<div id="editModal"
+class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
+
+<div class="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl">
+
+<div class="flex items-center justify-between mb-6">
+
+<h2 class="text-2xl font-black">
+تعديل المحتوى
+</h2>
+
+<button onclick="closeEditModal()"
+class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800">
+×
+</button>
+
+</div>
+
+<form id="editForm" class="space-y-5">
+
+<input id="editMaterialId" type="hidden">
+
+<div>
+
+<label class="block font-bold mb-2">
+العنوان
+</label>
+
+<input id="editTitle" type="text" required
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+الوصف
+</label>
+
+<textarea id="editDescription" rows="4"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3"></textarea>
+
+</div>
+
+<div>
+
+<label class="block font-bold mb-2">
+الترتيب
+</label>
+
+<input id="editSortOrder" type="number"
+class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-3">
+
+</div>
+
+<button type="submit"
+class="w-full py-4 rounded-xl bg-brand-600 text-white font-black">
+حفظ التعديل
+</button>
+
+</form>
+</div>
+</div>
 
 <script type="module">
 
 import { createClient }
 from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-
-/* ================= SUPABASE ================= */
-
 const SUPABASE_URL =
-    "https://fxezbarpvidzskcaaxnt.supabase.co";
+"https://fxezbarpvidzskcaaxnt.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
+"sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
 
 const STORAGE_BUCKET = "Content";
 
 const supabase =
-    createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* ================= GLOBAL ================= */
+createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
 let subjects = [];
 let materials = [];
@@ -580,297 +412,342 @@ let currentSession = null;
 
 /* ================= HELPERS ================= */
 
-function normalizeStorageUrl(url) {
+function normalizeStorageUrl(url){
 
-    if (!url) return url;
+if(!url)return url;
 
-    return url.replace(
-        "/storage/v1/object/public/content/",
-        "/storage/v1/object/public/Content/"
-    );
+return url.replace(
+"/storage/v1/object/public/content/",
+"/storage/v1/object/public/Content/"
+);
+
 }
 
 
-function getStoragePathFromUrl(url) {
+function getStoragePathFromUrl(url){
 
-    if (!url) return null;
+if(!url)return null;
 
-    const marker =
-        `/storage/v1/object/public/${STORAGE_BUCKET}/`;
+const marker =
+`/storage/v1/object/public/${STORAGE_BUCKET}/`;
 
-    const index = url.indexOf(marker);
+const index = url.indexOf(marker);
 
-    if (index === -1) return null;
+if(index === -1)return null;
 
-    return decodeURIComponent(
-        url.substring(index + marker.length)
-    );
+return decodeURIComponent(
+url.substring(index + marker.length)
+);
+
 }
 
 
-function escapeHtml(value) {
+function escapeHtml(value){
 
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
 }
 
 
-function getFileType(file) {
+function getFileType(file){
 
-    const type =
-        String(file.type || "").toLowerCase();
+const type =
+String(file.type || "").toLowerCase();
 
-    if (type === "application/pdf") {
-        return "pdf";
-    }
+if(type === "application/pdf")return "pdf";
 
-    if (type.startsWith("image/")) {
-        return "image";
-    }
+if(type.startsWith("image/"))return "image";
 
-    if (type.startsWith("video/")) {
-        return "video";
-    }
+if(type.startsWith("video/"))return "video";
 
-    if (type.startsWith("audio/")) {
-        return "audio";
-    }
+if(type.startsWith("audio/"))return "audio";
 
-    return "file";
+return "file";
+
 }
 
 
-/* ================= SAFE UPLOAD ================= */
+/* ==================================================
+   UPLOAD — SAFE VERSION
+   اسم الملف الأصلي لا يدخل Storage نهائياً
+================================================== */
 
-async function uploadFileToStorage(file, folder) {
+async function uploadFileToStorage(file,folder){
 
-    const mimeType =
-        String(file.type || "").toLowerCase();
-
-    let extension = "bin";
-
-
-    if (mimeType === "application/pdf") {
-
-        extension = "pdf";
-
-    }
+if(!file){
+throw new Error("لم يتم اختيار ملف.");
+}
 
 
-    else if (mimeType.startsWith("image/")) {
+/*
+نحدد الامتداد من MIME Type فقط.
+لا نستخدم file.name إطلاقاً.
+*/
 
-        const imageExtensions = {
+const mimeType =
+String(file.type || "").toLowerCase();
 
-            "image/jpeg": "jpg",
-            "image/jpg": "jpg",
-            "image/png": "png",
-            "image/webp": "webp",
-            "image/gif": "gif",
-            "image/bmp": "bmp",
-            "image/svg+xml": "svg"
-
-        };
-
-        extension =
-            imageExtensions[mimeType] || "jpg";
-
-    }
+let extension = "bin";
 
 
-    else if (mimeType.startsWith("video/")) {
+if(mimeType === "application/pdf"){
 
-        const videoExtensions = {
+extension = "pdf";
 
-            "video/mp4": "mp4",
-            "video/webm": "webm",
-            "video/quicktime": "mov",
-            "video/x-msvideo": "avi"
+}
 
-        };
+else if(mimeType.startsWith("image/")){
 
-        extension =
-            videoExtensions[mimeType] || "mp4";
+const imageExtensions = {
 
-    }
+"image/jpeg":"jpg",
+"image/jpg":"jpg",
+"image/png":"png",
+"image/webp":"webp",
+"image/gif":"gif",
+"image/bmp":"bmp",
+"image/svg+xml":"svg"
 
+};
 
-    else if (mimeType.startsWith("audio/")) {
+extension =
+imageExtensions[mimeType] || "jpg";
 
-        const audioExtensions = {
+}
 
-            "audio/mpeg": "mp3",
-            "audio/mp3": "mp3",
-            "audio/wav": "wav",
-            "audio/x-wav": "wav",
-            "audio/ogg": "ogg",
-            "audio/mp4": "m4a",
-            "audio/x-m4a": "m4a",
-            "audio/aac": "aac",
-            "audio/flac": "flac",
-            "audio/webm": "webm"
+else if(mimeType.startsWith("video/")){
 
-        };
+const videoExtensions = {
 
-        extension =
-            audioExtensions[mimeType] || "mp3";
+"video/mp4":"mp4",
+"video/webm":"webm",
+"video/quicktime":"mov",
+"video/x-msvideo":"avi"
 
-    }
+};
 
+extension =
+videoExtensions[mimeType] || "mp4";
 
-    /*
-       مهم جداً:
-       لا نستخدم اسم الملف الأصلي نهائياً.
-       ده يمنع مشاكل العربي والأرقام العربية والفارسية
-       في أسماء ملفات Storage.
-    */
+}
 
-    const safeName =
-        `file-${Date.now()}-${Math.random()
-            .toString(36)
-            .substring(2, 10)}.${extension}`;
+else if(mimeType.startsWith("audio/")){
 
+const audioExtensions = {
 
-    const path =
-        `${folder}/${safeName}`;
+"audio/mpeg":"mp3",
+"audio/mp3":"mp3",
+"audio/wav":"wav",
+"audio/x-wav":"wav",
+"audio/ogg":"ogg",
+"audio/mp4":"m4a",
+"audio/x-m4a":"m4a",
+"audio/aac":"aac",
+"audio/flac":"flac",
+"audio/webm":"webm"
 
+};
 
-    const {
-        error
-    } =
-        await supabase
-            .storage
-            .from(STORAGE_BUCKET)
-            .upload(
-                path,
-                file,
-                {
-                    upsert: false,
-                    contentType:
-                        file.type ||
-                        "application/octet-stream"
-                }
-            );
+extension =
+audioExtensions[mimeType] || "mp3";
+
+}
 
 
-    if (error) {
-        throw error;
-    }
+/*
+نستخدم crypto.randomUUID()
+بدلاً من اسم الملف الأصلي.
+
+مثال:
+file-1791273000000-a8f3c2d1.jpg
+
+وهو اسم ASCII آمن لـ Supabase Storage.
+*/
+
+let randomPart = "";
+
+if(
+window.crypto &&
+typeof window.crypto.randomUUID === "function"
+){
+
+randomPart =
+window.crypto
+.randomUUID()
+.replace(/-/g,"");
+
+}else{
+
+randomPart =
+Math.random()
+.toString(36)
+.substring(2,14);
+
+}
 
 
-    const {
-        data
-    } =
-        supabase
-            .storage
-            .from(STORAGE_BUCKET)
-            .getPublicUrl(path);
+const safeName =
+`file-${Date.now()}-${randomPart}.${extension}`;
 
 
-    return normalizeStorageUrl(
-        data.publicUrl
-    );
+/*
+المسار النهائي لا يحتوي على:
+اسم المستخدم
+العربي
+الأرقام العربية
+المسافات
+الرموز الخاصة
+*/
+
+const path =
+`${folder}/${safeName}`;
+
+
+console.log("Uploading safe path:",path);
+
+
+const {
+error
+} =
+await supabase
+.storage
+.from(STORAGE_BUCKET)
+.upload(
+path,
+file,
+{
+upsert:false,
+contentType:
+file.type ||
+"application/octet-stream"
+}
+);
+
+
+if(error){
+
+console.error("Supabase Storage Error:",error);
+
+throw error;
+
+}
+
+
+const {
+data
+} =
+supabase
+.storage
+.from(STORAGE_BUCKET)
+.getPublicUrl(path);
+
+
+if(!data || !data.publicUrl){
+
+throw new Error(
+"تم رفع الملف ولكن تعذر إنشاء الرابط."
+);
+
+}
+
+
+return normalizeStorageUrl(
+data.publicUrl
+);
+
 }
 
 
 /* ================= AUTH ================= */
 
-async function checkSession() {
+async function checkSession(){
 
-    const {
-        data
-    } =
-        await supabase
-            .auth
-            .getSession();
+const {
+data
+} =
+await supabase
+.auth
+.getSession();
 
-    currentSession =
-        data.session;
+currentSession =
+data.session;
 
-    await updateAuthUI();
-
-}
-
-
-async function updateAuthUI() {
-
-    const doctorButton =
-        document.getElementById(
-            "doctorButton"
-        );
-
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
-
-
-    if (!currentSession) {
-
-        doctorButton.classList.remove("hidden");
-        logoutButton.classList.add("hidden");
-
-        return;
-
-    }
-
-
-    const {
-        data: profile
-    } =
-        await supabase
-            .from("profiles")
-            .select("role,name")
-            .eq(
-                "id",
-                currentSession.user.id
-            )
-            .maybeSingle();
-
-
-    if (
-        profile &&
-        profile.role === "doctor"
-    ) {
-
-        doctorButton.textContent =
-            "لوحة الدكتور";
-
-        doctorButton.onclick =
-            showDoctorDashboard;
-
-        logoutButton.classList.remove("hidden");
-
-    }
-
-    else {
-
-        doctorButton.classList.remove("hidden");
-        logoutButton.classList.add("hidden");
-
-    }
+await updateAuthUI();
 
 }
 
 
-async function logout() {
+async function updateAuthUI(){
 
-    await supabase.auth.signOut();
+const doctorButton =
+document.getElementById("doctorButton");
 
-    currentSession = null;
+const logoutButton =
+document.getElementById("logoutButton");
 
-    document
-        .getElementById("doctorDashboard")
-        .classList.add("hidden-section");
 
-    document
-        .getElementById("homeSection")
-        .classList.remove("hidden-section");
+if(!currentSession){
 
-    await updateAuthUI();
+doctorButton.classList.remove("hidden");
+
+logoutButton.classList.add("hidden");
+
+return;
+
+}
+
+
+const {
+data:profile
+} =
+await supabase
+.from("profiles")
+.select("role,name")
+.eq("id",currentSession.user.id)
+.maybeSingle();
+
+
+if(profile && profile.role === "doctor"){
+
+doctorButton.textContent =
+"لوحة الدكتور";
+
+doctorButton.onclick =
+showDoctorDashboard;
+
+logoutButton.classList.remove("hidden");
+
+}else{
+
+doctorButton.classList.remove("hidden");
+
+logoutButton.classList.add("hidden");
+
+}
+
+}
+
+
+async function logout(){
+
+await supabase.auth.signOut();
+
+currentSession = null;
+
+document
+.getElementById("doctorDashboard")
+.classList.add("hidden-section");
+
+document
+.getElementById("homeSection")
+.classList.remove("hidden-section");
+
+await updateAuthUI();
 
 }
 
@@ -878,804 +755,684 @@ async function logout() {
 /* ================= LOGIN ================= */
 
 window.openLoginModal =
-function () {
+function(){
 
-    document
-        .getElementById("loginModal")
-        .classList.remove("hidden");
+document
+.getElementById("loginModal")
+.classList.remove("hidden");
 
 };
 
 
 window.closeLoginModal =
-function () {
+function(){
 
-    document
-        .getElementById("loginModal")
-        .classList.add("hidden");
+document
+.getElementById("loginModal")
+.classList.add("hidden");
 
 };
 
 
 document
-    .getElementById("loginForm")
-    .addEventListener(
-        "submit",
-        async function (event) {
+.getElementById("loginForm")
+.addEventListener(
+"submit",
+async function(event){
 
-            event.preventDefault();
+event.preventDefault();
 
+const email =
+document
+.getElementById("loginEmail")
+.value
+.trim();
 
-            const email =
-                document
-                    .getElementById("loginEmail")
-                    .value
-                    .trim();
+const password =
+document
+.getElementById("loginPassword")
+.value;
 
+const errorElement =
+document
+.getElementById("loginError");
 
-            const password =
-                document
-                    .getElementById("loginPassword")
-                    .value;
-
-
-            const errorElement =
-                document
-                    .getElementById("loginError");
-
-
-            errorElement.classList.add("hidden");
+errorElement.classList.add("hidden");
 
 
-            const {
-                data,
-                error
-            } =
-                await supabase
-                    .auth
-                    .signInWithPassword({
-                        email,
-                        password
-                    });
+const {
+data,
+error
+} =
+await supabase
+.auth
+.signInWithPassword({
+email,
+password
+});
 
 
-            if (error) {
+if(error){
 
-                errorElement.textContent =
-                    "بيانات الدخول غير صحيحة.";
+errorElement.textContent =
+"بيانات الدخول غير صحيحة.";
 
-                errorElement.classList.remove("hidden");
+errorElement.classList.remove("hidden");
 
-                return;
-
-            }
-
-
-            currentSession =
-                data.session;
-
-
-            closeLoginModal();
-
-            await updateAuthUI();
-
-            await showDoctorDashboard();
-
-        }
-    );
-
-
-/* ================= SUBJECTS ================= */
-
-async function loadSubjects() {
-
-    const {
-        data,
-        error
-    } =
-        await supabase
-            .from("subjects")
-            .select("*")
-            .order("id", {
-                ascending: true
-            });
-
-
-    if (error) {
-
-        console.error(error);
-
-        return;
-
-    }
-
-
-    subjects = data || [];
-
-    renderSubjects();
-
-    fillUploadSubjects();
-
-    updateStats();
+return;
 
 }
 
 
-function renderSubjects() {
+currentSession =
+data.session;
 
-    const grid =
-        document.getElementById(
-            "subjectsGrid"
-        );
+closeLoginModal();
 
+await updateAuthUI();
 
-    grid.innerHTML = "";
+await showDoctorDashboard();
 
-
-    if (!subjects.length) {
-
-        grid.innerHTML =
-            `
-            <div class="col-span-full text-center p-10 text-slate-500">
-                لا توجد مواد حالياً.
-            </div>
-            `;
-
-        return;
-
-    }
+}
+);
 
 
-    subjects.forEach(subject => {
+/* ================= SUBJECTS ================= */
 
-        const card =
-            document.createElement("button");
+async function loadSubjects(){
 
-
-        card.className =
-            `
-            text-right
-            bg-white
-            dark:bg-slate-900
-            rounded-3xl
-            p-6
-            shadow
-            hover:shadow-xl
-            hover:-translate-y-1
-            transition
-            border
-            border-slate-100
-            dark:border-slate-800
-            `;
+const {
+data,
+error
+} =
+await supabase
+.from("subjects")
+.select("*")
+.order("id",{ascending:true});
 
 
-        card.innerHTML =
-            `
-            <div class="w-14 h-14 rounded-2xl
-                        bg-brand-100 dark:bg-brand-900/40
-                        flex items-center justify-center
-                        text-2xl mb-5">
-                📚
-            </div>
+if(error){
 
-            <h3 class="text-xl font-black">
-                ${escapeHtml(subject.name)}
-            </h3>
+console.error(error);
 
-            <p class="text-slate-500 dark:text-slate-400 mt-2 leading-7">
-                ${escapeHtml(subject.description || "محتوى تعليمي")}
-            </p>
+return;
 
-            <div class="mt-5 text-brand-600 font-bold">
-                عرض المحتوى ←
-            </div>
-            `;
+}
 
 
-        card.onclick =
-            () => loadMaterials(subject.id);
+subjects =
+data || [];
+
+renderSubjects();
+
+fillUploadSubjects();
+
+updateStats();
+
+}
 
 
-        grid.appendChild(card);
+function renderSubjects(){
 
-    });
+const grid =
+document.getElementById("subjectsGrid");
+
+grid.innerHTML = "";
+
+
+if(!subjects.length){
+
+grid.innerHTML = `
+<div class="col-span-full text-center p-10 text-slate-500">
+لا توجد مواد حالياً.
+</div>
+`;
+
+return;
+
+}
+
+
+subjects.forEach(subject=>{
+
+const card =
+document.createElement("button");
+
+card.className = `
+text-right
+bg-white dark:bg-slate-900
+rounded-3xl p-6 shadow
+hover:shadow-xl hover:-translate-y-1
+transition border
+border-slate-100 dark:border-slate-800
+`;
+
+card.innerHTML = `
+<div class="w-14 h-14 rounded-2xl
+bg-brand-100 dark:bg-brand-900/40
+flex items-center justify-center
+text-2xl mb-5">
+📚
+</div>
+
+<h3 class="text-xl font-black">
+${escapeHtml(subject.name)}
+</h3>
+
+<p class="text-slate-500 dark:text-slate-400 mt-2 leading-7">
+${escapeHtml(subject.description || "محتوى تعليمي")}
+</p>
+
+<div class="mt-5 text-brand-600 font-bold">
+عرض المحتوى ←
+</div>
+`;
+
+card.onclick =
+()=>loadMaterials(subject.id);
+
+grid.appendChild(card);
+
+});
 
 }
 
 
 /* ================= MATERIALS ================= */
 
-async function loadMaterials(subjectId) {
+async function loadMaterials(subjectId){
 
-    currentSubjectId =
-        subjectId;
+currentSubjectId =
+subjectId;
 
-
-    const subject =
-        subjects.find(
-            item =>
-                Number(item.id) ===
-                Number(subjectId)
-        );
+const subject =
+subjects.find(
+item =>
+Number(item.id) === Number(subjectId)
+);
 
 
-    document
-        .getElementById(
-            "selectedSubjectLabel"
-        )
-        .textContent =
-        subject
-            ? subject.name
-            : "";
+document
+.getElementById("selectedSubjectLabel")
+.textContent =
+subject ? subject.name : "";
 
 
-    document
-        .getElementById(
-            "homeSection"
-        )
-        .classList.add(
-            "hidden-section"
-        );
+document
+.getElementById("homeSection")
+.classList.add("hidden-section");
 
 
-    document
-        .getElementById(
-            "materialsSection"
-        )
-        .classList.remove(
-            "hidden-section"
-        );
+document
+.getElementById("materialsSection")
+.classList.remove("hidden-section");
 
 
-    const {
-        data,
-        error
-    } =
-        await supabase
-            .from("materials")
-            .select("*")
-            .eq(
-                "subject_id",
-                subjectId
-            )
-            .order("sort_order", {
-                ascending: true
-            })
-            .order("created_at", {
-                ascending: false
-            });
+const {
+data,
+error
+} =
+await supabase
+.from("materials")
+.select("*")
+.eq("subject_id",subjectId)
+.order("sort_order",{ascending:true})
+.order("created_at",{ascending:false});
 
 
-    if (error) {
+if(error){
 
-        console.error(error);
+console.error(error);
 
-        return;
-
-    }
-
-
-    materials =
-        data || [];
-
-
-    renderMaterials();
+return;
 
 }
 
 
-function renderMaterials() {
+materials =
+data || [];
 
-    const grid =
-        document.getElementById(
-            "materialsGrid"
-        );
+renderMaterials();
 
+}
 
-    grid.innerHTML = "";
 
+function renderMaterials(){
 
-    if (!materials.length) {
+const grid =
+document.getElementById("materialsGrid");
 
-        grid.innerHTML =
-            `
-            <div class="col-span-full text-center
-                        bg-white dark:bg-slate-900
-                        rounded-3xl p-12">
+grid.innerHTML = "";
 
-                <div class="text-5xl mb-5">
-                    📚
-                </div>
 
-                <h3 class="text-2xl font-black">
-                    لا يوجد محتوى حالياً
-                </h3>
+if(!materials.length){
 
-                <p class="text-slate-500 mt-3">
-                    سيتم إضافة المحتوى قريباً.
-                </p>
+grid.innerHTML = `
+<div class="col-span-full text-center
+bg-white dark:bg-slate-900
+rounded-3xl p-12">
 
-            </div>
-            `;
+<div class="text-5xl mb-5">
+📚
+</div>
 
-        return;
+<h3 class="text-2xl font-black">
+لا يوجد محتوى حالياً
+</h3>
 
-    }
+<p class="text-slate-500 mt-3">
+سيتم إضافة المحتوى قريباً.
+</p>
 
+</div>
+`;
 
-    materials.forEach(material => {
+return;
 
-        const url =
-            normalizeStorageUrl(
-                material.file_url
-            );
+}
 
 
-        const type =
-            material.file_type;
+materials.forEach(material=>{
 
+const url =
+normalizeStorageUrl(material.file_url);
 
-        const card =
-            document.createElement("article");
+const type =
+material.file_type;
 
+const card =
+document.createElement("article");
 
-        card.className =
-            `
-            material-card
-            bg-white
-            dark:bg-slate-900
-            rounded-3xl
-            overflow-hidden
-            shadow
-            border
-            border-slate-100
-            dark:border-slate-800
-            `;
+card.className = `
+material-card
+bg-white dark:bg-slate-900
+rounded-3xl overflow-hidden shadow
+border border-slate-100 dark:border-slate-800
+`;
 
+let content = "";
 
-        let content = "";
 
+if(type === "video"){
 
-        /* VIDEO */
+content = `
+<video
+controls
+preload="metadata"
+class="w-full aspect-video bg-black">
 
-        if (type === "video") {
+<source src="${escapeHtml(url)}">
 
-            content =
-                `
-                <video
-                    controls
-                    preload="metadata"
-                    class="w-full aspect-video bg-black">
+متصفحك لا يدعم تشغيل الفيديو.
 
-                    <source
-                        src="${escapeHtml(url)}">
+</video>
+`;
 
-                    متصفحك لا يدعم تشغيل الفيديو.
-                </video>
-                `;
+}
 
-        }
+else if(type === "audio"){
 
+content = `
+<div class="p-6 bg-gradient-to-br
+from-brand-50 to-white
+dark:from-brand-950/30
+dark:to-slate-900">
 
-        /* AUDIO */
+<div class="text-5xl mb-5 text-center">
+🎧
+</div>
 
-        else if (type === "audio") {
+<audio controls preload="metadata">
 
-            content =
-                `
-                <div class="p-6 bg-gradient-to-br
-                            from-brand-50 to-white
-                            dark:from-brand-950/30
-                            dark:to-slate-900">
+<source src="${escapeHtml(url)}">
 
-                    <div class="text-5xl mb-5 text-center">
-                        🎧
-                    </div>
+متصفحك لا يدعم تشغيل الصوت.
 
-                    <audio
-                        controls
-                        preload="metadata">
+</audio>
 
-                        <source
-                            src="${escapeHtml(url)}">
+</div>
+`;
 
-                        متصفحك لا يدعم تشغيل الصوت.
-                    </audio>
+}
 
-                </div>
-                `;
+else if(type === "image"){
 
-        }
+content = `
+<img
+src="${escapeHtml(url)}"
+alt="${escapeHtml(material.title)}"
+class="w-full aspect-video object-cover">
+`;
 
+}
 
-        /* IMAGE */
+else if(type === "pdf"){
 
-        else if (type === "image") {
+content = `
+<div class="aspect-video bg-red-50
+dark:bg-red-950/20
+flex flex-col items-center
+justify-center">
 
-            content =
-                `
-                <img
-                    src="${escapeHtml(url)}"
-                    alt="${escapeHtml(material.title)}"
-                    class="w-full aspect-video object-cover">
-                `;
+<div class="text-6xl">
+📄
+</div>
 
-        }
+<div class="mt-3 font-black text-red-600">
+PDF
+</div>
 
+</div>
+`;
 
-        /* PDF */
+}
 
-        else if (type === "pdf") {
+else{
 
-            content =
-                `
-                <div class="aspect-video bg-red-50
-                            dark:bg-red-950/20
-                            flex flex-col
-                            items-center
-                            justify-center">
+content = `
+<div class="aspect-video bg-slate-100
+dark:bg-slate-800
+flex items-center justify-center
+text-6xl">
+📁
+</div>
+`;
 
-                    <div class="text-6xl">
-                        📄
-                    </div>
+}
 
-                    <div class="mt-3 font-black text-red-600">
-                        PDF
-                    </div>
 
-                </div>
-                `;
+let action = "";
 
-        }
 
+if(type === "pdf"){
 
-        else {
+action = `
+<a
+href="${escapeHtml(url)}"
+target="_blank"
+rel="noopener noreferrer"
+class="block w-full text-center py-3
+rounded-xl bg-brand-600 text-white font-bold">
 
-            content =
-                `
-                <div class="aspect-video bg-slate-100
-                            dark:bg-slate-800
-                            flex items-center justify-center
-                            text-6xl">
-                    📁
-                </div>
-                `;
+فتح ملف PDF
 
-        }
+</a>
+`;
 
+}
 
-        let action = "";
+else if(type === "image" || type === "file"){
 
+action = `
+<a
+href="${escapeHtml(url)}"
+target="_blank"
+rel="noopener noreferrer"
+class="block w-full text-center py-3
+rounded-xl bg-brand-600 text-white font-bold">
 
-        if (type === "pdf") {
+فتح المحتوى
 
-            action =
-                `
-                <a
-                    href="${escapeHtml(url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="block w-full text-center
-                           py-3 rounded-xl
-                           bg-brand-600 text-white
-                           font-bold">
-                    فتح ملف PDF
-                </a>
-                `;
+</a>
+`;
 
-        }
+}
 
-        else if (
-            type === "image" ||
-            type === "file"
-        ) {
 
-            action =
-                `
-                <a
-                    href="${escapeHtml(url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="block w-full text-center
-                           py-3 rounded-xl
-                           bg-brand-600 text-white
-                           font-bold">
-                    فتح المحتوى
-                </a>
-                `;
+card.innerHTML = `
+${content}
 
-        }
+<div class="p-5">
 
+<div class="flex items-start justify-between gap-3">
 
-        card.innerHTML =
-            `
-            ${content}
+<h3 class="text-xl font-black">
+${escapeHtml(material.title)}
+</h3>
 
-            <div class="p-5">
+<span class="shrink-0 px-3 py-1
+rounded-full bg-brand-100
+dark:bg-brand-900/40
+text-brand-700 dark:text-brand-300
+text-xs font-bold">
 
-                <div class="flex items-start justify-between gap-3">
+${
+type === "video"
+?"🎥 فيديو"
+:type === "audio"
+?"🎧 صوت"
+:type === "pdf"
+?"📄 PDF"
+:type === "image"
+?"🖼️ صورة"
+:"📁 ملف"
+}
 
-                    <h3 class="text-xl font-black">
-                        ${escapeHtml(material.title)}
-                    </h3>
+</span>
 
-                    <span
-                        class="shrink-0 px-3 py-1 rounded-full
-                               bg-brand-100 dark:bg-brand-900/40
-                               text-brand-700 dark:text-brand-300
-                               text-xs font-bold">
+</div>
 
-                        ${
-                            type === "video"
-                                ? "🎥 فيديو"
-                                : type === "audio"
-                                ? "🎧 صوت"
-                                : type === "pdf"
-                                ? "📄 PDF"
-                                : type === "image"
-                                ? "🖼️ صورة"
-                                : "📁 ملف"
-                        }
+<p class="text-slate-500 dark:text-slate-400
+mt-3 leading-7">
 
-                    </span>
+${escapeHtml(material.description || "")}
 
-                </div>
+</p>
 
+${
+action
+?`<div class="mt-5">${action}</div>`
+:""
+}
 
-                <p class="text-slate-500 dark:text-slate-400
-                          mt-3 leading-7">
-                    ${escapeHtml(material.description || "")}
-                </p>
+</div>
+`;
 
+grid.appendChild(card);
 
-                ${
-                    action
-                        ? `<div class="mt-5">${action}</div>`
-                        : ""
-                }
-
-            </div>
-            `;
-
-
-        grid.appendChild(card);
-
-    });
+});
 
 }
 
 
 /* ================= DOCTOR DASHBOARD ================= */
 
-async function showDoctorDashboard() {
+async function showDoctorDashboard(){
 
-    if (!currentSession) {
+if(!currentSession){
 
-        openLoginModal();
+openLoginModal();
 
-        return;
-
-    }
-
-
-    const {
-        data: profile
-    } =
-        await supabase
-            .from("profiles")
-            .select("role")
-            .eq(
-                "id",
-                currentSession.user.id
-            )
-            .maybeSingle();
-
-
-    if (
-        !profile ||
-        profile.role !== "doctor"
-    ) {
-
-        alert("هذا الحساب ليس حساب دكتور.");
-
-        return;
-
-    }
-
-
-    document
-        .getElementById("homeSection")
-        .classList.add("hidden-section");
-
-
-    document
-        .getElementById("materialsSection")
-        .classList.add("hidden-section");
-
-
-    document
-        .getElementById("doctorDashboard")
-        .classList.remove("hidden-section");
-
-
-    await loadDoctorMaterials();
+return;
 
 }
 
 
-async function loadDoctorMaterials() {
-
-    const {
-        data,
-        error
-    } =
-        await supabase
-            .from("materials")
-            .select("*")
-            .order("sort_order", {
-                ascending: true
-            })
-            .order("created_at", {
-                ascending: false
-            });
+const {
+data:profile
+} =
+await supabase
+.from("profiles")
+.select("role")
+.eq("id",currentSession.user.id)
+.maybeSingle();
 
 
-    if (error) {
+if(!profile || profile.role !== "doctor"){
 
-        console.error(error);
+alert("هذا الحساب ليس حساب دكتور.");
 
-        return;
-
-    }
-
-
-    materials =
-        data || [];
-
-
-    renderDoctorMaterials();
-
-    updateStats();
+return;
 
 }
 
 
-function renderDoctorMaterials() {
+document
+.getElementById("homeSection")
+.classList.add("hidden-section");
 
-    const container =
-        document.getElementById(
-            "doctorMaterials"
-        );
+document
+.getElementById("materialsSection")
+.classList.add("hidden-section");
 
+document
+.getElementById("doctorDashboard")
+.classList.remove("hidden-section");
 
-    container.innerHTML = "";
+await loadDoctorMaterials();
 
-
-    if (!materials.length) {
-
-        container.innerHTML =
-            `
-            <div class="text-center p-10 text-slate-500">
-                لا يوجد محتوى حتى الآن.
-            </div>
-            `;
-
-        return;
-
-    }
+}
 
 
-    materials.forEach(material => {
+async function loadDoctorMaterials(){
 
-        const subject =
-            subjects.find(
-                item =>
-                    Number(item.id) ===
-                    Number(material.subject_id)
-            );
-
-
-        const row =
-            document.createElement("div");
-
-
-        row.className =
-            `
-            border border-slate-200
-            dark:border-slate-800
-            rounded-2xl
-            p-4
-            flex flex-col
-            lg:flex-row
-            lg:items-center
-            justify-between
-            gap-4
-            `;
+const {
+data,
+error
+} =
+await supabase
+.from("materials")
+.select("*")
+.order("sort_order",{ascending:true})
+.order("created_at",{ascending:false});
 
 
-        row.innerHTML =
-            `
-            <div class="min-w-0">
+if(error){
 
-                <div class="flex flex-wrap items-center gap-2">
+console.error(error);
 
-                    <h3 class="font-black text-lg">
-                        ${escapeHtml(material.title)}
-                    </h3>
+return;
 
-                    <span class="px-2 py-1 rounded-full
-                                 bg-slate-100 dark:bg-slate-800
-                                 text-xs font-bold">
-
-                        ${
-                            material.file_type === "video"
-                                ? "🎥 فيديو"
-                                : material.file_type === "audio"
-                                ? "🎧 صوت"
-                                : material.file_type === "pdf"
-                                ? "📄 PDF"
-                                : material.file_type === "image"
-                                ? "🖼️ صورة"
-                                : "📁 ملف"
-                        }
-
-                    </span>
-
-                </div>
+}
 
 
-                <p class="text-sm text-brand-600 font-bold mt-2">
-                    ${escapeHtml(subject?.name || "بدون مادة")}
-                </p>
+materials =
+data || [];
+
+renderDoctorMaterials();
+
+updateStats();
+
+}
 
 
-                <p class="text-sm text-slate-500 mt-1">
-                    ${escapeHtml(material.description || "")}
-                </p>
+function renderDoctorMaterials(){
 
-            </div>
+const container =
+document.getElementById("doctorMaterials");
 
-
-            <div class="flex flex-wrap gap-2">
-
-                <button
-                    onclick="openEditMaterial(${material.id})"
-                    class="px-4 py-2 rounded-xl
-                           bg-blue-600 text-white font-bold">
-                    تعديل
-                </button>
+container.innerHTML = "";
 
 
-                <button
-                    onclick="moveMaterial(${material.id}, -1)"
-                    class="px-4 py-2 rounded-xl
-                           bg-slate-200 dark:bg-slate-800 font-bold">
-                    ↑
-                </button>
+if(!materials.length){
+
+container.innerHTML = `
+<div class="text-center p-10 text-slate-500">
+لا يوجد محتوى حتى الآن.
+</div>
+`;
+
+return;
+
+}
 
 
-                <button
-                    onclick="moveMaterial(${material.id}, 1)"
-                    class="px-4 py-2 rounded-xl
-                           bg-slate-200 dark:bg-slate-800 font-bold">
-                    ↓
-                </button>
+materials.forEach(material=>{
+
+const subject =
+subjects.find(
+item =>
+Number(item.id) ===
+Number(material.subject_id)
+);
 
 
-                <button
-                    onclick="deleteMaterial(${material.id})"
-                    class="px-4 py-2 rounded-xl
-                           bg-red-600 text-white font-bold">
-                    حذف
-                </button>
+const row =
+document.createElement("div");
 
-            </div>
-            `;
+row.className = `
+border border-slate-200
+dark:border-slate-800
+rounded-2xl p-4 flex flex-col
+lg:flex-row lg:items-center
+justify-between gap-4
+`;
 
+row.innerHTML = `
+<div class="min-w-0">
 
-        container.appendChild(row);
+<div class="flex flex-wrap items-center gap-2">
 
-    });
+<h3 class="font-black text-lg">
+${escapeHtml(material.title)}
+</h3>
+
+<span class="px-2 py-1 rounded-full
+bg-slate-100 dark:bg-slate-800
+text-xs font-bold">
+
+${
+material.file_type === "video"
+?"🎥 فيديو"
+:material.file_type === "audio"
+?"🎧 صوت"
+:material.file_type === "pdf"
+?"📄 PDF"
+:material.file_type === "image"
+?"🖼️ صورة"
+:"📁 ملف"
+}
+
+</span>
+
+</div>
+
+<p class="text-sm text-brand-600 font-bold mt-2">
+${escapeHtml(subject?.name || "بدون مادة")}
+</p>
+
+<p class="text-sm text-slate-500 mt-1">
+${escapeHtml(material.description || "")}
+</p>
+
+</div>
+
+<div class="flex flex-wrap gap-2">
+
+<button
+onclick="openEditMaterial(${material.id})"
+class="px-4 py-2 rounded-xl
+bg-blue-600 text-white font-bold">
+تعديل
+</button>
+
+<button
+onclick="moveMaterial(${material.id},-1)"
+class="px-4 py-2 rounded-xl
+bg-slate-200 dark:bg-slate-800 font-bold">
+↑
+</button>
+
+<button
+onclick="moveMaterial(${material.id},1)"
+class="px-4 py-2 rounded-xl
+bg-slate-200 dark:bg-slate-800 font-bold">
+↓
+</button>
+
+<button
+onclick="deleteMaterial(${material.id})"
+class="px-4 py-2 rounded-xl
+bg-red-600 text-white font-bold">
+حذف
+</button>
+
+</div>
+`;
+
+container.appendChild(row);
+
+});
 
 }
 
@@ -1683,381 +1440,360 @@ function renderDoctorMaterials() {
 /* ================= UPLOAD ================= */
 
 document
-    .getElementById("uploadForm")
-    .addEventListener(
-        "submit",
-        async function (event) {
+.getElementById("uploadForm")
+.addEventListener(
+"submit",
+async function(event){
 
-            event.preventDefault();
-
-
-            const subjectId =
-                document
-                    .getElementById("uploadSubject")
-                    .value;
+event.preventDefault();
 
 
-            const title =
-                document
-                    .getElementById("materialTitle")
-                    .value
-                    .trim();
+const subjectId =
+document
+.getElementById("uploadSubject")
+.value;
 
 
-            const description =
-                document
-                    .getElementById("materialDescription")
-                    .value
-                    .trim();
+const title =
+document
+.getElementById("materialTitle")
+.value
+.trim();
 
 
-            const file =
-                document
-                    .getElementById("materialFile")
-                    .files[0];
+const description =
+document
+.getElementById("materialDescription")
+.value
+.trim();
 
 
-            const sortOrder =
-                Number(
-                    document
-                        .getElementById("materialSortOrder")
-                        .value || 0
-                );
+const file =
+document
+.getElementById("materialFile")
+.files[0];
 
 
-            if (!file) {
-
-                alert("اختر ملفاً أولاً.");
-
-                return;
-
-            }
-
-
-            const button =
-                document
-                    .getElementById("uploadButton");
+const sortOrder =
+Number(
+document
+.getElementById("materialSortOrder")
+.value || 0
+);
 
 
-            button.disabled = true;
+if(!file){
 
-            button.textContent =
-                "جاري الرفع...";
+alert("اختر ملفاً أولاً.");
 
+return;
 
-            try {
-
-                const fileType =
-                    getFileType(file);
+}
 
 
-                /*
-                   نستخدم مجلد materials فقط.
-                   واسم الملف الحقيقي لا يدخل في المسار.
-                */
+const button =
+document
+.getElementById("uploadButton");
 
-                const fileUrl =
-                    await uploadFileToStorage(
-                        file,
-                        "materials"
-                    );
+button.disabled = true;
+
+button.textContent =
+"جاري الرفع...";
 
 
-                const {
-                    error
-                } =
-                    await supabase
-                        .from("materials")
-                        .insert({
-                            subject_id:
-                                Number(subjectId),
+try{
 
-                            title,
-
-                            description,
-
-                            file_url:
-                                fileUrl,
-
-                            file_type:
-                                fileType,
-
-                            sort_order:
-                                sortOrder
-                        });
+const fileType =
+getFileType(file);
 
 
-                if (error) {
-
-                    throw error;
-
-                }
-
-
-                alert(
-                    "تم رفع المحتوى بنجاح."
-                );
+const fileUrl =
+await uploadFileToStorage(
+file,
+"materials"
+);
 
 
-                document
-                    .getElementById("uploadForm")
-                    .reset();
+const {
+error
+} =
+await supabase
+.from("materials")
+.insert({
+
+subject_id:
+Number(subjectId),
+
+title,
+
+description,
+
+file_url:
+fileUrl,
+
+file_type:
+fileType,
+
+sort_order:
+sortOrder
+
+});
 
 
-                document
-                    .getElementById("materialSortOrder")
-                    .value = 0;
+if(error){
+
+throw error;
+
+}
 
 
-                await loadDoctorMaterials();
+alert(
+"تم رفع المحتوى بنجاح."
+);
 
-            }
 
-            catch (error) {
+document
+.getElementById("uploadForm")
+.reset();
 
-                console.error(error);
 
-                alert(
-                    "حدث خطأ أثناء الرفع:\n" +
-                    error.message
-                );
+document
+.getElementById("materialSortOrder")
+.value = 0;
 
-            }
 
-            finally {
+await loadDoctorMaterials();
 
-                button.disabled = false;
+}
 
-                button.textContent =
-                    "رفع المحتوى";
+catch(error){
 
-            }
+console.error(error);
 
-        }
-    );
+alert(
+"حدث خطأ أثناء الرفع:\n" +
+error.message
+);
+
+}
+
+finally{
+
+button.disabled = false;
+
+button.textContent =
+"رفع المحتوى";
+
+}
+
+}
+);
 
 
 /* ================= EDIT ================= */
 
 window.openEditMaterial =
-async function (id) {
+async function(id){
 
-    const material =
-        materials.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
+const material =
+materials.find(
+item =>
+Number(item.id) === Number(id)
+);
 
-
-    if (!material) return;
+if(!material)return;
 
 
-    document
-        .getElementById("editMaterialId")
-        .value =
-        material.id;
+document
+.getElementById("editMaterialId")
+.value =
+material.id;
 
+document
+.getElementById("editTitle")
+.value =
+material.title || "";
 
-    document
-        .getElementById("editTitle")
-        .value =
-        material.title || "";
+document
+.getElementById("editDescription")
+.value =
+material.description || "";
 
+document
+.getElementById("editSortOrder")
+.value =
+material.sort_order || 0;
 
-    document
-        .getElementById("editDescription")
-        .value =
-        material.description || "";
-
-
-    document
-        .getElementById("editSortOrder")
-        .value =
-        material.sort_order || 0;
-
-
-    document
-        .getElementById("editModal")
-        .classList.remove("hidden");
+document
+.getElementById("editModal")
+.classList.remove("hidden");
 
 };
 
 
 window.closeEditModal =
-function () {
+function(){
 
-    document
-        .getElementById("editModal")
-        .classList.add("hidden");
+document
+.getElementById("editModal")
+.classList.add("hidden");
 
 };
 
 
 document
-    .getElementById("editForm")
-    .addEventListener(
-        "submit",
-        async function (event) {
+.getElementById("editForm")
+.addEventListener(
+"submit",
+async function(event){
 
-            event.preventDefault();
-
-
-            const id =
-                document
-                    .getElementById("editMaterialId")
-                    .value;
+event.preventDefault();
 
 
-            const title =
-                document
-                    .getElementById("editTitle")
-                    .value
-                    .trim();
+const id =
+document
+.getElementById("editMaterialId")
+.value;
 
 
-            const description =
-                document
-                    .getElementById("editDescription")
-                    .value
-                    .trim();
+const title =
+document
+.getElementById("editTitle")
+.value
+.trim();
 
 
-            const sortOrder =
-                Number(
-                    document
-                        .getElementById("editSortOrder")
-                        .value || 0
-                );
+const description =
+document
+.getElementById("editDescription")
+.value
+.trim();
 
 
-            const {
-                error
-            } =
-                await supabase
-                    .from("materials")
-                    .update({
-                        title,
-                        description,
-                        sort_order: sortOrder
-                    })
-                    .eq(
-                        "id",
-                        id
-                    );
+const sortOrder =
+Number(
+document
+.getElementById("editSortOrder")
+.value || 0
+);
 
 
-            if (error) {
+const {
+error
+} =
+await supabase
+.from("materials")
+.update({
+title,
+description,
+sort_order:sortOrder
+})
+.eq("id",id);
 
-                alert(
-                    "حدث خطأ:\n" +
-                    error.message
-                );
 
-                return;
+if(error){
 
-            }
+alert(
+"حدث خطأ:\n" +
+error.message
+);
+
+return;
+
+}
 
 
-            closeEditModal();
+closeEditModal();
 
-            await loadDoctorMaterials();
+await loadDoctorMaterials();
 
-        }
-    );
+}
+);
 
 
 /* ================= DELETE ================= */
 
 window.deleteMaterial =
-async function (id) {
+async function(id){
 
-    const material =
-        materials.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
+const material =
+materials.find(
+item =>
+Number(item.id) === Number(id)
+);
 
-
-    if (!material) return;
+if(!material)return;
 
 
-    const confirmed =
-        confirm(
-            `هل تريد حذف "${material.title}"؟`
-        );
+const confirmed =
+confirm(
+`هل تريد حذف "${material.title}"؟`
+);
+
+if(!confirmed)return;
 
 
-    if (!confirmed) return;
+try{
+
+const storagePath =
+getStoragePathFromUrl(
+material.file_url
+);
 
 
-    try {
-
-        const storagePath =
-            getStoragePathFromUrl(
-                material.file_url
-            );
-
-
-        const {
-            error: deleteDbError
-        } =
-            await supabase
-                .from("materials")
-                .delete()
-                .eq(
-                    "id",
-                    id
-                );
+const {
+error:deleteDbError
+} =
+await supabase
+.from("materials")
+.delete()
+.eq("id",id);
 
 
-        if (deleteDbError) {
+if(deleteDbError){
 
-            throw deleteDbError;
+throw deleteDbError;
 
-        }
-
-
-        if (storagePath) {
-
-            const {
-                error: storageError
-            } =
-                await supabase
-                    .storage
-                    .from(STORAGE_BUCKET)
-                    .remove([
-                        storagePath
-                    ]);
+}
 
 
-            if (storageError) {
+if(storagePath){
 
-                console.warn(
-                    "Storage delete warning:",
-                    storageError
-                );
+const {
+error:storageError
+} =
+await supabase
+.storage
+.from(STORAGE_BUCKET)
+.remove([storagePath]);
 
-            }
 
-        }
+if(storageError){
+
+console.warn(
+"Storage delete warning:",
+storageError
+);
+
+}
+
+}
 
 
-        await loadDoctorMaterials();
+await loadDoctorMaterials();
 
-    }
+}
 
-    catch (error) {
+catch(error){
 
-        console.error(error);
+console.error(error);
 
-        alert(
-            "حدث خطأ أثناء الحذف:\n" +
-            error.message
-        );
+alert(
+"حدث خطأ أثناء الحذف:\n" +
+error.message
+);
 
-    }
+}
 
 };
 
@@ -2065,189 +1801,168 @@ async function (id) {
 /* ================= MOVE ================= */
 
 window.moveMaterial =
-async function (id, direction) {
+async function(id,direction){
 
-    const index =
-        materials.findIndex(
-            item =>
-                Number(item.id) ===
-                Number(id)
-        );
+const index =
+materials.findIndex(
+item =>
+Number(item.id) === Number(id)
+);
 
-
-    if (index === -1) return;
+if(index === -1)return;
 
 
-    const newIndex =
-        index + direction;
+const newIndex =
+index + direction;
 
 
-    if (
-        newIndex < 0 ||
-        newIndex >= materials.length
-    ) {
-        return;
-    }
+if(
+newIndex < 0 ||
+newIndex >= materials.length
+)return;
 
 
-    const current =
-        materials[index];
+const current =
+materials[index];
+
+const target =
+materials[newIndex];
 
 
-    const target =
-        materials[newIndex];
+const currentOrder =
+Number(current.sort_order || 0);
+
+const targetOrder =
+Number(target.sort_order || 0);
 
 
-    const currentOrder =
-        Number(current.sort_order || 0);
+const {
+error:error1
+} =
+await supabase
+.from("materials")
+.update({
+sort_order:targetOrder
+})
+.eq("id",current.id);
 
 
-    const targetOrder =
-        Number(target.sort_order || 0);
+if(error1){
+
+alert(error1.message);
+
+return;
+
+}
 
 
-    const {
-        error: error1
-    } =
-        await supabase
-            .from("materials")
-            .update({
-                sort_order:
-                    targetOrder
-            })
-            .eq(
-                "id",
-                current.id
-            );
+const {
+error:error2
+} =
+await supabase
+.from("materials")
+.update({
+sort_order:currentOrder
+})
+.eq("id",target.id);
 
 
-    if (error1) {
+if(error2){
 
-        alert(error1.message);
+alert(error2.message);
 
-        return;
+return;
 
-    }
-
-
-    const {
-        error: error2
-    } =
-        await supabase
-            .from("materials")
-            .update({
-                sort_order:
-                    currentOrder
-            })
-            .eq(
-                "id",
-                target.id
-            );
+}
 
 
-    if (error2) {
-
-        alert(error2.message);
-
-        return;
-
-    }
-
-
-    await loadDoctorMaterials();
+await loadDoctorMaterials();
 
 };
 
 
 /* ================= UPLOAD SUBJECTS ================= */
 
-function fillUploadSubjects() {
+function fillUploadSubjects(){
 
-    const select =
-        document.getElementById(
-            "uploadSubject"
-        );
+const select =
+document.getElementById("uploadSubject");
 
-
-    select.innerHTML =
-        "";
+select.innerHTML = "";
 
 
-    subjects.forEach(subject => {
+subjects.forEach(subject=>{
 
-        const option =
-            document.createElement("option");
+const option =
+document.createElement("option");
 
+option.value =
+subject.id;
 
-        option.value =
-            subject.id;
+option.textContent =
+subject.name;
 
+select.appendChild(option);
 
-        option.textContent =
-            subject.name;
-
-
-        select.appendChild(option);
-
-    });
+});
 
 }
 
 
 /* ================= STATS ================= */
 
-async function updateStats() {
+async function updateStats(){
 
-    document
-        .getElementById("statSubjects")
-        .textContent =
-        subjects.length;
-
-
-    const {
-        data,
-        error
-    } =
-        await supabase
-            .from("materials")
-            .select("file_type");
+document
+.getElementById("statSubjects")
+.textContent =
+subjects.length;
 
 
-    if (error) {
-
-        console.error(error);
-
-        return;
-
-    }
-
-
-    const list =
-        data || [];
+const {
+data,
+error
+} =
+await supabase
+.from("materials")
+.select("file_type");
 
 
-    document
-        .getElementById("statMaterials")
-        .textContent =
-        list.length;
+if(error){
+
+console.error(error);
+
+return;
+
+}
 
 
-    document
-        .getElementById("statVideos")
-        .textContent =
-        list.filter(
-            item =>
-                item.file_type === "video"
-        ).length;
+const list =
+data || [];
 
 
-    document
-        .getElementById("statAudios")
-        .textContent =
-        list.filter(
-            item =>
-                item.file_type === "audio"
-        ).length;
+document
+.getElementById("statMaterials")
+.textContent =
+list.length;
+
+
+document
+.getElementById("statVideos")
+.textContent =
+list.filter(
+item =>
+item.file_type === "video"
+).length;
+
+
+document
+.getElementById("statAudios")
+.textContent =
+list.filter(
+item =>
+item.file_type === "audio"
+).length;
 
 }
 
@@ -2255,27 +1970,24 @@ async function updateStats() {
 /* ================= NAVIGATION ================= */
 
 window.showHome =
-function () {
+function(){
 
-    document
-        .getElementById("homeSection")
-        .classList.remove("hidden-section");
+document
+.getElementById("homeSection")
+.classList.remove("hidden-section");
 
+document
+.getElementById("materialsSection")
+.classList.add("hidden-section");
 
-    document
-        .getElementById("materialsSection")
-        .classList.add("hidden-section");
+document
+.getElementById("doctorDashboard")
+.classList.add("hidden-section");
 
-
-    document
-        .getElementById("doctorDashboard")
-        .classList.add("hidden-section");
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
 };
 
@@ -2287,17 +1999,17 @@ showDoctorDashboard;
 /* ================= AUTH STATE ================= */
 
 supabase
-    .auth
-    .onAuthStateChange(
-        async (_event, session) => {
+.auth
+.onAuthStateChange(
+async (_event,session)=>{
 
-            currentSession =
-                session;
+currentSession =
+session;
 
-            await updateAuthUI();
+await updateAuthUI();
 
-        }
-    );
+}
+);
 
 
 /* ================= START ================= */
@@ -2309,4 +2021,4 @@ await loadSubjects();
 </script>
 
 </body>
-  </html>
+</html>
