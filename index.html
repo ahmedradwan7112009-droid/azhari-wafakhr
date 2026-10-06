@@ -1,1494 +1,1905 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>أزهري وأفتخر</title>
+  <title>أزهري وأفتخر</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-    body {
-        font-family: Tahoma, Arial, sans-serif;
-        background: #f8fafc;
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#16a34a',
+              600: '#15803d',
+              700: '#166534',
+              800: '#14532d',
+              900: '#052e16'
+            }
+          }
+        }
+      }
     }
-
-    .hero {
-        background:
-            radial-gradient(circle at top right, rgba(16,185,129,.18), transparent 35%),
-            linear-gradient(135deg, #064e3b, #0f766e);
-    }
-
-    .card {
-        transition: .25s;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-    }
-
-    video {
-        width: 100%;
-        border-radius: 16px;
-        background: #000;
-    }
-</style>
+  </script>
 </head>
 
-<body class="text-slate-800">
+<body class="bg-slate-50 text-slate-900">
 
-<!-- HEADER -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b">
     <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 
-        <div class="flex items-center gap-3">
-            <div class="text-3xl">🕌</div>
+      <button onclick="goHome()" class="text-xl md:text-2xl font-black text-brand-700">
+        🕌 أزهري وأفتخر
+      </button>
 
-            <div>
-                <h1 class="font-black text-xl text-emerald-800">
-                    أزهري وأفتخر
-                </h1>
+      <div class="flex items-center gap-2">
+        <span id="userName" class="hidden text-sm font-bold text-slate-600"></span>
 
-                <p class="text-xs text-slate-500">
-                    منصة تعليمية
-                </p>
-            </div>
-        </div>
+        <button
+          id="loginBtn"
+          onclick="openLogin()"
+          class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl font-bold">
+          تسجيل الدخول
+        </button>
 
-        <div class="flex items-center gap-2">
+        <button
+          id="logoutBtn"
+          onclick="logout()"
+          class="hidden bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
+          خروج
+        </button>
+      </div>
 
-            <span id="userName"
-                  class="hidden md:block text-sm font-bold text-emerald-700">
-            </span>
-
-            <button
-                id="loginButton"
-                onclick="openLogin()"
-                class="bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold">
-                تسجيل الدخول
-            </button>
-
-            <button
-                id="doctorButton"
-                onclick="openDoctorDashboard()"
-                class="hidden bg-slate-900 text-white px-4 py-2 rounded-xl font-bold">
-                لوحة الدكتور
-            </button>
-
-            <button
-                id="logoutButton"
-                onclick="logout()"
-                class="hidden bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
-                خروج
-            </button>
-
-        </div>
     </div>
-</header>
+  </header>
 
 
-<!-- HERO -->
-<section class="hero text-white">
-    <div class="max-w-7xl mx-auto px-4 py-20">
+  <!-- HOME -->
+  <main id="homePage">
 
-        <div class="max-w-3xl">
+    <!-- HERO -->
+    <section class="bg-gradient-to-br from-brand-900 via-brand-800 to-slate-900 text-white">
+      <div class="max-w-7xl mx-auto px-5 py-20 text-center">
 
-            <span class="inline-block bg-white/10 px-4 py-2 rounded-full mb-5">
-                العلم نور
-            </span>
+        <div class="text-5xl mb-6">🕌</div>
 
-            <h2 class="text-4xl md:text-6xl font-black leading-tight mb-6">
-                أزهري وأفتخر
-            </h2>
+        <h1 class="text-4xl md:text-6xl font-black mb-5">
+          أزهري وأفتخر
+        </h1>
 
-            <p class="text-lg md:text-xl text-white/90 leading-9">
-                منصة تعليمية تجمع المواد الدينية والدراسية
-                في مكان واحد بطريقة منظمة وسهلة.
-            </p>
+        <p class="text-lg md:text-xl text-green-100 max-w-2xl mx-auto leading-8">
+          منصة تعليمية تجمع بين العلوم الشرعية والمواد الدراسية
+          في مكان واحد بطريقة منظمة وسهلة.
+        </p>
 
-        </div>
-    </div>
-</section>
+        <button
+          onclick="document.getElementById('sections').scrollIntoView({behavior:'smooth'})"
+          class="mt-8 bg-white text-brand-800 px-7 py-3 rounded-2xl font-black">
+          ابدأ التعلم
+        </button>
 
-
-<!-- MAIN -->
-<main class="max-w-7xl mx-auto px-4 py-12">
-
-    <!-- HOME -->
-    <section id="homeSection">
-
-        <div class="text-center mb-10">
-
-            <span class="text-emerald-600 font-bold">
-                الأقسام التعليمية
-            </span>
-
-            <h2 class="text-3xl md:text-4xl font-black mt-2">
-                اختر القسم
-            </h2>
-
-            <p class="text-slate-500 mt-3">
-                اختر القسم ثم المادة للوصول إلى الدروس والملفات
-            </p>
-
-        </div>
+      </div>
+    </section>
 
 
-        <!-- CATEGORIES -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+    <!-- SECTIONS -->
+    <section id="sections" class="max-w-7xl mx-auto px-4 py-16">
 
-            <button
-                onclick="showCategory('dini')"
-                class="card bg-emerald-50 border border-emerald-100 rounded-3xl p-7 text-right">
+      <div class="text-center mb-12">
+        <span class="text-brand-600 font-bold">أقسام المنصة</span>
 
-                <div class="text-4xl mb-4">🕌</div>
-
-                <h3 class="text-2xl font-black text-emerald-800">
-                    ديني
-                </h3>
-
-                <p class="text-slate-500 mt-2">
-                    القرآن الكريم والعلوم الشرعية
-                </p>
-
-            </button>
+        <h2 class="text-3xl md:text-5xl font-black mt-3">
+          اختر القسم
+        </h2>
+      </div>
 
 
-            <button
-                onclick="showCategory('academic')"
-                class="card bg-blue-50 border border-blue-100 rounded-3xl p-7 text-right">
+      <div class="grid md:grid-cols-2 gap-6">
 
-                <div class="text-4xl mb-4">🎓</div>
+        <button
+          onclick="openCategory('dini')"
+          class="text-right bg-white border rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
 
-                <h3 class="text-2xl font-black text-blue-800">
-                    دراسي
-                </h3>
+          <div class="text-5xl mb-5">❤️‍🩹</div>
 
-                <p class="text-slate-500 mt-2">
-                    العربي والفيزياء والكيمياء والأحياء والرياضيات والإنجليزي
-                </p>
+          <h3 class="text-2xl font-black mb-3">
+            القسم الديني
+          </h3>
 
-            </button>
+          <p class="text-slate-500">
+            القرآن الكريم والعلوم الشرعية.
+          </p>
 
-
-            <button
-                onclick="showAllSubjects()"
-                class="card bg-slate-50 border border-slate-200 rounded-3xl p-7 text-right">
-
-                <div class="text-4xl mb-4">📚</div>
-
-                <h3 class="text-2xl font-black text-slate-800">
-                    كل المواد
-                </h3>
-
-                <p class="text-slate-500 mt-2">
-                    عرض جميع المواد التعليمية
-                </p>
-
-            </button>
-
-        </div>
+        </button>
 
 
-        <!-- SUBJECTS -->
-        <div id="subjectsSection">
+        <button
+          onclick="openCategory('academic')"
+          class="text-right bg-white border rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
 
-            <div class="flex items-center justify-between mb-6">
+          <div class="text-5xl mb-5">🎓</div>
 
-                <div>
-                    <h2 class="text-2xl font-black">
-                        المواد
-                    </h2>
+          <h3 class="text-2xl font-black mb-3">
+            المواد الدراسية
+          </h3>
 
-                    <p class="text-slate-500 text-sm">
-                        اختر المادة لعرض محتواها
-                    </p>
-                </div>
+          <p class="text-slate-500">
+            الأحياء والكيمياء والفيزياء والرياضيات واللغة العربية والإنجليزية.
+          </p>
 
-            </div>
+        </button>
 
-            <div
-                id="subjectsGrid"
-                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            </div>
+      </div>
 
-        </div>
+    </section>
+
+
+    <!-- SUBJECTS -->
+    <section id="subjectsSection" class="hidden max-w-7xl mx-auto px-4 pb-20">
+
+      <button
+        onclick="backToSections()"
+        class="mb-6 bg-slate-200 px-5 py-2 rounded-xl font-bold">
+        ← رجوع
+      </button>
+
+      <div class="mb-10">
+        <h2 id="categoryTitle" class="text-3xl md:text-5xl font-black"></h2>
+      </div>
+
+      <div id="subjectsGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5"></div>
 
     </section>
 
 
     <!-- MATERIALS -->
-    <section id="materialsSection" class="hidden">
+    <section id="materialsSection" class="hidden max-w-7xl mx-auto px-4 pb-20">
 
-        <button
-            onclick="backToSubjects()"
-            class="mb-6 bg-slate-100 px-4 py-2 rounded-xl font-bold">
-            ← رجوع للمواد
-        </button>
+      <button
+        onclick="backToSubjects()"
+        class="mb-6 bg-slate-200 px-5 py-2 rounded-xl font-bold">
+        ← المواد
+      </button>
 
-        <div class="mb-8">
+      <div class="mb-10">
+        <h2 id="subjectTitle" class="text-3xl md:text-5xl font-black"></h2>
+        <p id="subjectDescription" class="text-slate-500 mt-3"></p>
+      </div>
 
-            <h2
-                id="selectedSubjectTitle"
-                class="text-3xl font-black">
-            </h2>
-
-            <p class="text-slate-500 mt-2">
-                الدروس والملفات المتاحة
-            </p>
-
-        </div>
-
-        <div
-            id="materialsGrid"
-            class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        </div>
+      <div id="materialsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
     </section>
 
-
-    <!-- DOCTOR DASHBOARD -->
-    <section id="doctorDashboard"
-             class="hidden">
-
-        <button
-            onclick="closeDoctorDashboard()"
-            class="mb-6 bg-slate-100 px-4 py-2 rounded-xl font-bold">
-            ← العودة للمنصة
-        </button>
-
-        <div class="bg-white rounded-3xl shadow-sm border p-6 md:p-8">
-
-            <div class="mb-8">
-
-                <span class="text-emerald-600 font-bold">
-                    لوحة التحكم
-                </span>
-
-                <h2 class="text-3xl font-black mt-2">
-                    لوحة الدكتور
-                </h2>
-
-                <p class="text-slate-500 mt-2">
-                    رفع فيديوهات وملفات PDF للطلاب
-                </p>
-
-            </div>
+  </main>
 
 
-            <div class="grid gap-5">
+  <!-- DOCTOR DASHBOARD -->
+  <section id="doctorDashboard" class="hidden max-w-7xl mx-auto px-4 py-12">
 
-                <!-- SUBJECT -->
-                <div>
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
 
-                    <label class="block font-bold mb-2">
-                        المادة
-                    </label>
+      <div>
+        <span class="text-brand-600 font-bold">
+          لوحة التحكم
+        </span>
 
-                    <select
-                        id="uploadSubject"
-                        class="w-full border rounded-xl p-3">
-                    </select>
+        <h2 class="text-3xl md:text-5xl font-black mt-2">
+          لوحة الدكتور
+        </h2>
+      </div>
 
-                </div>
-
-
-                <!-- TITLE -->
-                <div>
-
-                    <label class="block font-bold mb-2">
-                        عنوان الدرس
-                    </label>
-
-                    <input
-                        id="uploadTitle"
-                        type="text"
-                        placeholder="مثال: المحاضرة الأولى"
-                        class="w-full border rounded-xl p-3">
-
-                </div>
-
-
-                <!-- DESCRIPTION -->
-                <div>
-
-                    <label class="block font-bold mb-2">
-                        وصف الدرس
-                    </label>
-
-                    <textarea
-                        id="uploadDescription"
-                        rows="4"
-                        placeholder="اكتب وصفًا مختصرًا..."
-                        class="w-full border rounded-xl p-3">
-                    </textarea>
-
-                </div>
-
-
-                <!-- FILE -->
-                <div>
-
-                    <label class="block font-bold mb-2">
-                        الفيديو أو PDF
-                    </label>
-
-                    <input
-                        id="uploadFile"
-                        type="file"
-                        accept=".mp4,.webm,.mov,.pdf"
-                        class="w-full border rounded-xl p-3">
-
-                </div>
-
-
-                <!-- STATUS -->
-                <div
-                    id="uploadStatus"
-                    class="text-sm font-bold">
-                </div>
-
-
-                <!-- BUTTON -->
-                <button
-                    onclick="uploadMaterial()"
-                    class="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl p-4 font-black">
-
-                    رفع المحتوى
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- LOGIN MODAL -->
-<div
-    id="loginModal"
-    class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-
-    <div class="bg-white rounded-3xl p-7 w-full max-w-md">
-
-        <div class="flex justify-between items-center mb-6">
-
-            <h2 class="text-2xl font-black">
-                تسجيل الدخول
-            </h2>
-
-            <button
-                onclick="closeLogin()"
-                class="text-2xl">
-                ×
-            </button>
-
-        </div>
-
-
-        <div class="space-y-4">
-
-            <input
-                id="emailInput"
-                type="email"
-                placeholder="البريد الإلكتروني"
-                class="w-full border rounded-xl p-3">
-
-            <input
-                id="passwordInput"
-                type="password"
-                placeholder="كلمة المرور"
-                class="w-full border rounded-xl p-3">
-
-            <div
-                id="loginStatus"
-                class="text-sm font-bold">
-            </div>
-
-            <button
-                onclick="login()"
-                class="w-full bg-emerald-700 text-white rounded-xl p-3 font-black">
-
-                دخول
-
-            </button>
-
-        </div>
+      <button
+        onclick="goHome()"
+        class="bg-slate-200 px-5 py-3 rounded-xl font-bold">
+        الصفحة الرئيسية
+      </button>
 
     </div>
 
-</div>
+
+    <!-- STATS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+
+      <div class="bg-white border rounded-2xl p-5">
+        <div class="text-slate-500 text-sm">إجمالي المواد</div>
+        <div id="statMaterials" class="text-3xl font-black mt-2">0</div>
+      </div>
+
+      <div class="bg-white border rounded-2xl p-5">
+        <div class="text-slate-500 text-sm">الفيديوهات</div>
+        <div id="statVideos" class="text-3xl font-black mt-2">0</div>
+      </div>
+
+      <div class="bg-white border rounded-2xl p-5">
+        <div class="text-slate-500 text-sm">ملفات PDF</div>
+        <div id="statPDFs" class="text-3xl font-black mt-2">0</div>
+      </div>
+
+      <div class="bg-white border rounded-2xl p-5">
+        <div class="text-slate-500 text-sm">المواد الدراسية</div>
+        <div id="statSubjects" class="text-3xl font-black mt-2">0</div>
+      </div>
+
+    </div>
 
 
-<script>
+    <!-- UPLOAD -->
+    <div class="bg-white border rounded-3xl p-6 md:p-8 mb-10">
 
-const SUPABASE_URL =
-    "https://fxezbarpvidzskcaaxnt.supabase.co";
+      <h3 class="text-2xl font-black mb-6">
+        📤 رفع محتوى جديد
+      </h3>
 
-const SUPABASE_KEY =
-    "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
+      <div class="grid md:grid-cols-2 gap-5">
 
-const supabaseClient =
-    window.supabase.createClient(
+        <div>
+          <label class="block font-bold mb-2">
+            المادة
+          </label>
+
+          <select
+            id="doctorSubject"
+            class="w-full border rounded-xl p-3 bg-white">
+          </select>
+        </div>
+
+
+        <div>
+          <label class="block font-bold mb-2">
+            عنوان الدرس
+          </label>
+
+          <input
+            id="materialTitle"
+            type="text"
+            placeholder="مثال: شرح درس الهرمونات"
+            class="w-full border rounded-xl p-3">
+        </div>
+
+
+        <div class="md:col-span-2">
+
+          <label class="block font-bold mb-2">
+            وصف الدرس
+          </label>
+
+          <textarea
+            id="materialDescription"
+            rows="3"
+            placeholder="وصف مختصر للدرس..."
+            class="w-full border rounded-xl p-3"></textarea>
+
+        </div>
+
+
+        <div>
+
+          <label class="block font-bold mb-2">
+            صورة الغلاف
+          </label>
+
+          <input
+            id="coverFile"
+            type="file"
+            accept="image/*"
+            class="w-full border rounded-xl p-3 bg-white">
+
+        </div>
+
+
+        <div>
+
+          <label class="block font-bold mb-2">
+            الفيديو أو PDF
+          </label>
+
+          <input
+            id="contentFile"
+            type="file"
+            accept=".mp4,.webm,.mov,.pdf"
+            class="w-full border rounded-xl p-3 bg-white">
+
+        </div>
+
+      </div>
+
+
+      <div id="uploadStatus" class="mt-5 text-sm font-bold"></div>
+
+
+      <button
+        onclick="uploadMaterial()"
+        class="mt-5 bg-brand-600 hover:bg-brand-700 text-white px-7 py-3 rounded-xl font-black">
+        رفع المحتوى
+      </button>
+
+    </div>
+
+
+    <!-- MANAGEMENT -->
+    <div class="bg-white border rounded-3xl p-6 md:p-8">
+
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+
+        <div>
+          <h3 class="text-2xl font-black">
+            📚 إدارة المحتوى
+          </h3>
+
+          <p class="text-slate-500 mt-1">
+            تعديل أو حذف أو ترتيب الدروس.
+          </p>
+        </div>
+
+        <select
+          id="manageSubject"
+          onchange="loadDoctorMaterials()"
+          class="border rounded-xl p-3 bg-white">
+        </select>
+
+      </div>
+
+      <div id="doctorMaterialsList" class="space-y-4"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- LOGIN MODAL -->
+  <div
+    id="loginModal"
+    class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
+
+    <div class="bg-white rounded-3xl w-full max-w-md p-7">
+
+      <div class="flex items-center justify-between mb-6">
+
+        <h3 class="text-2xl font-black">
+          تسجيل الدخول
+        </h3>
+
+        <button
+          onclick="closeLogin()"
+          class="text-2xl">
+          ×
+        </button>
+
+      </div>
+
+
+      <input
+        id="loginEmail"
+        type="email"
+        placeholder="البريد الإلكتروني"
+        class="w-full border rounded-xl p-3 mb-4">
+
+
+      <input
+        id="loginPassword"
+        type="password"
+        placeholder="كلمة المرور"
+        class="w-full border rounded-xl p-3 mb-4">
+
+
+      <div id="loginStatus" class="text-sm font-bold mb-4"></div>
+
+
+      <button
+        onclick="login()"
+        class="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-xl font-black">
+        دخول
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- EDIT MODAL -->
+  <div
+    id="editModal"
+    class="hidden fixed inset-0 z-[100] bg-black/60 p-4 flex items-center justify-center">
+
+    <div class="bg-white rounded-3xl w-full max-w-lg p-7">
+
+      <div class="flex justify-between items-center mb-6">
+
+        <h3 class="text-2xl font-black">
+          تعديل الدرس
+        </h3>
+
+        <button
+          onclick="closeEditModal()"
+          class="text-2xl">
+          ×
+        </button>
+
+      </div>
+
+
+      <input type="hidden" id="editId">
+
+
+      <label class="block font-bold mb-2">
+        العنوان
+      </label>
+
+      <input
+        id="editTitle"
+        class="w-full border rounded-xl p-3 mb-4">
+
+
+      <label class="block font-bold mb-2">
+        الوصف
+      </label>
+
+      <textarea
+        id="editDescription"
+        rows="4"
+        class="w-full border rounded-xl p-3 mb-4"></textarea>
+
+
+      <div id="editStatus" class="text-sm font-bold mb-4"></div>
+
+
+      <button
+        onclick="saveEdit()"
+        class="w-full bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-xl font-black">
+        حفظ التعديل
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- SUPABASE -->
+  <script type="module">
+
+    import {
+      createClient
+    } from "https://esm.sh/@supabase/supabase-js@2";
+
+
+    const SUPABASE_URL =
+      "https://fxezbarpvidzskcaaxnt.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
+
+
+    const supabase =
+      createClient(
         SUPABASE_URL,
         SUPABASE_KEY
-    );
+      );
 
 
-let subjects = [];
-let currentUser = null;
-let currentProfile = null;
-let currentSubjectId = null;
+    window.supabaseClient = supabase;
 
 
-/* =========================
-   SUBJECTS
-========================= */
-
-const subjectOrder = [
-    "القرآن الكريم",
-    "العلوم الشرعية",
-    "اللغة العربية",
-    "الفيزياء",
-    "الكيمياء",
-    "الأحياء",
-    "الرياضيات",
-    "English"
-];
+    let currentUser = null;
+    let currentProfile = null;
+    let currentCategory = null;
+    let currentSubject = null;
 
 
-/* =========================
-   START
-========================= */
+    const diniSubjects = [
+      "القرآن الكريم",
+      "العلوم الشرعية"
+    ];
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
 
-        await loadSubjects();
+    function escapeHTML(value) {
 
-        await checkUser();
+      if (value === null || value === undefined) {
+        return "";
+      }
+
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 
     }
-);
 
 
-/* =========================
-   LOAD SUBJECTS
-========================= */
+    async function loadSubjects() {
 
-async function loadSubjects() {
+      const {
+        data,
+        error
+      } = await supabase
+        .from("subjects")
+        .select("*")
+        .order("id", {
+          ascending: true
+        });
 
-    const { data, error } =
-        await supabaseClient
-            .from("subjects")
-            .select("*");
 
-    if (error) {
+      if (error) {
 
         console.error(error);
 
+        return [];
+
+      }
+
+
+      return data || [];
+
+    }
+
+
+    async function refreshAuth() {
+
+      const {
+        data
+      } = await supabase.auth.getSession();
+
+
+      currentUser =
+        data?.session?.user || null;
+
+
+      if (!currentUser) {
+
+        currentProfile = null;
+
+        updateHeader();
+
         return;
 
+      }
+
+
+      const {
+        data: profile
+      } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", currentUser.id)
+        .maybeSingle();
+
+
+      currentProfile =
+        profile || null;
+
+
+      updateHeader();
+
     }
 
-    subjects = data || [];
 
-    subjects.sort(
-        (a, b) =>
-            subjectOrder.indexOf(a.name)
-            -
-            subjectOrder.indexOf(b.name)
-    );
+    function updateHeader() {
 
-    renderSubjects(subjects);
+      const loginBtn =
+        document.getElementById("loginBtn");
 
-    renderUploadSubjects();
+      const logoutBtn =
+        document.getElementById("logoutBtn");
 
-}
+      const userName =
+        document.getElementById("userName");
 
 
-/* =========================
-   RENDER SUBJECTS
-========================= */
+      if (currentUser) {
 
-function renderSubjects(list) {
+        loginBtn.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
 
-    const grid =
+        userName.textContent =
+          currentProfile?.name ||
+          currentUser.email ||
+          "";
+
+        userName.classList.remove("hidden");
+
+      } else {
+
+        loginBtn.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
+        userName.classList.add("hidden");
+
+      }
+
+    }
+
+
+    window.openLogin = function() {
+
+      document
+        .getElementById("loginModal")
+        .classList.remove("hidden");
+
+    };
+
+
+    window.closeLogin = function() {
+
+      document
+        .getElementById("loginModal")
+        .classList.add("hidden");
+
+    };
+
+
+    window.login = async function() {
+
+      const email =
+        document
+          .getElementById("loginEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value;
+
+
+      const status =
+        document.getElementById("loginStatus");
+
+
+      status.textContent =
+        "جاري تسجيل الدخول...";
+
+      status.className =
+        "text-sm font-bold mb-4 text-slate-500";
+
+
+      const {
+        error
+      } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+
+      if (error) {
+
+        status.textContent =
+          "بيانات الدخول غير صحيحة.";
+
+        status.className =
+          "text-sm font-bold mb-4 text-red-600";
+
+        return;
+
+      }
+
+
+      status.textContent =
+        "تم تسجيل الدخول.";
+
+      status.className =
+        "text-sm font-bold mb-4 text-green-600";
+
+
+      await refreshAuth();
+
+      setTimeout(() => {
+
+        closeLogin();
+
+        if (currentProfile?.role === "doctor") {
+          showDoctorDashboard();
+        }
+
+      }, 400);
+
+    };
+
+
+    window.logout = async function() {
+
+      await supabase.auth.signOut();
+
+      currentUser = null;
+      currentProfile = null;
+
+      updateHeader();
+
+      goHome();
+
+    };
+
+
+    window.goHome = function() {
+
+      document
+        .getElementById("homePage")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("subjectsSection")
+        .classList.add("hidden");
+
+      document
+        .getElementById("materialsSection")
+        .classList.add("hidden");
+
+      document
+        .getElementById("doctorDashboard")
+        .classList.add("hidden");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    };
+
+
+    window.openCategory = async function(category) {
+
+      currentCategory = category;
+
+      document
+        .getElementById("homePage")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("subjectsSection")
+        .classList.remove("hidden");
+
+      document
+        .getElementById("materialsSection")
+        .classList.add("hidden");
+
+      document
+        .getElementById("doctorDashboard")
+        .classList.add("hidden");
+
+
+      const title =
+        document.getElementById("categoryTitle");
+
+      title.textContent =
+        category === "dini"
+          ? "❤️‍🩹 القسم الديني"
+          : "🎓 المواد الدراسية";
+
+
+      const subjects =
+        await loadSubjects();
+
+
+      const filtered =
+        subjects.filter(subject => {
+
+          if (category === "dini") {
+
+            return diniSubjects.includes(
+              subject.name
+            );
+
+          }
+
+          return !diniSubjects.includes(
+            subject.name
+          );
+
+        });
+
+
+      const grid =
         document.getElementById("subjectsGrid");
 
-    grid.innerHTML = "";
 
-    list.forEach(subject => {
+      if (!filtered.length) {
 
-        const icons = {
-
-            "القرآن الكريم": "📖",
-
-            "العلوم الشرعية": "🕌",
-
-            "اللغة العربية": "✍️",
-
-            "الفيزياء": "⚡",
-
-            "الكيمياء": "🧪",
-
-            "الأحياء": "🧬",
-
-            "الرياضيات": "📐",
-
-            "English": "🇬🇧"
-
-        };
-
-        const icon =
-            icons[subject.name] || "📚";
-
-
-        const card =
-            document.createElement("button");
-
-        card.className =
-            "card bg-white border border-slate-200 rounded-3xl p-6 text-right shadow-sm";
-
-        card.innerHTML = `
-
-            <div class="text-4xl mb-4">
-                ${icon}
-            </div>
-
-            <h3 class="text-xl font-black">
-                ${escapeHtml(subject.name)}
-            </h3>
-
-            <p class="text-slate-500 text-sm mt-2">
-                اضغط لعرض المحتوى
-            </p>
-
+        grid.innerHTML = `
+          <div class="col-span-full bg-white border rounded-2xl p-8 text-center text-slate-500">
+            لا توجد مواد حاليًا.
+          </div>
         `;
 
-        card.onclick = () =>
-            openSubject(subject);
+      } else {
 
-        grid.appendChild(card);
+        grid.innerHTML =
+          filtered.map(subject => `
 
-    });
+            <button
+              onclick="openSubject(${subject.id})"
+              class="text-right bg-white border rounded-2xl p-6 hover:shadow-xl transition">
 
-}
+              <div class="text-3xl mb-4">
+                📚
+              </div>
+
+              <h3 class="text-xl font-black">
+                ${escapeHTML(subject.name)}
+              </h3>
+
+              <p class="text-slate-500 mt-2 text-sm">
+                ${escapeHTML(subject.description || "استعرض الدروس والمحتوى")}
+              </p>
+
+            </button>
+
+          `).join("");
+
+      }
 
 
-/* =========================
-   CATEGORY
-========================= */
-
-function showCategory(category) {
-
-    let filtered = [];
-
-    if (category === "dini") {
-
-        filtered =
-            subjects.filter(
-                s =>
-                    s.name === "القرآن الكريم"
-                    ||
-                    s.name === "العلوم الشرعية"
-            );
-
-    }
-
-    if (category === "academic") {
-
-        filtered =
-            subjects.filter(
-                s =>
-                    s.name !== "القرآن الكريم"
-                    &&
-                    s.name !== "العلوم الشرعية"
-            );
-
-    }
-
-    renderSubjects(filtered);
-
-    document
+      document
         .getElementById("subjectsSection")
         .scrollIntoView({
-            behavior: "smooth"
+          behavior: "smooth"
         });
 
-}
+    };
 
 
-function showAllSubjects() {
+    window.openSubject = async function(subjectId) {
 
-    renderSubjects(subjects);
+      const subjects =
+        await loadSubjects();
 
-    document
+
+      const subject =
+        subjects.find(
+          s => Number(s.id) === Number(subjectId)
+        );
+
+
+      if (!subject) return;
+
+
+      currentSubject =
+        subject;
+
+
+      document
         .getElementById("subjectsSection")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+        .classList.add("hidden");
 
-}
-
-
-/* =========================
-   OPEN SUBJECT
-========================= */
-
-async function openSubject(subject) {
-
-    currentSubjectId = subject.id;
-
-    document
-        .getElementById("homeSection")
-        .classList
-        .add("hidden");
-
-    document
-        .getElementById("doctorDashboard")
-        .classList
-        .add("hidden");
-
-    document
+      document
         .getElementById("materialsSection")
-        .classList
-        .remove("hidden");
+        .classList.remove("hidden");
 
-    document
-        .getElementById("selectedSubjectTitle")
+
+      document
+        .getElementById("subjectTitle")
         .textContent =
         subject.name;
 
 
-    await loadMaterials(subject.id);
+      document
+        .getElementById("subjectDescription")
+        .textContent =
+        subject.description || "";
 
-}
+
+      await loadMaterials(subject.id);
 
 
-/* =========================
-   LOAD MATERIALS
-========================= */
+      document
+        .getElementById("materialsSection")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
-async function loadMaterials(subjectId) {
+    };
 
-    const grid =
+
+    async function loadMaterials(subjectId) {
+
+      const {
+        data,
+        error
+      } = await supabase
+        .from("materials")
+        .select("*")
+        .eq("subject_id", subjectId)
+        .order("sort_order", {
+          ascending: true
+        })
+        .order("created_at", {
+          ascending: true
+        });
+
+
+      const grid =
         document.getElementById("materialsGrid");
 
-    grid.innerHTML = `
 
-        <div class="col-span-full text-center py-10 text-slate-500">
-            جاري تحميل المحتوى...
-        </div>
-
-    `;
-
-
-    const { data, error } =
-        await supabaseClient
-            .from("materials")
-            .select("*")
-            .eq("subject_id", subjectId)
-            .order("created_at", {
-                ascending: false
-            });
-
-
-    if (error) {
+      if (error) {
 
         console.error(error);
 
         grid.innerHTML = `
-
-            <div class="col-span-full text-center text-red-600">
-                حدث خطأ أثناء تحميل المحتوى.
-            </div>
-
+          <div class="col-span-full bg-red-50 text-red-700 rounded-2xl p-6">
+            حدث خطأ أثناء تحميل المحتوى.
+          </div>
         `;
 
         return;
 
-    }
+      }
 
 
-    grid.innerHTML = "";
-
-
-    if (!data || data.length === 0) {
+      if (!data?.length) {
 
         grid.innerHTML = `
+          <div class="col-span-full bg-white border rounded-2xl p-10 text-center">
+            <div class="text-5xl mb-4">📚</div>
+            <h3 class="text-xl font-black mb-2">
+              لا يوجد محتوى حتى الآن
+            </h3>
+            <p class="text-slate-500">
+              سيتم إضافة الدروس قريبًا.
+            </p>
+          </div>
+        `;
 
-            <div class="col-span-full bg-white border rounded-3xl p-10 text-center">
+        return;
 
-                <div class="text-5xl mb-4">
-                    📚
+      }
+
+
+      grid.innerHTML =
+        data.map(material => {
+
+          const isVideo =
+            material.file_type === "video";
+
+
+          const cover =
+            material.cover_url;
+
+
+          return `
+
+            <article class="bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition">
+
+              ${
+                cover
+                ?
+                `
+                  <img
+                    src="${escapeHTML(cover)}"
+                    class="w-full h-48 object-cover"
+                    alt="">
+                `
+                :
+                `
+                  <div class="w-full h-48 bg-gradient-to-br from-brand-800 to-slate-900 flex items-center justify-center text-6xl">
+                    ${isVideo ? "🎥" : "📄"}
+                  </div>
+                `
+              }
+
+
+              <div class="p-6">
+
+                <div class="text-xs font-bold text-brand-600 mb-2">
+                  ${isVideo ? "🎥 فيديو" : "📄 PDF"}
                 </div>
 
                 <h3 class="text-xl font-black">
-                    لا يوجد محتوى حتى الآن
+                  ${escapeHTML(material.title)}
                 </h3>
 
-                <p class="text-slate-500 mt-2">
-                    سيتم إضافة الدروس قريبًا.
-                </p>
+                ${
+                  material.description
+                  ?
+                  `
+                    <p class="text-slate-500 mt-3 leading-7">
+                      ${escapeHTML(material.description)}
+                    </p>
+                  `
+                  :
+                  ""
+                }
 
-            </div>
 
-        `;
+                ${
+                  isVideo
+                  ?
+                  `
+                    <video
+                      controls
+                      playsinline
+                      class="w-full rounded-2xl mt-5 bg-black"
+                      src="${escapeHTML(material.file_url)}">
+                    </video>
+                  `
+                  :
+                  `
+                    <a
+                      href="${escapeHTML(material.file_url)}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="block text-center mt-5 bg-brand-600 hover:bg-brand-700 text-white py-3 rounded-xl font-black">
+                      فتح ملف PDF
+                    </a>
+                  `
+                }
 
-        return;
+              </div>
+
+            </article>
+
+          `;
+
+        }).join("");
 
     }
 
 
-    data.forEach(material => {
+    window.backToSections = function() {
 
-        const card =
-            document.createElement("div");
+      document
+        .getElementById("subjectsSection")
+        .classList.add("hidden");
 
-        card.className =
-            "bg-white border rounded-3xl p-5 shadow-sm";
+      goHome();
 
+      document
+        .getElementById("sections")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
-        let content = "";
-
-
-        if (material.file_type === "video") {
-
-            content = `
-
-                <video
-                    controls
-                    preload="metadata"
-                    class="mb-4">
-
-                    <source
-                        src="${escapeHtml(material.file_url)}">
-
-                    متصفحك لا يدعم تشغيل الفيديو.
-
-                </video>
-
-            `;
-
-        }
+    };
 
 
-        else if (material.file_type === "pdf") {
+    window.backToSubjects = function() {
 
-            content = `
-
-                <a
-                    href="${escapeHtml(material.file_url)}"
-                    target="_blank"
-                    rel="noopener"
-                    class="block bg-red-600 text-white text-center rounded-xl p-4 font-black mb-4">
-
-                    📄 فتح ملف PDF
-
-                </a>
-
-            `;
-
-        }
-
-
-        card.innerHTML = `
-
-            ${content}
-
-            <h3 class="text-xl font-black">
-                ${escapeHtml(material.title || "درس")}
-            </h3>
-
-            <p class="text-slate-500 mt-2 leading-7">
-                ${escapeHtml(material.description || "")}
-            </p>
-
-        `;
-
-
-        grid.appendChild(card);
-
-    });
-
-}
-
-
-/* =========================
-   BACK
-========================= */
-
-function backToSubjects() {
-
-    document
+      document
         .getElementById("materialsSection")
-        .classList
-        .add("hidden");
+        .classList.add("hidden");
 
-    document
-        .getElementById("homeSection")
-        .classList
-        .remove("hidden");
+      document
+        .getElementById("subjectsSection")
+        .classList.remove("hidden");
 
-}
+      document
+        .getElementById("subjectsSection")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
 
-
-/* =========================
-   LOGIN
-========================= */
-
-function openLogin() {
-
-    document
-        .getElementById("loginModal")
-        .classList
-        .remove("hidden");
-
-}
+    };
 
 
-function closeLogin() {
+    async function prepareDoctorSubjects() {
 
-    document
-        .getElementById("loginModal")
-        .classList
-        .add("hidden");
-
-}
+      const subjects =
+        await loadSubjects();
 
 
-async function login() {
+      const options =
+        subjects.map(subject => `
+          <option value="${subject.id}">
+            ${escapeHTML(subject.name)}
+          </option>
+        `).join("");
 
-    const email =
+
+      document
+        .getElementById("doctorSubject")
+        .innerHTML = options;
+
+      document
+        .getElementById("manageSubject")
+        .innerHTML = options;
+
+    }
+
+
+    window.showDoctorDashboard = async function() {
+
+      if (
+        !currentUser ||
+        currentProfile?.role !== "doctor"
+      ) {
+
+        openLogin();
+
+        return;
+
+      }
+
+
+      document
+        .getElementById("homePage")
+        .classList.add("hidden");
+
+      document
+        .getElementById("doctorDashboard")
+        .classList.remove("hidden");
+
+
+      await prepareDoctorSubjects();
+
+      await loadDoctorStats();
+
+      await loadDoctorMaterials();
+
+
+      document
+        .getElementById("doctorDashboard")
+        .scrollIntoView({
+          behavior: "smooth"
+        });
+
+    };
+
+
+    async function uploadFileToStorage(file, folder) {
+
+      const safeName =
+        file.name
+          .replace(/[^\w.\-\u0600-\u06FF ]+/g, "")
+          .replace(/\s+/g, "-");
+
+
+      const path =
+        `${folder}/${Date.now()}-${safeName}`;
+
+
+      const {
+        error
+      } = await supabase
+        .storage
+        .from("Content")
+        .upload(
+          path,
+          file,
+          {
+            upsert: false,
+            contentType: file.type
+          }
+        );
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      const {
+        data
+      } =
+        supabase
+          .storage
+          .from("content")
+          .getPublicUrl(path);
+
+
+      return data.publicUrl;
+
+    }
+
+
+    window.uploadMaterial = async function() {
+
+      if (
+        !currentUser ||
+        currentProfile?.role !== "doctor"
+      ) {
+
+        return;
+
+      }
+
+
+      const subjectId =
         document
-            .getElementById("emailInput")
-            .value
-            .trim();
+          .getElementById("doctorSubject")
+          .value;
 
-    const password =
+
+      const title =
         document
-            .getElementById("passwordInput")
-            .value;
+          .getElementById("materialTitle")
+          .value
+          .trim();
 
 
-    const status =
+      const description =
         document
-            .getElementById("loginStatus");
+          .getElementById("materialDescription")
+          .value
+          .trim();
 
 
-    status.textContent =
-        "جاري تسجيل الدخول...";
+      const coverFile =
+        document
+          .getElementById("coverFile")
+          .files[0];
 
 
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
+      const contentFile =
+        document
+          .getElementById("contentFile")
+          .files[0];
+
+
+      const status =
+        document.getElementById("uploadStatus");
+
+
+      if (!title) {
+
+        status.textContent =
+          "اكتب عنوان الدرس أولًا.";
+
+        status.className =
+          "mt-5 text-sm font-bold text-red-600";
+
+        return;
+
+      }
+
+
+      if (!contentFile) {
+
+        status.textContent =
+          "اختر الفيديو أو ملف PDF.";
+
+        status.className =
+          "mt-5 text-sm font-bold text-red-600";
+
+        return;
+
+      }
+
+
+      status.textContent =
+        "جاري رفع الملفات...";
+
+      status.className =
+        "mt-5 text-sm font-bold text-slate-500";
+
+
+      try {
+
+        let coverUrl = null;
+
+
+        if (coverFile) {
+
+          coverUrl =
+            await uploadFileToStorage(
+              coverFile,
+              "covers"
+            );
+
+        }
+
+
+        const contentUrl =
+          await uploadFileToStorage(
+            contentFile,
+            "materials"
+          );
+
+
+        const fileType =
+          contentFile.type === "application/pdf"
+            ? "pdf"
+            : "video";
+
+
+        const {
+          data: lastMaterial
+        } = await supabase
+          .from("materials")
+          .select("sort_order")
+          .eq("subject_id", subjectId)
+          .order("sort_order", {
+            ascending: false
+          })
+          .limit(1)
+          .maybeSingle();
+
+
+        const nextOrder =
+          lastMaterial
+            ? Number(lastMaterial.sort_order || 0) + 1
+            : 0;
+
+
+        const {
+          error
+        } = await supabase
+          .from("materials")
+          .insert({
+
+            subject_id:
+              Number(subjectId),
+
+            title,
+
+            description,
+
+            file_url:
+              contentUrl,
+
+            file_type:
+              fileType,
+
+            cover_url:
+              coverUrl,
+
+            sort_order:
+              nextOrder
+
+          });
+
+
+        if (error) {
+
+          throw error;
+
+        }
+
+
+        status.textContent =
+          "✅ تم رفع المحتوى بنجاح.";
+
+        status.className =
+          "mt-5 text-sm font-bold text-green-600";
+
+
+        document
+          .getElementById("materialTitle")
+          .value = "";
+
+
+        document
+          .getElementById("materialDescription")
+          .value = "";
+
+
+        document
+          .getElementById("coverFile")
+          .value = "";
+
+
+        document
+          .getElementById("contentFile")
+          .value = "";
+
+
+        await loadDoctorStats();
+
+        await loadDoctorMaterials();
+
+      } catch (error) {
+
+        console.error(error);
+
+        status.textContent =
+          "❌ حدث خطأ أثناء الرفع: " +
+          error.message;
+
+        status.className =
+          "mt-5 text-sm font-bold text-red-600";
+
+      }
+
+    };
+
+
+    async function loadDoctorStats() {
+
+      const {
+        data: materials
+      } = await supabase
+        .from("materials")
+        .select("id,file_type");
+
+
+      const {
+        count: subjectsCount
+      } = await supabase
+        .from("subjects")
+        .select("*", {
+          count: "exact",
+          head: true
         });
 
 
-    if (error) {
+      const total =
+        materials?.length || 0;
 
-        status.textContent =
-            "بيانات الدخول غير صحيحة.";
 
-        status.className =
-            "text-sm font-bold text-red-600";
+      const videos =
+        materials?.filter(
+          m => m.file_type === "video"
+        ).length || 0;
+
+
+      const pdfs =
+        materials?.filter(
+          m => m.file_type === "pdf"
+        ).length || 0;
+
+
+      document
+        .getElementById("statMaterials")
+        .textContent = total;
+
+
+      document
+        .getElementById("statVideos")
+        .textContent = videos;
+
+
+      document
+        .getElementById("statPDFs")
+        .textContent = pdfs;
+
+
+      document
+        .getElementById("statSubjects")
+        .textContent =
+        subjectsCount || 0;
+
+    }
+
+
+    window.loadDoctorMaterials = async function() {
+
+      const subjectId =
+        document
+          .getElementById("manageSubject")
+          .value;
+
+
+      if (!subjectId) return;
+
+
+      const {
+        data,
+        error
+      } = await supabase
+        .from("materials")
+        .select("*")
+        .eq("subject_id", Number(subjectId))
+        .order("sort_order", {
+          ascending: true
+        })
+        .order("created_at", {
+          ascending: true
+        });
+
+
+      const list =
+        document.getElementById("doctorMaterialsList");
+
+
+      if (error) {
+
+        list.innerHTML = `
+          <div class="bg-red-50 text-red-700 p-5 rounded-xl">
+            حدث خطأ في تحميل المحتوى.
+          </div>
+        `;
 
         return;
 
-    }
+      }
 
 
-    currentUser = data.user;
+      if (!data?.length) {
 
-    await loadProfile();
-
-    closeLogin();
-
-}
-
-
-/* =========================
-   CHECK USER
-========================= */
-
-async function checkUser() {
-
-    const { data } =
-        await supabaseClient.auth.getUser();
-
-    currentUser =
-        data?.user || null;
-
-
-    if (currentUser) {
-
-        await loadProfile();
-
-    }
-
-}
-
-
-/* =========================
-   PROFILE
-========================= */
-
-async function loadProfile() {
-
-    if (!currentUser)
-        return;
-
-
-    const { data, error } =
-        await supabaseClient
-            .from("profiles")
-            .select("name, role")
-            .eq("id", currentUser.id)
-            .maybeSingle();
-
-
-    if (error) {
-
-        console.error(
-            "Profile error:",
-            error
-        );
+        list.innerHTML = `
+          <div class="border rounded-2xl p-8 text-center text-slate-500">
+            لا يوجد محتوى لهذه المادة.
+          </div>
+        `;
 
         return;
 
-    }
+      }
 
 
-    currentProfile = data;
+      list.innerHTML =
+        data.map((material, index) => `
+
+          <div class="border rounded-2xl p-4 flex flex-col md:flex-row gap-4 md:items-center">
+
+            <div class="w-full md:w-24 h-20 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+
+              ${
+                material.cover_url
+                ?
+                `
+                  <img
+                    src="${escapeHTML(material.cover_url)}"
+                    class="w-full h-full object-cover">
+                `
+                :
+                `
+                  <div class="w-full h-full flex items-center justify-center text-3xl">
+                    ${material.file_type === "video" ? "🎥" : "📄"}
+                  </div>
+                `
+              }
+
+            </div>
 
 
-    updateHeader();
+            <div class="flex-1">
 
-}
+              <div class="text-xs text-brand-600 font-bold mb-1">
+                ${material.file_type === "video" ? "فيديو" : "PDF"}
+              </div>
+
+              <h4 class="font-black text-lg">
+                ${escapeHTML(material.title)}
+              </h4>
+
+              <p class="text-slate-500 text-sm mt-1">
+                ${escapeHTML(material.description || "بدون وصف")}
+              </p>
+
+            </div>
 
 
-/* =========================
-   HEADER
-========================= */
+            <div class="flex flex-wrap gap-2">
 
-function updateHeader() {
+              <button
+                onclick="moveMaterial('${material.id}', 'up')"
+                class="bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg font-bold"
+                title="لأعلى">
+                ↑
+              </button>
 
-    const loginButton =
-        document.getElementById(
-            "loginButton"
+
+              <button
+                onclick="moveMaterial('${material.id}', 'down')"
+                class="bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg font-bold"
+                title="لأسفل">
+                ↓
+              </button>
+
+
+              <button
+                onclick="openEditModal('${material.id}', '${escapeHTML(material.title).replaceAll("'", "\\'")}', '${escapeHTML(material.description || "").replaceAll("'", "\\'")}')"
+                class="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-2 rounded-lg font-bold">
+                تعديل
+              </button>
+
+
+              <button
+                onclick="deleteMaterial('${material.id}')"
+                class="bg-red-100 text-red-700 hover:bg-red-200 px-4 py-2 rounded-lg font-bold">
+                حذف
+              </button>
+
+            </div>
+
+          </div>
+
+        `).join("");
+
+    };
+
+
+    window.deleteMaterial = async function(id) {
+
+      const confirmed =
+        confirm(
+          "هل أنت متأكد من حذف هذا الدرس؟"
         );
 
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
 
-    const doctorButton =
-        document.getElementById(
-            "doctorButton"
-        );
-
-    const userName =
-        document.getElementById(
-            "userName"
-        );
+      if (!confirmed) return;
 
 
-    if (currentUser) {
-
-        loginButton.classList.add(
-            "hidden"
-        );
-
-        logoutButton.classList.remove(
-            "hidden"
-        );
-
-        userName.classList.remove(
-            "hidden"
-        );
-
-        userName.textContent =
-            currentProfile?.name ||
-            currentUser.email;
+      const {
+        error
+      } = await supabase
+        .from("materials")
+        .delete()
+        .eq("id", id);
 
 
-        if (
-            currentProfile?.role === "doctor"
-        ) {
-
-            doctorButton.classList.remove(
-                "hidden"
-            );
-
-        } else {
-
-            doctorButton.classList.add(
-                "hidden"
-            );
-
-        }
-
-    }
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-async function logout() {
-
-    await supabaseClient.auth.signOut();
-
-    currentUser = null;
-
-    currentProfile = null;
-
-    document
-        .getElementById("doctorButton")
-        .classList
-        .add("hidden");
-
-    document
-        .getElementById("logoutButton")
-        .classList
-        .add("hidden");
-
-    document
-        .getElementById("loginButton")
-        .classList
-        .remove("hidden");
-
-    document
-        .getElementById("userName")
-        .classList
-        .add("hidden");
-
-}
-
-
-/* =========================
-   DOCTOR DASHBOARD
-========================= */
-
-function openDoctorDashboard() {
-
-    if (
-        !currentProfile ||
-        currentProfile.role !== "doctor"
-    ) {
+      if (error) {
 
         alert(
-            "هذا القسم مخصص للدكتور فقط."
+          "حدث خطأ أثناء الحذف: " +
+          error.message
         );
 
         return;
 
-    }
+      }
 
 
-    document
-        .getElementById("homeSection")
-        .classList
-        .add("hidden");
+      await loadDoctorStats();
 
-    document
-        .getElementById("materialsSection")
-        .classList
-        .add("hidden");
+      await loadDoctorMaterials();
 
-    document
-        .getElementById("doctorDashboard")
-        .classList
-        .remove("hidden");
 
-
-    renderUploadSubjects();
-
-}
-
-
-function closeDoctorDashboard() {
-
-    document
-        .getElementById("doctorDashboard")
-        .classList
-        .add("hidden");
-
-    document
-        .getElementById("homeSection")
-        .classList
-        .remove("hidden");
-
-}
-
-
-/* =========================
-   UPLOAD SUBJECTS
-========================= */
-
-function renderUploadSubjects() {
-
-    const select =
-        document.getElementById(
-            "uploadSubject"
-        );
-
-
-    if (!select || !subjects.length)
-        return;
-
-
-    select.innerHTML = "";
-
-
-    subjects.forEach(subject => {
-
-        const option =
-            document.createElement("option");
-
-        option.value =
-            subject.id;
-
-        option.textContent =
-            subject.name;
-
-        select.appendChild(option);
-
-    });
-
-}
-
-
-/* =========================
-   UPLOAD MATERIAL
-========================= */
-
-async function uploadMaterial() {
-
-    if (
-        !currentUser ||
-        !currentProfile ||
-        currentProfile.role !== "doctor"
-    ) {
-
-        alert(
-            "يجب تسجيل الدخول بحساب الدكتور."
-        );
-
-        return;
-
-    }
-
-
-    const subjectId =
-        document
-            .getElementById("uploadSubject")
-            .value;
-
-
-    const title =
-        document
-            .getElementById("uploadTitle")
-            .value
-            .trim();
-
-
-    const description =
-        document
-            .getElementById("uploadDescription")
-            .value
-            .trim();
-
-
-    const file =
-        document
-            .getElementById("uploadFile")
-            .files[0];
-
-
-    const status =
-        document
-            .getElementById("uploadStatus");
-
-
-    if (!subjectId) {
-
-        status.textContent =
-            "اختر المادة.";
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    if (!title) {
-
-        status.textContent =
-            "اكتب عنوان الدرس.";
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    if (!file) {
-
-        status.textContent =
-            "اختر فيديو أو ملف PDF.";
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    status.textContent =
-        "جاري رفع الملف...";
-
-    status.className =
-        "text-sm font-bold text-blue-600";
-
-
-    const extension =
-        file.name
-            .split(".")
-            .pop()
-            .toLowerCase();
-
-
-    let fileType = "";
-
-
-    if (
-        file.type.startsWith("video/")
-        ||
-        ["mp4", "webm", "mov"].includes(extension)
-    ) {
-
-        fileType = "video";
-
-    }
-
-    else if (
-        file.type === "application/pdf"
-        ||
-        extension === "pdf"
-    ) {
-
-        fileType = "pdf";
-
-    }
-
-    else {
-
-        status.textContent =
-            "نوع الملف غير مدعوم.";
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    const safeName =
-        file.name
-            .replace(
-                /[^a-zA-Z0-9._-]/g,
-                "-"
-            );
-
-
-    const filePath =
-        `materials/${Date.now()}-${safeName}`;
-
-
-    const { error: uploadError } =
-        await supabaseClient.storage
-            .from("content")
-            .upload(
-                filePath,
-                file,
-                {
-                    cacheControl: "3600",
-                    upsert: false,
-                    contentType:
-                        file.type || undefined
-                }
-            );
-
-
-    if (uploadError) {
-
-        console.error(uploadError);
-
-        status.textContent =
-            "فشل رفع الملف: " +
-            uploadError.message;
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    const { data: publicData } =
-        supabaseClient.storage
-            .from("content")
-            .getPublicUrl(filePath);
-
-
-    const publicUrl =
-        publicData.publicUrl;
-
-
-    const { error: insertError } =
-        await supabaseClient
-            .from("materials")
-            .insert({
-
-                subject_id:
-                    Number(subjectId),
-
-                title:
-                    title,
-
-                description:
-                    description,
-
-                file_url:
-                    publicUrl,
-
-                file_type:
-                    fileType
-
-            });
-
-
-    if (insertError) {
-
-        console.error(insertError);
-
-        status.textContent =
-            "تم رفع الملف لكن حدث خطأ في حفظ بياناته.";
-
-        status.className =
-            "text-sm font-bold text-red-600";
-
-        return;
-
-    }
-
-
-    status.textContent =
-        "تم رفع المحتوى بنجاح ✅";
-
-    status.className =
-        "text-sm font-bold text-emerald-600";
-
-
-    document
-        .getElementById("uploadTitle")
-        .value = "";
-
-
-    document
-        .getElementById("uploadDescription")
-        .value = "";
-
-
-    document
-        .getElementById("uploadFile")
-        .value = "";
-
-
-    if (currentSubjectId === Number(subjectId)) {
+      if (
+        currentSubject &&
+        !document
+          .getElementById("materialsSection")
+          .classList.contains("hidden")
+      ) {
 
         await loadMaterials(
-            Number(subjectId)
+          currentSubject.id
         );
+
+      }
+
+    };
+
+
+    window.openEditModal = function(
+      id,
+      title,
+      description
+    ) {
+
+      document
+        .getElementById("editId")
+        .value = id;
+
+
+      document
+        .getElementById("editTitle")
+        .value = title;
+
+
+      document
+        .getElementById("editDescription")
+        .value = description;
+
+
+      document
+        .getElementById("editStatus")
+        .textContent = "";
+
+
+      document
+        .getElementById("editModal")
+        .classList.remove("hidden");
+
+    };
+
+
+    window.closeEditModal = function() {
+
+      document
+        .getElementById("editModal")
+        .classList.add("hidden");
+
+    };
+
+
+    window.saveEdit = async function() {
+
+      const id =
+        document
+          .getElementById("editId")
+          .value;
+
+
+      const title =
+        document
+          .getElementById("editTitle")
+          .value
+          .trim();
+
+
+      const description =
+        document
+          .getElementById("editDescription")
+          .value
+          .trim();
+
+
+      const status =
+        document.getElementById("editStatus");
+
+
+      if (!title) {
+
+        status.textContent =
+          "اكتب عنوان الدرس.";
+
+        status.className =
+          "text-sm font-bold mb-4 text-red-600";
+
+        return;
+
+      }
+
+
+      const {
+        error
+      } = await supabase
+        .from("materials")
+        .update({
+          title,
+          description
+        })
+        .eq("id", id);
+
+
+      if (error) {
+
+        status.textContent =
+          "حدث خطأ: " +
+          error.message;
+
+        status.className =
+          "text-sm font-bold mb-4 text-red-600";
+
+        return;
+
+      }
+
+
+      status.textContent =
+        "تم الحفظ.";
+
+      status.className =
+        "text-sm font-bold mb-4 text-green-600";
+
+
+      await loadDoctorMaterials();
+
+
+      if (currentSubject) {
+
+        await loadMaterials(
+          currentSubject.id
+        );
+
+      }
+
+
+      setTimeout(
+        closeEditModal,
+        500
+      );
+
+    };
+
+
+    window.moveMaterial = async function(
+      id,
+      direction
+    ) {
+
+      const subjectId =
+        document
+          .getElementById("manageSubject")
+          .value;
+
+
+      const {
+        data: materials,
+        error
+      } = await supabase
+        .from("materials")
+        .select("id,sort_order")
+        .eq("subject_id", Number(subjectId))
+        .order("sort_order", {
+          ascending: true
+        })
+        .order("created_at", {
+          ascending: true
+        });
+
+
+      if (error || !materials) {
+
+        return;
+
+      }
+
+
+      const index =
+        materials.findIndex(
+          item => String(item.id) === String(id)
+        );
+
+
+      if (index === -1) return;
+
+
+      const targetIndex =
+        direction === "up"
+          ? index - 1
+          : index + 1;
+
+
+      if (
+        targetIndex < 0 ||
+        targetIndex >= materials.length
+      ) {
+
+        return;
+
+      }
+
+
+      const current =
+        materials[index];
+
+      const target =
+        materials[targetIndex];
+
+
+      const currentOrder =
+        Number(current.sort_order || 0);
+
+      const targetOrder =
+        Number(target.sort_order || 0);
+
+
+      await supabase
+        .from("materials")
+        .update({
+          sort_order: targetOrder
+        })
+        .eq("id", current.id);
+
+
+      await supabase
+        .from("materials")
+        .update({
+          sort_order: currentOrder
+        })
+        .eq("id", target.id);
+
+
+      await loadDoctorMaterials();
+
+
+      if (currentSubject) {
+
+        await loadMaterials(
+          currentSubject.id
+        );
+
+      }
+
+    };
+
+
+    // تحميل المستخدم عند فتح الموقع
+    await refreshAuth();
+
+
+    // لو الدكتور مسجل دخول بالفعل
+    if (
+      currentUser &&
+      currentProfile?.role === "doctor"
+    ) {
+
+      showDoctorDashboard();
 
     }
 
-}
 
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHtml(value) {
-
-    return String(value ?? "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-/* =========================
-   AUTH STATE
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
-
-        currentUser =
-            session?.user || null;
-
-
-        if (currentUser) {
-
-            await loadProfile();
-
-        }
-
-    }
-);
-
-</script>
+  </script>
 
 </body>
 </html>
