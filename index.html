@@ -1,789 +1,466 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أزهري وأفتخر</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-body{
-    font-family:Arial,Tahoma,sans-serif;
-}
-.modal{
-    display:none;
-}
-.modal.active{
-    display:flex;
-}
-</style></head><body class="bg-slate-50 text-slate-900"><header class="bg-white shadow-sm sticky top-0 z-40">
-<div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between"><div class="font-black text-xl">
-    🕌 أزهري وأفتخر
-</div>
 
-<div id="authArea">
-    <button onclick="openLogin()"
-    class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
-        تسجيل الدخول
-    </button>
-</div>
+<title>أزهري وأفتخر</title>
 
-</div>
-</header><main><!-- HERO --><section class="bg-gradient-to-br from-emerald-700 to-emerald-950 text-white">
-<div class="max-w-7xl mx-auto px-4 py-20 text-center"><div class="text-6xl mb-6">🕌</div>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<h1 class="text-4xl md:text-6xl font-black mb-6">
-    أزهري وأفتخر
-</h1>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<p class="text-2xl md:text-3xl font-bold mb-5">
-    علمٌ يُبنى عليه المستقبل
-</p>
-
-<p class="max-w-2xl mx-auto text-emerald-100 leading-8 mb-8">
-    منصة تعليمية تجمع بين العلم الشرعي والمواد الدراسية
-    في مكان واحد، مع تنظيم المحتوى والفيديوهات والملفات
-    ليسهل على الطالب الوصول إلى ما يحتاجه.
-</p>
-
-<button
-onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})"
-class="bg-white text-emerald-800 px-8 py-3 rounded-xl font-black">
-    استكشف المنصة
-</button>
-
-</div>
-</section><!-- CATEGORIES --><section id="categories" class="max-w-7xl mx-auto px-4 py-16"><div class="text-center mb-12"><span class="text-emerald-600 font-bold">
-    أقسام المنصة
-</span>
-
-<h2 class="text-4xl font-black mt-3">
-    اختر المجال الذي تريد دراسته
-</h2>
-
-</div><div class="grid grid-cols-1 md:grid-cols-2 gap-7"><!-- DINI --><div
-onclick="openDini()"
-class="cursor-pointer bg-gradient-to-br from-emerald-800 to-emerald-950
-text-white rounded-3xl p-8 shadow-lg hover:scale-[1.02]
-transition"><div class="text-6xl mb-5">
-    ❤️‍🩹
-</div>
-
-<h3 class="text-3xl font-black mb-3">
-    الديني
-</h3>
-
-<p class="text-emerald-100 leading-7 mb-6">
-    القرآن الكريم والعلوم الشرعية
-    ومحتوى يساعدك على طلب العلم والفهم الصحيح.
-</p>
-
-<button
-class="bg-white text-emerald-900 px-6 py-3
-rounded-xl font-black">
-    دخول القسم ←
-</button>
-
-</div><!-- ACADEMIC --><div
-onclick="openAcademic()"
-class="cursor-pointer bg-white border rounded-3xl p-8
-shadow-lg hover:scale-[1.02] transition"><div class="text-6xl mb-5">
-    🎓
-</div>
-
-<h3 class="text-3xl font-black mb-3">
-    المواد الدراسية
-</h3>
-
-<p class="text-slate-500 leading-7 mb-6">
-    المواد الدراسية المختلفة مع الفيديوهات
-    والملفات التعليمية المنظمة.
-</p>
-
-<button
-class="bg-emerald-600 text-white px-6 py-3
-rounded-xl font-black">
-    دخول المواد ←
-</button>
-
-</div></div></section><!-- SUBJECTS --><section id="subjects" class="hidden bg-white border-t"><div class="max-w-7xl mx-auto px-4 py-12"><button
-onclick="closeSubjects()"
-class="mb-7 bg-slate-100 px-5 py-2 rounded-xl font-bold">
-← العودة للأقسام
-</button>
-
-<h2
-id="sectionTitle"
-class="text-4xl font-black mb-10">
-</h2><div
-id="subjectsContainer"
-class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"><div class="text-center col-span-full py-10">
-جاري تحميل المواد...
-</div></div></div></section><!-- MATERIALS --><section id="materialsSection" class="hidden bg-slate-50 border-t"><div class="max-w-7xl mx-auto px-4 py-12"><button
-onclick="backToSubjects()"
-class="mb-7 bg-white px-5 py-2 rounded-xl font-bold shadow-sm">
-← العودة للمواد
-</button>
-
-<h2
-id="currentSubjectTitle"
-class="text-4xl font-black mb-3">
-</h2><p class="text-slate-500 mb-10">
-المحتوى التعليمي المتاح في هذه المادة
-</p><div id="materialsContainer"><div class="text-center py-10">
-جاري تحميل المحتوى...
-</div></div></div></section><!-- ABOUT --><section class="max-w-4xl mx-auto px-4 py-16 text-center"><h2 class="text-4xl font-black mb-5">
-عن أزهري وأفتخر
-</h2><p class="text-slate-600 leading-8">
-منصة تجمع بين العلم الشرعي والتميز الدراسي،
-وتهدف إلى تنظيم المحتوى التعليمي وتسهيل وصول الطالب
-إلى الدروس والفيديوهات والملفات التعليمية.
-</p><div class="mt-8 text-2xl font-black text-emerald-700">
-علمٌ نافع وطموحٌ لا يتوقف 🕌❤️‍🩹
-</div></section></main><footer class="bg-slate-900 text-white text-center py-8"><div class="font-black text-xl mb-2">
-🕌 أزهري وأفتخر
-</div><div>
-© 2026 جميع الحقوق محفوظة
-</div></footer><!-- LOGIN --><div
-id="loginModal"
-class="modal fixed inset-0 bg-black/60 items-center justify-center z-50 px-4"><div class="bg-white rounded-3xl p-7 w-full max-w-md"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-black">
-تسجيل الدخول
-</h2><button onclick="closeLogin()" class="text-2xl">
-×
-</button></div><label class="block font-bold mb-2">
-البريد الإلكتروني
-</label><input
-id="email"
-type="email"
-placeholder="البريد الإلكتروني"
-class="w-full border rounded-xl px-4 py-3 mb-5">
-
-<label class="block font-bold mb-2">
-كلمة المرور
-</label><input
-id="password"
-type="password"
-placeholder="كلمة المرور"
-class="w-full border rounded-xl px-4 py-3 mb-5">
-
-<button
-onclick="login()"
-class="w-full bg-emerald-600 text-white py-3 rounded-xl font-black">
-دخول
-</button>
-
-<p id="loginMessage"
-class="text-center mt-4 font-bold">
-</p></div>
-</div><script>
-
-const SUPABASE_URL =
-"https://fxezbarpvidzskcaaxnt.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
-
-const supabaseClient =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
-
-
-let currentUser = null;
-let allSubjects = [];
-let currentSubject = null;
-let currentSection = "";
-
-
-/* =========================
-   AUTH
-========================= */
-
-async function updateAuthUI(){
-
-    const authArea =
-        document.getElementById("authArea");
-
-    if(!currentUser){
-
-        authArea.innerHTML = `
-        <button onclick="openLogin()"
-        class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold">
-            تسجيل الدخول
-        </button>`;
-
-        return;
+<style>
+    body {
+        font-family: Tahoma, Arial, sans-serif;
+        background: #f8fafc;
     }
 
-    let name =
-        currentUser.email || "الطالب";
-
-    const {data:profile} =
-        await supabaseClient
-        .from("profiles")
-        .select("name")
-        .eq("id",currentUser.id)
-        .maybeSingle();
-
-    if(profile?.name){
-        name = profile.name;
+    .hero {
+        background:
+            radial-gradient(circle at top right, rgba(16,185,129,.18), transparent 35%),
+            linear-gradient(135deg, #064e3b, #0f766e);
     }
 
-    authArea.innerHTML = `
+    .card {
+        transition: .25s;
+    }
 
-    <div class="flex items-center gap-2">
+    .card:hover {
+        transform: translateY(-5px);
+    }
 
-        <div class="hidden sm:block text-right">
-            <div class="text-xs text-slate-500">
-                مرحبًا بك
-            </div>
+    video {
+        width: 100%;
+        border-radius: 16px;
+        background: #000;
+    }
+</style>
+</head>
 
-            <div class="font-black text-emerald-700">
-                👤 ${name}
+<body class="text-slate-800">
+
+<!-- HEADER -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+
+        <div class="flex items-center gap-3">
+            <div class="text-3xl">🕌</div>
+
+            <div>
+                <h1 class="font-black text-xl text-emerald-800">
+                    أزهري وأفتخر
+                </h1>
+
+                <p class="text-xs text-slate-500">
+                    منصة تعليمية
+                </p>
             </div>
         </div>
 
+        <div class="flex items-center gap-2">
+
+            <span id="userName"
+                  class="hidden md:block text-sm font-bold text-emerald-700">
+            </span>
+
+            <button
+                id="loginButton"
+                onclick="openLogin()"
+                class="bg-emerald-700 text-white px-4 py-2 rounded-xl font-bold">
+                تسجيل الدخول
+            </button>
+
+            <button
+                id="doctorButton"
+                onclick="openDoctorDashboard()"
+                class="hidden bg-slate-900 text-white px-4 py-2 rounded-xl font-bold">
+                لوحة الدكتور
+            </button>
+
+            <button
+                id="logoutButton"
+                onclick="logout()"
+                class="hidden bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
+                خروج
+            </button>
+
+        </div>
+    </div>
+</header>
+
+
+<!-- HERO -->
+<section class="hero text-white">
+    <div class="max-w-7xl mx-auto px-4 py-20">
+
+        <div class="max-w-3xl">
+
+            <span class="inline-block bg-white/10 px-4 py-2 rounded-full mb-5">
+                العلم نور
+            </span>
+
+            <h2 class="text-4xl md:text-6xl font-black leading-tight mb-6">
+                أزهري وأفتخر
+            </h2>
+
+            <p class="text-lg md:text-xl text-white/90 leading-9">
+                منصة تعليمية تجمع المواد الدينية والدراسية
+                في مكان واحد بطريقة منظمة وسهلة.
+            </p>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- MAIN -->
+<main class="max-w-7xl mx-auto px-4 py-12">
+
+    <!-- HOME -->
+    <section id="homeSection">
+
+        <div class="text-center mb-10">
+
+            <span class="text-emerald-600 font-bold">
+                الأقسام التعليمية
+            </span>
+
+            <h2 class="text-3xl md:text-4xl font-black mt-2">
+                اختر القسم
+            </h2>
+
+            <p class="text-slate-500 mt-3">
+                اختر القسم ثم المادة للوصول إلى الدروس والملفات
+            </p>
+
+        </div>
+
+
+        <!-- CATEGORIES -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+
+            <button
+                onclick="showCategory('dini')"
+                class="card bg-emerald-50 border border-emerald-100 rounded-3xl p-7 text-right">
+
+                <div class="text-4xl mb-4">🕌</div>
+
+                <h3 class="text-2xl font-black text-emerald-800">
+                    ديني
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                    القرآن الكريم والعلوم الشرعية
+                </p>
+
+            </button>
+
+
+            <button
+                onclick="showCategory('academic')"
+                class="card bg-blue-50 border border-blue-100 rounded-3xl p-7 text-right">
+
+                <div class="text-4xl mb-4">🎓</div>
+
+                <h3 class="text-2xl font-black text-blue-800">
+                    دراسي
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                    العربي والفيزياء والكيمياء والأحياء والرياضيات والإنجليزي
+                </p>
+
+            </button>
+
+
+            <button
+                onclick="showAllSubjects()"
+                class="card bg-slate-50 border border-slate-200 rounded-3xl p-7 text-right">
+
+                <div class="text-4xl mb-4">📚</div>
+
+                <h3 class="text-2xl font-black text-slate-800">
+                    كل المواد
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                    عرض جميع المواد التعليمية
+                </p>
+
+            </button>
+
+        </div>
+
+
+        <!-- SUBJECTS -->
+        <div id="subjectsSection">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+                    <h2 class="text-2xl font-black">
+                        المواد
+                    </h2>
+
+                    <p class="text-slate-500 text-sm">
+                        اختر المادة لعرض محتواها
+                    </p>
+                </div>
+
+            </div>
+
+            <div
+                id="subjectsGrid"
+                class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MATERIALS -->
+    <section id="materialsSection" class="hidden">
+
         <button
-        onclick="logout()"
-        class="bg-red-600 text-white px-4 py-2 rounded-xl font-bold">
-            🚪 خروج
+            onclick="backToSubjects()"
+            class="mb-6 bg-slate-100 px-4 py-2 rounded-xl font-bold">
+            ← رجوع للمواد
         </button>
 
-    </div>`;
+        <div class="mb-8">
 
-}
+            <h2
+                id="selectedSubjectTitle"
+                class="text-3xl font-black">
+            </h2>
 
+            <p class="text-slate-500 mt-2">
+                الدروس والملفات المتاحة
+            </p>
 
-function openLogin(){
+        </div>
 
-    document
-    .getElementById("loginModal")
-    .classList.add("active");
+        <div
+            id="materialsGrid"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        </div>
 
-}
+    </section>
 
 
-function closeLogin(){
+    <!-- DOCTOR DASHBOARD -->
+    <section id="doctorDashboard"
+             class="hidden">
 
-    document
-    .getElementById("loginModal")
-    .classList.remove("active");
+        <button
+            onclick="closeDoctorDashboard()"
+            class="mb-6 bg-slate-100 px-4 py-2 rounded-xl font-bold">
+            ← العودة للمنصة
+        </button>
 
-}
+        <div class="bg-white rounded-3xl shadow-sm border p-6 md:p-8">
 
+            <div class="mb-8">
 
-async function login(){
+                <span class="text-emerald-600 font-bold">
+                    لوحة التحكم
+                </span>
 
-    const email =
-        document.getElementById("email").value.trim();
+                <h2 class="text-3xl font-black mt-2">
+                    لوحة الدكتور
+                </h2>
 
-    const password =
-        document.getElementById("password").value;
+                <p class="text-slate-500 mt-2">
+                    رفع فيديوهات وملفات PDF للطلاب
+                </p>
 
-    const message =
-        document.getElementById("loginMessage");
+            </div>
 
-    if(!email || !password){
 
-        message.textContent =
-        "⚠️ اكتب البريد الإلكتروني وكلمة المرور";
+            <div class="grid gap-5">
 
-        message.className =
-        "text-center mt-4 font-bold text-red-600";
+                <!-- SUBJECT -->
+                <div>
 
-        return;
-    }
+                    <label class="block font-bold mb-2">
+                        المادة
+                    </label>
 
-    message.textContent =
-    "جاري تسجيل الدخول...";
+                    <select
+                        id="uploadSubject"
+                        class="w-full border rounded-xl p-3">
+                    </select>
 
-    const {data,error} =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
+                </div>
 
-    if(error){
 
-        message.textContent =
-        "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة";
+                <!-- TITLE -->
+                <div>
 
-        message.className =
-        "text-center mt-4 font-bold text-red-600";
+                    <label class="block font-bold mb-2">
+                        عنوان الدرس
+                    </label>
 
-        return;
-    }
+                    <input
+                        id="uploadTitle"
+                        type="text"
+                        placeholder="مثال: المحاضرة الأولى"
+                        class="w-full border rounded-xl p-3">
 
-    currentUser = data.user;
+                </div>
 
-    await updateAuthUI();
 
-    message.textContent =
-    "✅ تم تسجيل الدخول بنجاح";
+                <!-- DESCRIPTION -->
+                <div>
 
-    message.className =
-    "text-center mt-4 font-bold text-green-600";
+                    <label class="block font-bold mb-2">
+                        وصف الدرس
+                    </label>
 
-    setTimeout(() => {
-        closeLogin();
-    },700);
+                    <textarea
+                        id="uploadDescription"
+                        rows="4"
+                        placeholder="اكتب وصفًا مختصرًا..."
+                        class="w-full border rounded-xl p-3">
+                    </textarea>
 
-}
+                </div>
 
 
-async function logout(){
+                <!-- FILE -->
+                <div>
 
-    await supabaseClient.auth.signOut();
+                    <label class="block font-bold mb-2">
+                        الفيديو أو PDF
+                    </label>
 
-    currentUser = null;
+                    <input
+                        id="uploadFile"
+                        type="file"
+                        accept=".mp4,.webm,.mov,.pdf"
+                        class="w-full border rounded-xl p-3">
 
-    await updateAuthUI();
+                </div>
 
-}
 
+                <!-- STATUS -->
+                <div
+                    id="uploadStatus"
+                    class="text-sm font-bold">
+                </div>
 
-/* =========================
-   SECTIONS
-========================= */
 
-function openDini(){
+                <!-- BUTTON -->
+                <button
+                    onclick="uploadMaterial()"
+                    class="bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl p-4 font-black">
 
-    currentSection = "dini";
+                    رفع المحتوى
 
-    document.getElementById("sectionTitle").textContent =
-        "❤️‍🩹 القسم الديني";
+                </button>
 
-    document.getElementById("subjects").classList.remove("hidden");
+            </div>
 
-    document.getElementById("subjects").scrollIntoView({
-        behavior:"smooth"
-    });
+        </div>
 
-    renderSubjects();
+    </section>
 
-}
+</main>
 
 
-function openAcademic(){
+<!-- LOGIN MODAL -->
+<div
+    id="loginModal"
+    class="hidden fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
 
-    currentSection = "academic";
+    <div class="bg-white rounded-3xl p-7 w-full max-w-md">
 
-    document.getElementById("sectionTitle").textContent =
-        "🎓 المواد الدراسية";
+        <div class="flex justify-between items-center mb-6">
 
-    document.getElementById("subjects").classList.remove("hidden");
+            <h2 class="text-2xl font-black">
+                تسجيل الدخول
+            </h2>
 
-    document.getElementById("subjects").scrollIntoView({
-        behavior:"smooth"
-    });
+            <button
+                onclick="closeLogin()"
+                class="text-2xl">
+                ×
+            </button>
 
-    renderSubjects();
+        </div>
 
-}
 
+        <div class="space-y-4">
 
-function closeSubjects(){
+            <input
+                id="emailInput"
+                type="email"
+                placeholder="البريد الإلكتروني"
+                class="w-full border rounded-xl p-3">
 
-    document.getElementById("subjects")
-    .classList.add("hidden");
+            <input
+                id="passwordInput"
+                type="password"
+                placeholder="كلمة المرور"
+                class="w-full border rounded-xl p-3">
 
-    document.getElementById("materialsSection")
-    .classList.add("hidden");
+            <div
+                id="loginStatus"
+                class="text-sm font-bold">
+            </div>
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+            <button
+                onclick="login()"
+                class="w-full bg-emerald-700 text-white rounded-xl p-3 font-black">
 
-}
+                دخول
 
+            </button>
 
-function backToSubjects(){
+        </div>
 
-    document.getElementById("materialsSection")
-    .classList.add("hidden");
+    </div>
 
-    document.getElementById("subjects")
-    .classList.remove("hidden");
+</div>
 
-    document.getElementById("subjects").scrollIntoView({
-        behavior:"smooth"
-    });
 
-}
+<script>
+
+const SUPABASE_URL =
+    "https://fxezbarpvidzskcaaxnt.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_1hTr2mOxng5UILxDVDCQng_VnYEm13y";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+let subjects = [];
+let currentUser = null;
+let currentProfile = null;
+let currentSubjectId = null;
 
 
 /* =========================
    SUBJECTS
 ========================= */
 
-async function loadSubjects(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("subjects")
-        .select("*")
-        .order("id");
-
-    if(error){
-
-        console.error(error);
-
-        return;
-    }
-
-    allSubjects = data || [];
-
-}
-
-
-function renderSubjects(){
-
-    const container =
-        document.getElementById("subjectsContainer");
-
-    let subjects = [];
-
-    if(currentSection === "dini"){
-
-        subjects =
-            allSubjects.filter(subject =>
-                subject.name.includes("القرآن") ||
-                subject.name.includes("شرعية")
-            );
-
-    }else{
-
-        subjects =
-            allSubjects.filter(subject =>
-                !subject.name.includes("القرآن") &&
-                !subject.name.includes("شرعية")
-            );
-
-    }
-
-
-    if(subjects.length === 0){
-
-        container.innerHTML = `
-        <div class="col-span-full text-center py-10">
-            لا توجد مواد في هذا القسم حاليًا.
-        </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    subjects.forEach(subject => {
-
-        let icon = "📚";
-
-        if(subject.name.includes("القرآن"))
-            icon = "📖";
-
-        else if(subject.name.includes("شرعية"))
-            icon = "🕌";
-
-        else if(subject.name.includes("العربية"))
-            icon = "📚";
-
-        else if(subject.name.includes("الفيزياء"))
-            icon = "⚡";
-
-        else if(subject.name.includes("الكيمياء"))
-            icon = "🧪";
-
-        else if(subject.name.includes("الأحياء"))
-            icon = "🧬";
-
-        else if(subject.name.includes("English"))
-            icon = "🇬🇧";
-
-        else if(subject.name.includes("الرياضيات"))
-            icon = "📐";
-
-
-        container.innerHTML += `
-
-        <div class="bg-white rounded-3xl p-7 shadow-sm border
-        hover:shadow-lg transition">
-
-            <div class="text-5xl mb-5">
-                ${icon}
-            </div>
-
-            <h3 class="text-2xl font-black mb-3">
-                ${subject.name}
-            </h3>
-
-            <p class="text-slate-500 mb-6">
-                ${subject.description || "محتوى تعليمي منظم"}
-            </p>
-
-            <button
-            onclick="openSubject(${subject.id})"
-            class="w-full bg-emerald-600 text-white py-3
-            rounded-xl font-black">
-
-                دخول المادة
-
-            </button>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-
-/* =========================
-   SUBJECT
-========================= */
-
-async function openSubject(subjectId){
-
-    currentSubject =
-        allSubjects.find(
-            subject => subject.id === subjectId
-        );
-
-    if(!currentSubject){
-
-        alert("لم يتم العثور على المادة");
-
-        return;
-    }
-
-
-    document.getElementById(
-        "currentSubjectTitle"
-    ).textContent =
-        currentSubject.name;
-
-
-    document.getElementById(
-        "subjects"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "materialsSection"
-    ).classList.remove("hidden");
-
-
-    document.getElementById(
-        "materialsSection"
-    ).scrollIntoView({
-        behavior:"smooth"
-    });
-
-
-    await loadMaterials();
-
-}
-
-
-/* =========================
-   MATERIALS
-========================= */
-
-async function loadMaterials(){
-
-    const container =
-        document.getElementById("materialsContainer");
-
-    container.innerHTML = `
-    <div class="text-center py-10">
-        جاري تحميل المحتوى...
-    </div>`;
-
-
-    const {data,error} =
-        await supabaseClient
-        .from("materials")
-        .select("*")
-        .eq("subject_id",currentSubject.id)
-        .order("id");
-
-
-    if(error){
-
-        console.error(error);
-
-        container.innerHTML = `
-        <div class="bg-red-50 text-red-700
-        rounded-2xl p-6 text-center font-bold">
-
-            ❌ حدث خطأ أثناء تحميل المحتوى.
-
-        </div>`;
-
-        return;
-    }
-
-
-    if(!data || data.length === 0){
-
-        container.innerHTML = `
-        <div class="bg-white rounded-3xl p-10
-        text-center border">
-
-            <div class="text-5xl mb-4">
-                📚
-            </div>
-
-            <h3 class="text-2xl font-black mb-2">
-                لا يوجد محتوى حاليًا
-            </h3>
-
-            <p class="text-slate-500">
-                سيتم إضافة المحتوى قريبًا.
-            </p>
-
-        </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML = `
-    <div
-    id="materialsGrid"
-    class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    </div>`;
-
-
-    const grid =
-        document.getElementById("materialsGrid");
-
-
-    data.forEach(material => {
-
-        const isVideo =
-            material.file_type === "video";
-
-        const isPdf =
-            material.file_type === "pdf";
-
-
-        if(isVideo){
-
-            grid.innerHTML += `
-
-            <div class="bg-white rounded-3xl border
-            shadow-sm overflow-hidden">
-
-                <div class="bg-slate-900 p-3">
-
-                    <video
-                    controls
-                    preload="metadata"
-                    class="w-full rounded-2xl max-h-[420px]">
-
-                        <source
-                        src="${material.file_url}"
-                        type="video/mp4">
-
-                        المتصفح لا يدعم تشغيل الفيديو.
-
-                    </video>
-
-                </div>
-
-
-                <div class="p-6">
-
-                    <div class="text-4xl mb-4">
-                        🎥
-                    </div>
-
-                    <h3 class="text-2xl font-black mb-3">
-                        ${material.title}
-                    </h3>
-
-                    <p class="text-slate-500">
-                        ${material.description || "فيديو تعليمي"}
-                    </p>
-
-                </div>
-
-            </div>
-
-            `;
-
-        }else if(isPdf){
-
-            grid.innerHTML += `
-
-            <div class="bg-white rounded-3xl border
-            shadow-sm p-7">
-
-                <div class="text-5xl mb-5">
-                    📄
-                </div>
-
-                <h3 class="text-2xl font-black mb-3">
-                    ${material.title}
-                </h3>
-
-                <p class="text-slate-500 mb-6">
-                    ${material.description || "ملف PDF تعليمي"}
-                </p>
-
-                <a
-                href="${material.file_url}"
-                target="_blank"
-                class="inline-block bg-red-600 text-white
-                px-6 py-3 rounded-xl font-black">
-
-                    📄 فتح ملف PDF
-
-                </a>
-
-            </div>
-
-            `;
-
-        }else{
-
-            grid.innerHTML += `
-
-            <div class="bg-white rounded-3xl border
-            shadow-sm p-7">
-
-                <div class="text-5xl mb-5">
-                    📎
-                </div>
-
-                <h3 class="text-2xl font-black mb-3">
-                    ${material.title}
-                </h3>
-
-                <p class="text-slate-500 mb-6">
-                    ${material.description || "محتوى تعليمي"}
-                </p>
-
-                <a
-                href="${material.file_url}"
-                target="_blank"
-                class="inline-block bg-emerald-600 text-white
-                px-6 py-3 rounded-xl font-black">
-
-                    فتح المحتوى
-
-                </a>
-
-            </div>
-
-            `;
-
-        }
-
-    });
-
-}
+const subjectOrder = [
+    "القرآن الكريم",
+    "العلوم الشرعية",
+    "اللغة العربية",
+    "الفيزياء",
+    "الكيمياء",
+    "الأحياء",
+    "الرياضيات",
+    "English"
+];
 
 
 /* =========================
@@ -791,20 +468,1027 @@ async function loadMaterials(){
 ========================= */
 
 document.addEventListener(
-"DOMContentLoaded",
-async () => {
+    "DOMContentLoaded",
+    async () => {
 
-    const {data} =
+        await loadSubjects();
+
+        await checkUser();
+
+    }
+);
+
+
+/* =========================
+   LOAD SUBJECTS
+========================= */
+
+async function loadSubjects() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("subjects")
+            .select("*");
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    subjects = data || [];
+
+    subjects.sort(
+        (a, b) =>
+            subjectOrder.indexOf(a.name)
+            -
+            subjectOrder.indexOf(b.name)
+    );
+
+    renderSubjects(subjects);
+
+    renderUploadSubjects();
+
+}
+
+
+/* =========================
+   RENDER SUBJECTS
+========================= */
+
+function renderSubjects(list) {
+
+    const grid =
+        document.getElementById("subjectsGrid");
+
+    grid.innerHTML = "";
+
+    list.forEach(subject => {
+
+        const icons = {
+
+            "القرآن الكريم": "📖",
+
+            "العلوم الشرعية": "🕌",
+
+            "اللغة العربية": "✍️",
+
+            "الفيزياء": "⚡",
+
+            "الكيمياء": "🧪",
+
+            "الأحياء": "🧬",
+
+            "الرياضيات": "📐",
+
+            "English": "🇬🇧"
+
+        };
+
+        const icon =
+            icons[subject.name] || "📚";
+
+
+        const card =
+            document.createElement("button");
+
+        card.className =
+            "card bg-white border border-slate-200 rounded-3xl p-6 text-right shadow-sm";
+
+        card.innerHTML = `
+
+            <div class="text-4xl mb-4">
+                ${icon}
+            </div>
+
+            <h3 class="text-xl font-black">
+                ${escapeHtml(subject.name)}
+            </h3>
+
+            <p class="text-slate-500 text-sm mt-2">
+                اضغط لعرض المحتوى
+            </p>
+
+        `;
+
+        card.onclick = () =>
+            openSubject(subject);
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function showCategory(category) {
+
+    let filtered = [];
+
+    if (category === "dini") {
+
+        filtered =
+            subjects.filter(
+                s =>
+                    s.name === "القرآن الكريم"
+                    ||
+                    s.name === "العلوم الشرعية"
+            );
+
+    }
+
+    if (category === "academic") {
+
+        filtered =
+            subjects.filter(
+                s =>
+                    s.name !== "القرآن الكريم"
+                    &&
+                    s.name !== "العلوم الشرعية"
+            );
+
+    }
+
+    renderSubjects(filtered);
+
+    document
+        .getElementById("subjectsSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+function showAllSubjects() {
+
+    renderSubjects(subjects);
+
+    document
+        .getElementById("subjectsSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================
+   OPEN SUBJECT
+========================= */
+
+async function openSubject(subject) {
+
+    currentSubjectId = subject.id;
+
+    document
+        .getElementById("homeSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("doctorDashboard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("materialsSection")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("selectedSubjectTitle")
+        .textContent =
+        subject.name;
+
+
+    await loadMaterials(subject.id);
+
+}
+
+
+/* =========================
+   LOAD MATERIALS
+========================= */
+
+async function loadMaterials(subjectId) {
+
+    const grid =
+        document.getElementById("materialsGrid");
+
+    grid.innerHTML = `
+
+        <div class="col-span-full text-center py-10 text-slate-500">
+            جاري تحميل المحتوى...
+        </div>
+
+    `;
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("materials")
+            .select("*")
+            .eq("subject_id", subjectId)
+            .order("created_at", {
+                ascending: false
+            });
+
+
+    if (error) {
+
+        console.error(error);
+
+        grid.innerHTML = `
+
+            <div class="col-span-full text-center text-red-600">
+                حدث خطأ أثناء تحميل المحتوى.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML = "";
+
+
+    if (!data || data.length === 0) {
+
+        grid.innerHTML = `
+
+            <div class="col-span-full bg-white border rounded-3xl p-10 text-center">
+
+                <div class="text-5xl mb-4">
+                    📚
+                </div>
+
+                <h3 class="text-xl font-black">
+                    لا يوجد محتوى حتى الآن
+                </h3>
+
+                <p class="text-slate-500 mt-2">
+                    سيتم إضافة الدروس قريبًا.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(material => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "bg-white border rounded-3xl p-5 shadow-sm";
+
+
+        let content = "";
+
+
+        if (material.file_type === "video") {
+
+            content = `
+
+                <video
+                    controls
+                    preload="metadata"
+                    class="mb-4">
+
+                    <source
+                        src="${escapeHtml(material.file_url)}">
+
+                    متصفحك لا يدعم تشغيل الفيديو.
+
+                </video>
+
+            `;
+
+        }
+
+
+        else if (material.file_type === "pdf") {
+
+            content = `
+
+                <a
+                    href="${escapeHtml(material.file_url)}"
+                    target="_blank"
+                    rel="noopener"
+                    class="block bg-red-600 text-white text-center rounded-xl p-4 font-black mb-4">
+
+                    📄 فتح ملف PDF
+
+                </a>
+
+            `;
+
+        }
+
+
+        card.innerHTML = `
+
+            ${content}
+
+            <h3 class="text-xl font-black">
+                ${escapeHtml(material.title || "درس")}
+            </h3>
+
+            <p class="text-slate-500 mt-2 leading-7">
+                ${escapeHtml(material.description || "")}
+            </p>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   BACK
+========================= */
+
+function backToSubjects() {
+
+    document
+        .getElementById("materialsSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("homeSection")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList
+        .remove("hidden");
+
+}
+
+
+function closeLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList
+        .add("hidden");
+
+}
+
+
+async function login() {
+
+    const email =
+        document
+            .getElementById("emailInput")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("passwordInput")
+            .value;
+
+
+    const status =
+        document
+            .getElementById("loginStatus");
+
+
+    status.textContent =
+        "جاري تسجيل الدخول...";
+
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+
+    if (error) {
+
+        status.textContent =
+            "بيانات الدخول غير صحيحة.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    currentUser = data.user;
+
+    await loadProfile();
+
+    closeLogin();
+
+}
+
+
+/* =========================
+   CHECK USER
+========================= */
+
+async function checkUser() {
+
+    const { data } =
         await supabaseClient.auth.getUser();
 
     currentUser =
         data?.user || null;
 
-    await updateAuthUI();
 
-    await loadSubjects();
+    if (currentUser) {
 
-});
+        await loadProfile();
 
-</script></body>
+    }
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+async function loadProfile() {
+
+    if (!currentUser)
+        return;
+
+
+    const { data, error } =
+        await supabaseClient
+            .from("profiles")
+            .select("name, role")
+            .eq("id", currentUser.id)
+            .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    currentProfile = data;
+
+
+    updateHeader();
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+function updateHeader() {
+
+    const loginButton =
+        document.getElementById(
+            "loginButton"
+        );
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+    const doctorButton =
+        document.getElementById(
+            "doctorButton"
+        );
+
+    const userName =
+        document.getElementById(
+            "userName"
+        );
+
+
+    if (currentUser) {
+
+        loginButton.classList.add(
+            "hidden"
+        );
+
+        logoutButton.classList.remove(
+            "hidden"
+        );
+
+        userName.classList.remove(
+            "hidden"
+        );
+
+        userName.textContent =
+            currentProfile?.name ||
+            currentUser.email;
+
+
+        if (
+            currentProfile?.role === "doctor"
+        ) {
+
+            doctorButton.classList.remove(
+                "hidden"
+            );
+
+        } else {
+
+            doctorButton.classList.add(
+                "hidden"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    currentUser = null;
+
+    currentProfile = null;
+
+    document
+        .getElementById("doctorButton")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("logoutButton")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("loginButton")
+        .classList
+        .remove("hidden");
+
+    document
+        .getElementById("userName")
+        .classList
+        .add("hidden");
+
+}
+
+
+/* =========================
+   DOCTOR DASHBOARD
+========================= */
+
+function openDoctorDashboard() {
+
+    if (
+        !currentProfile ||
+        currentProfile.role !== "doctor"
+    ) {
+
+        alert(
+            "هذا القسم مخصص للدكتور فقط."
+        );
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("homeSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("materialsSection")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("doctorDashboard")
+        .classList
+        .remove("hidden");
+
+
+    renderUploadSubjects();
+
+}
+
+
+function closeDoctorDashboard() {
+
+    document
+        .getElementById("doctorDashboard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("homeSection")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================
+   UPLOAD SUBJECTS
+========================= */
+
+function renderUploadSubjects() {
+
+    const select =
+        document.getElementById(
+            "uploadSubject"
+        );
+
+
+    if (!select || !subjects.length)
+        return;
+
+
+    select.innerHTML = "";
+
+
+    subjects.forEach(subject => {
+
+        const option =
+            document.createElement("option");
+
+        option.value =
+            subject.id;
+
+        option.textContent =
+            subject.name;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+
+/* =========================
+   UPLOAD MATERIAL
+========================= */
+
+async function uploadMaterial() {
+
+    if (
+        !currentUser ||
+        !currentProfile ||
+        currentProfile.role !== "doctor"
+    ) {
+
+        alert(
+            "يجب تسجيل الدخول بحساب الدكتور."
+        );
+
+        return;
+
+    }
+
+
+    const subjectId =
+        document
+            .getElementById("uploadSubject")
+            .value;
+
+
+    const title =
+        document
+            .getElementById("uploadTitle")
+            .value
+            .trim();
+
+
+    const description =
+        document
+            .getElementById("uploadDescription")
+            .value
+            .trim();
+
+
+    const file =
+        document
+            .getElementById("uploadFile")
+            .files[0];
+
+
+    const status =
+        document
+            .getElementById("uploadStatus");
+
+
+    if (!subjectId) {
+
+        status.textContent =
+            "اختر المادة.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    if (!title) {
+
+        status.textContent =
+            "اكتب عنوان الدرس.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    if (!file) {
+
+        status.textContent =
+            "اختر فيديو أو ملف PDF.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "جاري رفع الملف...";
+
+    status.className =
+        "text-sm font-bold text-blue-600";
+
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    let fileType = "";
+
+
+    if (
+        file.type.startsWith("video/")
+        ||
+        ["mp4", "webm", "mov"].includes(extension)
+    ) {
+
+        fileType = "video";
+
+    }
+
+    else if (
+        file.type === "application/pdf"
+        ||
+        extension === "pdf"
+    ) {
+
+        fileType = "pdf";
+
+    }
+
+    else {
+
+        status.textContent =
+            "نوع الملف غير مدعوم.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    const safeName =
+        file.name
+            .replace(
+                /[^a-zA-Z0-9._-]/g,
+                "-"
+            );
+
+
+    const filePath =
+        `materials/${Date.now()}-${safeName}`;
+
+
+    const { error: uploadError } =
+        await supabaseClient.storage
+            .from("content")
+            .upload(
+                filePath,
+                file,
+                {
+                    cacheControl: "3600",
+                    upsert: false,
+                    contentType:
+                        file.type || undefined
+                }
+            );
+
+
+    if (uploadError) {
+
+        console.error(uploadError);
+
+        status.textContent =
+            "فشل رفع الملف: " +
+            uploadError.message;
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    const { data: publicData } =
+        supabaseClient.storage
+            .from("content")
+            .getPublicUrl(filePath);
+
+
+    const publicUrl =
+        publicData.publicUrl;
+
+
+    const { error: insertError } =
+        await supabaseClient
+            .from("materials")
+            .insert({
+
+                subject_id:
+                    Number(subjectId),
+
+                title:
+                    title,
+
+                description:
+                    description,
+
+                file_url:
+                    publicUrl,
+
+                file_type:
+                    fileType
+
+            });
+
+
+    if (insertError) {
+
+        console.error(insertError);
+
+        status.textContent =
+            "تم رفع الملف لكن حدث خطأ في حفظ بياناته.";
+
+        status.className =
+            "text-sm font-bold text-red-600";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "تم رفع المحتوى بنجاح ✅";
+
+    status.className =
+        "text-sm font-bold text-emerald-600";
+
+
+    document
+        .getElementById("uploadTitle")
+        .value = "";
+
+
+    document
+        .getElementById("uploadDescription")
+        .value = "";
+
+
+    document
+        .getElementById("uploadFile")
+        .value = "";
+
+
+    if (currentSubjectId === Number(subjectId)) {
+
+        await loadMaterials(
+            Number(subjectId)
+        );
+
+    }
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+    async (event, session) => {
+
+        currentUser =
+            session?.user || null;
+
+
+        if (currentUser) {
+
+            await loadProfile();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
 </html>
