@@ -51,7 +51,7 @@ audio{width:100%}
 </button>
 
 <button id="doctorButton" onclick="openLoginModal()" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-bold">
-دخول الدكتور
+تسجيل الدخول
 </button>
 
 <button id="logoutButton" onclick="logout()" class="hidden px-4 py-2 rounded-xl bg-red-600 text-white font-bold">
@@ -104,6 +104,8 @@ audio{width:100%}
 
 </section>
 
+</main>
+
 <section id="materialsSection" class="hidden-section max-w-7xl mx-auto px-4 py-12">
 
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -127,8 +129,6 @@ audio{width:100%}
 <div id="materialsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
 </section>
-
-</main>
 
 <section id="doctorDashboard" class="hidden-section max-w-7xl mx-auto px-4 py-10">
 
@@ -276,7 +276,7 @@ class="hidden fixed inset-0 z-[100] bg-black/60 flex items-center justify-center
 <div class="flex items-center justify-between mb-6">
 
 <h2 class="text-2xl font-black">
-دخول الدكتور
+تسجيل الدخول
 </h2>
 
 <button onclick="closeLoginModal()"
@@ -428,6 +428,8 @@ function getStoragePathFromUrl(url){
 
 if(!url)return null;
 
+url = normalizeStorageUrl(url);
+
 const marker =
 `/storage/v1/object/public/${STORAGE_BUCKET}/`;
 
@@ -472,10 +474,7 @@ return "file";
 }
 
 
-/* ==================================================
-   UPLOAD — SAFE VERSION
-   اسم الملف الأصلي لا يدخل Storage نهائياً
-================================================== */
+/* ================= STORAGE UPLOAD ================= */
 
 async function uploadFileToStorage(file,folder){
 
@@ -483,17 +482,10 @@ if(!file){
 throw new Error("لم يتم اختيار ملف.");
 }
 
-
-/*
-نحدد الامتداد من MIME Type فقط.
-لا نستخدم file.name إطلاقاً.
-*/
-
 const mimeType =
 String(file.type || "").toLowerCase();
 
 let extension = "bin";
-
 
 if(mimeType === "application/pdf"){
 
@@ -558,17 +550,6 @@ audioExtensions[mimeType] || "mp3";
 
 }
 
-
-/*
-نستخدم crypto.randomUUID()
-بدلاً من اسم الملف الأصلي.
-
-مثال:
-file-1791273000000-a8f3c2d1.jpg
-
-وهو اسم ASCII آمن لـ Supabase Storage.
-*/
-
 let randomPart = "";
 
 if(
@@ -590,26 +571,11 @@ Math.random()
 
 }
 
-
 const safeName =
 `file-${Date.now()}-${randomPart}.${extension}`;
 
-
-/*
-المسار النهائي لا يحتوي على:
-اسم المستخدم
-العربي
-الأرقام العربية
-المسافات
-الرموز الخاصة
-*/
-
 const path =
 `${folder}/${safeName}`;
-
-
-console.log("Uploading safe path:",path);
-
 
 const {
 error
@@ -628,15 +594,13 @@ file.type ||
 }
 );
 
-
 if(error){
 
-console.error("Supabase Storage Error:",error);
+console.error(error);
 
 throw error;
 
 }
-
 
 const {
 data
@@ -646,7 +610,6 @@ supabase
 .from(STORAGE_BUCKET)
 .getPublicUrl(path);
 
-
 if(!data || !data.publicUrl){
 
 throw new Error(
@@ -654,7 +617,6 @@ throw new Error(
 );
 
 }
-
 
 return normalizeStorageUrl(
 data.publicUrl
@@ -690,10 +652,16 @@ document.getElementById("doctorButton");
 const logoutButton =
 document.getElementById("logoutButton");
 
+if(!doctorButton || !logoutButton)return;
+
 
 if(!currentSession){
 
-doctorButton.classList.remove("hidden");
+doctorButton.textContent =
+"تسجيل الدخول";
+
+doctorButton.onclick =
+openLoginModal;
 
 logoutButton.classList.add("hidden");
 
@@ -724,18 +692,42 @@ logoutButton.classList.remove("hidden");
 
 }else{
 
-doctorButton.classList.remove("hidden");
+doctorButton.textContent =
+"حساب الطالب";
 
-logoutButton.classList.add("hidden");
+doctorButton.onclick =
+showHome;
+
+logoutButton.classList.remove("hidden");
 
 }
 
 }
 
+
+/* ================= LOGOUT ================= */
 
 async function logout(){
 
+try{
+
+const {
+error
+} =
 await supabase.auth.signOut();
+
+if(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تسجيل الخروج:\n" +
+error.message
+);
+
+return;
+
+}
 
 currentSession = null;
 
@@ -744,12 +736,39 @@ document
 .classList.add("hidden-section");
 
 document
+.getElementById("materialsSection")
+.classList.add("hidden-section");
+
+document
 .getElementById("homeSection")
 .classList.remove("hidden-section");
 
 await updateAuthUI();
 
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}catch(error){
+
+console.error(error);
+
+alert(
+"حدث خطأ أثناء تسجيل الخروج."
+);
+
 }
+
+}
+
+
+/*
+مهم جداً:
+لأن هذا script من نوع module،
+نجعل logout متاحة لزر HTML.
+*/
+window.logout = logout;
 
 
 /* ================= LOGIN ================= */
@@ -799,7 +818,6 @@ document
 
 errorElement.classList.add("hidden");
 
-
 const {
 data,
 error
@@ -810,7 +828,6 @@ await supabase
 email,
 password
 });
-
 
 if(error){
 
@@ -823,7 +840,6 @@ return;
 
 }
 
-
 currentSession =
 data.session;
 
@@ -831,7 +847,25 @@ closeLoginModal();
 
 await updateAuthUI();
 
+const {
+data:profile
+} =
+await supabase
+.from("profiles")
+.select("role")
+.eq("id",currentSession.user.id)
+.maybeSingle();
+
+
+if(profile && profile.role === "doctor"){
+
 await showDoctorDashboard();
+
+}else{
+
+showHome();
+
+}
 
 }
 );
@@ -850,7 +884,6 @@ await supabase
 .select("*")
 .order("id",{ascending:true});
 
-
 if(error){
 
 console.error(error);
@@ -858,7 +891,6 @@ console.error(error);
 return;
 
 }
-
 
 subjects =
 data || [];
@@ -879,7 +911,6 @@ document.getElementById("subjectsGrid");
 
 grid.innerHTML = "";
 
-
 if(!subjects.length){
 
 grid.innerHTML = `
@@ -891,7 +922,6 @@ grid.innerHTML = `
 return;
 
 }
-
 
 subjects.forEach(subject=>{
 
@@ -951,21 +981,29 @@ item =>
 Number(item.id) === Number(subjectId)
 );
 
-
 document
 .getElementById("selectedSubjectLabel")
 .textContent =
 subject ? subject.name : "";
 
-
 document
 .getElementById("homeSection")
 .classList.add("hidden-section");
 
-
 document
 .getElementById("materialsSection")
 .classList.remove("hidden-section");
+
+
+const grid =
+document.getElementById("materialsGrid");
+
+grid.innerHTML = `
+<div class="col-span-full text-center p-10">
+<div class="text-4xl mb-4">⏳</div>
+<p class="font-bold">جاري تحميل المحتوى...</p>
+</div>
+`;
 
 
 const {
@@ -984,10 +1022,27 @@ if(error){
 
 console.error(error);
 
+grid.innerHTML = `
+<div class="col-span-full text-center
+bg-white dark:bg-slate-900
+rounded-3xl p-10">
+
+<div class="text-5xl mb-4">⚠️</div>
+
+<h3 class="text-xl font-black">
+تعذر تحميل المحتوى
+</h3>
+
+<p class="text-red-500 mt-3">
+${escapeHtml(error.message)}
+</p>
+
+</div>
+`;
+
 return;
 
 }
-
 
 materials =
 data || [];
@@ -1003,7 +1058,6 @@ const grid =
 document.getElementById("materialsGrid");
 
 grid.innerHTML = "";
-
 
 if(!materials.length){
 
@@ -1052,7 +1106,6 @@ border border-slate-100 dark:border-slate-800
 
 let content = "";
 
-
 if(type === "video"){
 
 content = `
@@ -1098,10 +1151,15 @@ dark:to-slate-900">
 else if(type === "image"){
 
 content = `
+<div class="w-full aspect-video bg-slate-100
+dark:bg-slate-800 flex items-center justify-center">
+
 <img
 src="${escapeHtml(url)}"
 alt="${escapeHtml(material.title)}"
-class="w-full aspect-video object-cover">
+class="w-full h-full object-contain">
+
+</div>
 `;
 
 }
@@ -1142,7 +1200,6 @@ text-6xl">
 
 
 let action = "";
-
 
 if(type === "pdf"){
 
@@ -1284,6 +1341,12 @@ await loadDoctorMaterials();
 }
 
 
+window.showDoctorDashboard =
+showDoctorDashboard;
+
+
+/* ================= DOCTOR MATERIALS ================= */
+
 async function loadDoctorMaterials(){
 
 const {
@@ -1305,7 +1368,6 @@ return;
 
 }
 
-
 materials =
 data || [];
 
@@ -1316,13 +1378,16 @@ updateStats();
 }
 
 
+window.loadDoctorMaterials =
+loadDoctorMaterials;
+
+
 function renderDoctorMaterials(){
 
 const container =
 document.getElementById("doctorMaterials");
 
 container.innerHTML = "";
-
 
 if(!materials.length){
 
@@ -1345,7 +1410,6 @@ item =>
 Number(item.id) ===
 Number(material.subject_id)
 );
-
 
 const row =
 document.createElement("div");
@@ -1447,12 +1511,10 @@ async function(event){
 
 event.preventDefault();
 
-
 const subjectId =
 document
 .getElementById("uploadSubject")
 .value;
-
 
 const title =
 document
@@ -1460,19 +1522,16 @@ document
 .value
 .trim();
 
-
 const description =
 document
 .getElementById("materialDescription")
 .value
 .trim();
 
-
 const file =
 document
 .getElementById("materialFile")
 .files[0];
-
 
 const sortOrder =
 Number(
@@ -1481,7 +1540,6 @@ document
 .value || 0
 );
 
-
 if(!file){
 
 alert("اختر ملفاً أولاً.");
@@ -1489,7 +1547,6 @@ alert("اختر ملفاً أولاً.");
 return;
 
 }
-
 
 const button =
 document
@@ -1500,19 +1557,16 @@ button.disabled = true;
 button.textContent =
 "جاري الرفع...";
 
-
 try{
 
 const fileType =
 getFileType(file);
-
 
 const fileUrl =
 await uploadFileToStorage(
 file,
 "materials"
 );
-
 
 const {
 error
@@ -1539,28 +1593,23 @@ sortOrder
 
 });
 
-
 if(error){
 
 throw error;
 
 }
 
-
 alert(
 "تم رفع المحتوى بنجاح."
 );
-
 
 document
 .getElementById("uploadForm")
 .reset();
 
-
 document
 .getElementById("materialSortOrder")
 .value = 0;
-
 
 await loadDoctorMaterials();
 
@@ -1602,7 +1651,6 @@ Number(item.id) === Number(id)
 );
 
 if(!material)return;
-
 
 document
 .getElementById("editMaterialId")
@@ -1649,12 +1697,10 @@ async function(event){
 
 event.preventDefault();
 
-
 const id =
 document
 .getElementById("editMaterialId")
 .value;
-
 
 const title =
 document
@@ -1662,13 +1708,11 @@ document
 .value
 .trim();
 
-
 const description =
 document
 .getElementById("editDescription")
 .value
 .trim();
-
 
 const sortOrder =
 Number(
@@ -1676,7 +1720,6 @@ document
 .getElementById("editSortOrder")
 .value || 0
 );
-
 
 const {
 error
@@ -1690,7 +1733,6 @@ sort_order:sortOrder
 })
 .eq("id",id);
 
-
 if(error){
 
 alert(
@@ -1701,7 +1743,6 @@ error.message
 return;
 
 }
-
 
 closeEditModal();
 
@@ -1724,7 +1765,6 @@ Number(item.id) === Number(id)
 
 if(!material)return;
 
-
 const confirmed =
 confirm(
 `هل تريد حذف "${material.title}"؟`
@@ -1732,14 +1772,12 @@ confirm(
 
 if(!confirmed)return;
 
-
 try{
 
 const storagePath =
 getStoragePathFromUrl(
 material.file_url
 );
-
 
 const {
 error:deleteDbError
@@ -1749,13 +1787,11 @@ await supabase
 .delete()
 .eq("id",id);
 
-
 if(deleteDbError){
 
 throw deleteDbError;
 
 }
-
 
 if(storagePath){
 
@@ -1767,7 +1803,6 @@ await supabase
 .from(STORAGE_BUCKET)
 .remove([storagePath]);
 
-
 if(storageError){
 
 console.warn(
@@ -1778,7 +1813,6 @@ storageError
 }
 
 }
-
 
 await loadDoctorMaterials();
 
@@ -1811,16 +1845,13 @@ Number(item.id) === Number(id)
 
 if(index === -1)return;
 
-
 const newIndex =
 index + direction;
-
 
 if(
 newIndex < 0 ||
 newIndex >= materials.length
 )return;
-
 
 const current =
 materials[index];
@@ -1828,13 +1859,11 @@ materials[index];
 const target =
 materials[newIndex];
 
-
 const currentOrder =
 Number(current.sort_order || 0);
 
 const targetOrder =
 Number(target.sort_order || 0);
-
 
 const {
 error:error1
@@ -1846,7 +1875,6 @@ sort_order:targetOrder
 })
 .eq("id",current.id);
 
-
 if(error1){
 
 alert(error1.message);
@@ -1854,7 +1882,6 @@ alert(error1.message);
 return;
 
 }
-
 
 const {
 error:error2
@@ -1866,7 +1893,6 @@ sort_order:currentOrder
 })
 .eq("id",target.id);
 
-
 if(error2){
 
 alert(error2.message);
@@ -1874,7 +1900,6 @@ alert(error2.message);
 return;
 
 }
-
 
 await loadDoctorMaterials();
 
@@ -1889,7 +1914,6 @@ const select =
 document.getElementById("uploadSubject");
 
 select.innerHTML = "";
-
 
 subjects.forEach(subject=>{
 
@@ -1913,10 +1937,25 @@ select.appendChild(option);
 
 async function updateStats(){
 
-document
-.getElementById("statSubjects")
-.textContent =
+const statSubjects =
+document.getElementById("statSubjects");
+
+const statMaterials =
+document.getElementById("statMaterials");
+
+const statVideos =
+document.getElementById("statVideos");
+
+const statAudios =
+document.getElementById("statAudios");
+
+
+if(statSubjects){
+
+statSubjects.textContent =
 subjects.length;
+
+}
 
 
 const {
@@ -1927,7 +1966,6 @@ await supabase
 .from("materials")
 .select("file_type");
 
-
 if(error){
 
 console.error(error);
@@ -1936,33 +1974,35 @@ return;
 
 }
 
-
 const list =
 data || [];
 
+if(statMaterials){
 
-document
-.getElementById("statMaterials")
-.textContent =
+statMaterials.textContent =
 list.length;
 
+}
 
-document
-.getElementById("statVideos")
-.textContent =
+if(statVideos){
+
+statVideos.textContent =
 list.filter(
 item =>
 item.file_type === "video"
 ).length;
 
+}
 
-document
-.getElementById("statAudios")
-.textContent =
+if(statAudios){
+
+statAudios.textContent =
 list.filter(
 item =>
 item.file_type === "audio"
 ).length;
+
+}
 
 }
 
@@ -1992,21 +2032,17 @@ behavior:"smooth"
 };
 
 
-window.showDoctorDashboard =
-showDoctorDashboard;
-
-
 /* ================= AUTH STATE ================= */
 
 supabase
 .auth
 .onAuthStateChange(
-async (_event,session)=>{
+(_event,session)=>{
 
 currentSession =
 session;
 
-await updateAuthUI();
+updateAuthUI();
 
 }
 );
